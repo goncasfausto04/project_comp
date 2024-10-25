@@ -9,3 +9,6 @@ glowing_light_red = (239, 128, 128)  # Light red for brighter text
 
 # SCREEN RESOLUTION
 resolution = (720, 720)
+
+for i in range(0, 10):
+    print(i)
