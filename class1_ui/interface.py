@@ -9,6 +9,11 @@ def interface():
     # creating the screen at the set resolution
     screen = pygame.display.set_mode(resolution)
 
+    # setting the font:
+    corbelfont = pygame.font.SysFont("corbel", 50)
+    #render the text (will be used in the game button)
+    wilderness_text = corbelfont.render("Wilderness Explorer", True, white)
+
     pass
 
 
