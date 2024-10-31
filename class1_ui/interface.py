@@ -47,6 +47,15 @@ def interface():
                 if 90 <= mouse[0] <= 630 and 240 <= mouse[1] <= 300:
                     under_construction()
 
+            # options button
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if 90 <= mouse[0] <= 230 and 600 <= mouse[1] <= 660:
+                    under_construction()
+
+            # rules button
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if 90 <= mouse[0] <= 230 and 480 <= mouse[1] <= 540:
+                    under_construction()
 
                     
         #fill the screen with black
