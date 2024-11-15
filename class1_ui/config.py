@@ -9,6 +9,9 @@ glowing_light_red = (239, 128, 128)  # Light red for brighter text
 blue = (0, 0, 255)
 green = (34, 139, 34)
 yellow = (255, 255, 0)
+red = (150, 0, 24)
+cute_purple = (128, 0, 128)
+green_ish = (0, 215, 10)
 
 # SCREEN RESOLUTION
 resolution = (720, 720)
@@ -17,5 +20,5 @@ fps = 60
 
 # SIZES 
 player_size = (50, 100)
-enemy_size = 40
+enemy_size = (40,40)
 bullet_size = 10

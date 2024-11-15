@@ -15,7 +15,7 @@ class Player(pygame.sprite.Sprite):
         # we call surface to represent the player image
         self.image = pygame.Surface(player_size)
         # drawing the image of the player
-        self.image.fill(blue)
+        self.image.fill(cute_purple)
         self.rect = self.image.get_rect()
         self.rect.center = (width // 2, height // 2)
 
