@@ -2,6 +2,7 @@ from config import *
 import math
 import pygame
 from player import Player
+from enemy import Enemy
 
 def execute_game():
 
@@ -29,6 +30,14 @@ def execute_game():
     #creating an empty bullet group that will be given as input to the player.shoot method
     bullets = pygame.sprite.Group()
 
+    #create enemy group
+    enemies = pygame.sprite.Group()
+
+    #setup enemy cooldown variable
+    enemy_cooldown = 0
+
+
+
     # MAING GAME LOOP
 
     running = True
@@ -53,14 +62,38 @@ def execute_game():
         #calling the .update() method of all the instances in the player group
         player_group.update()
 
-        # updating the bullets group
+        # updating the bullets group and enemies group
         bullets.update()
+        enemies.update(player)
 
-        # drawing the player sprites
+            #spawn enemies
+        if enemy_cooldown <= 0:
+            enemy = Enemy()
+            enemies.add(enemy)
+            enemy_cooldown = fps*2
+
+        enemy_cooldown -= 1
+
+        # drawing the player sprites and enemies sprites
+        enemies.draw(screen)
         player_group.draw(screen)
 
         # drawing the bullets sprites
         for bullet in bullets:
             bullet.draw(screen)
 
+        #bullet collision with enemies
+        for bullet in bullets:
+            hits = pygame.sprite.spritecollide(bullet,enemies,False)
+
+            for enemy in hits:
+                enemy.health -= 5
+                bullet.kill()
+                if enemy.health <= 0:
+                    enemy.kill()
+
+            for hit in hits:
+                bullet.kill()
+
         pygame.display.flip()
+
