@@ -1,3 +1,4 @@
+from game import execute_game
 import pygame
 from utils import * # no need to import pygame because the import is in utils
 from config import * # importing colors and the like
@@ -45,7 +46,7 @@ def interface():
             # wilderness game button
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if 90 <= mouse[0] <= 630 and 240 <= mouse[1] <= 300:
-                    under_construction()
+                    wilderness_explorer()
 
             # options button
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -212,4 +213,4 @@ def rules_():
 
 
 def wilderness_explorer():
-    print("Wilderness Explorer Game Starting...")
+    execute_game()
