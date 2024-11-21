@@ -9,7 +9,7 @@ def execute_game():
     #SETUP
 
     # setting up the background
-    background = pygame.image.load("GrassImageBackground.jpg")
+    background = pygame.image.load("ImageBackground.jpg")
     background = pygame.transform.scale(background, (width, height))
 
     # using the clock to control the time frame.
