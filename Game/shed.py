@@ -59,6 +59,9 @@ def shed(player):
             #returning to the previous screen
 
             return "main"
-
+        
+        # drawing the player
         player_group.draw(screen)
+
+        #updating the screen
         pygame.display.flip()
