@@ -22,8 +22,19 @@ class Player(pygame.sprite.Sprite):
         # GAMEPLAY VARIABLES
         self.speed = 5
         self.health = 100
+        self.max_health = 100
         self.bullet_cooldown = 0
 
+        self.powerup_active = False
+        self.powerup_timer = 0
+
+    def activate_powerup(self):
+        """
+        Activates the invincibility power-up for 15 seconds.
+        """
+        self.powerup_active = True
+        self.powerup_timer = 15 * fps  # 15 seconds worth of frames
+        self.image.fill(dark_red)
     def update(self):
 
         # getting the keys input:
@@ -38,6 +49,12 @@ class Player(pygame.sprite.Sprite):
             self.rect.x -= self.speed
         if keys[pygame.K_d] and self.rect.right < width:
             self.rect.x += self.speed
+        if self.powerup_active:
+            self.powerup_timer -= 1
+            if self.powerup_timer <= 0:
+                self.powerup_active = False  # Deactivate power-up
+                self.image.fill(cute_purple)  # Revert to original color
+
 
     def shoot(self, bullets):
         """
@@ -61,3 +78,20 @@ class Player(pygame.sprite.Sprite):
             self.bullet_cooldown = fps
 
         self.bullet_cooldown -= 1
+
+    def draw_health_bar(self, screen):
+        """
+        Draws a health bar below the player's sprite.
+        """
+        bar_width = 50  # Width of the health bar
+        bar_height = 8  # Height of the health bar
+        health_ratio = self.health / self.max_health  # Fraction of health remaining
+
+        # Positioning the health bar below the player
+        bar_x = self.rect.centerx - bar_width // 2
+        bar_y = self.rect.bottom + 5  # Just below the bottom of the player sprite
+
+        # Draw the red background (full bar)
+        pygame.draw.rect(screen, red, (bar_x, bar_y, bar_width, bar_height))
+        # Draw the green foreground (current health)
+        pygame.draw.rect(screen, green, (bar_x, bar_y, int(bar_width * health_ratio), bar_height))

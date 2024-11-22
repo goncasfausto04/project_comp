@@ -3,7 +3,8 @@ import pygame
 from player import Player
 from enemy import Enemy
 from shed import shed
-
+from powerup import *
+import random
 #endless loop that will keep the game running
 def game_loop():
     #create player from the game
@@ -51,7 +52,10 @@ def execute_game(player):
     # MAING GAME LOOP
 
     running = True
-
+    powerups_group = pygame.sprite.Group()  # Group to hold power-up sprites
+    spawn_timer = 0  # Timer to track power-up spawn opportunities
+    spawn_rate = 200  # Frames between spawn attempts (e.g., every ~3.3 seconds at 60 FPS)
+    spawn_chance = 100  # Percentage rarity of power-up (lower is rarer, e.g., 10% here)
     while running:
 
         # controlling the frame rate
@@ -80,7 +84,19 @@ def execute_game(player):
             enemy_cooldown = 2 * fps
 
         # updating the enemy cooldown
-        enemy_cooldown -= 1            
+        enemy_cooldown -= 1
+
+        spawn_timer += 1  # Increment spawn timer
+        if spawn_timer >= spawn_rate:
+            # Spawn power-up if chance allows
+            if random.randint(1, spawn_chance) <= 10:  # 10% chance to spawn
+                x = random.randint(50, width - 50)
+                y = random.randint(50, height - 50)
+                powerup = PowerUp(x, y)
+                powerups_group.add(powerup)
+            spawn_timer = 0  # Reset spawn timer
+        if pygame.sprite.spritecollide(player, powerups_group, True):  # True removes power-up
+            player.activate_powerup()  # Activate invincibility for the player
 
         # updating positions and visuals
         #calling the .update() method of all the instances in the player group
@@ -94,9 +110,15 @@ def execute_game(player):
         bullets.update()
         enemies.update(player)
 
+        if player.powerup_active:  # If the player is invincible
+            collided_enemies = pygame.sprite.spritecollide(player, enemies, True)  # True removes enemy
+            for enemy in collided_enemies:
+                enemy.kill()  # Remove enemy on collision
+
         # drawing the player and enemies sprites on the screen
         player_group.draw(screen)
         enemies.draw(screen)
+        powerups_group.draw(screen)
 
 
         # drawing the bullets sprites
@@ -120,7 +142,7 @@ def execute_game(player):
                 # checking if the enemy is ripperino
                 if enemy.health <= 0:
                     enemy.kill()
-
+        player.draw_health_bar(screen)
         pygame.display.flip()
 
     # the main while 

@@ -3,6 +3,7 @@ import pygame
 import random
 import math
 
+
 class Enemy(pygame.sprite.Sprite):
 
     def __init__(self):
