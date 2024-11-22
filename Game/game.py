@@ -1,15 +1,28 @@
 from config import *
-import math
 import pygame
 from player import Player
 from enemy import Enemy
+from shed import shed
 
-def execute_game():
+#endless loop that will keep the game running
+def game_loop():
+    #create player from the game
+    player = Player()
+    #by default star game in main area
+    current_state = "main"
+
+    while True:
+        if current_state == "main":
+            current_state = execute_game(player)
+        elif current_state == "shed":
+            current_state = shed(player)
+
+def execute_game(player):
 
     #SETUP
 
     # setting up the background
-    background = pygame.image.load("GrassImageBackground.jpg")
+    background = pygame.image.load("ImageBackground.jpg")
     background = pygame.transform.scale(background, (width, height))
 
     # using the clock to control the time frame.
@@ -19,9 +32,8 @@ def execute_game():
     screen = pygame.display.set_mode(resolution)
     pygame.display.set_caption("Endless Wilderness Explorer")
 
-    #setting up the player
-    player = Player()
-    # creating an empty group for the player
+
+    # creating an empty group for the player received as input
     player_group = pygame.sprite.Group()
 
     # adding the player to the group
@@ -73,6 +85,10 @@ def execute_game():
         # updating positions and visuals
         #calling the .update() method of all the instances in the player group
         player_group.update()
+
+        #check if player moved off screen
+        if player.rect.right >= width:
+            return "shed" 
 
         # updating the bullets group
         bullets.update()

@@ -1,8 +1,9 @@
 from utils import under_construction
-from game import execute_game
+from game import game_loop
 import pygame
 from utils import * # no need to import pygame because the import is in utils
 from config import * # importing colors and the like
+
 
 def interface():
 
@@ -145,12 +146,8 @@ def credits_():
         #updating the display
         pygame.display.update()
 
-    
-
-
 def rules_():
     print("Displaying rules...")
 
-
 def wilderness_explorer():
-    execute_game()
+    game_loop()
