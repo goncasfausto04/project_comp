@@ -3,7 +3,7 @@ from game import game_loop
 import pygame
 from utils import * # no need to import pygame because the import is in utils
 from config import * # importing colors and the like
-
+import moviepy
 
 def interface():
 
@@ -23,6 +23,14 @@ def interface():
     rules_text = corbelfont.render('Rules', True, white)
     options_text = corbelfont.render('Options', True, white)
     title_text = comicsansfont.render('Computation_3 Project!', True, glowing_light_red)
+
+    #render music
+    pygame.mixer.music.load('mainmusic.mp3')
+    pygame.mixer.music.play(-1)
+    pygame.mixer.music.set_pos(5)
+
+
+
 
     #main loop
     while True:
