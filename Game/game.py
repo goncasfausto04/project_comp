@@ -6,11 +6,12 @@ from shed import shed
 from utils import *
 import os
 
-#endless loop that will keep the game running
+
+# endless loop that will keep the game running
 def game_loop():
-    #create player from the game
+    # create player from the game
     player = Player()
-    #by default star game in main area
+    # by default star game in main area
     current_state = "shed"
 
     while True:
@@ -19,10 +20,11 @@ def game_loop():
         elif current_state == "shed":
             current_state = shed(player)
 
+
 def execute_game(player):
     base_path = os.path.dirname(__file__)
     pygame.mixer.music.stop()
-    background_path = os.path.join(base_path, 'extras', 'ImageBackground.jpg')
+    background_path = os.path.join(base_path, "extras", "ImageBackground.jpg")
     background = pygame.image.load(background_path)
     background = pygame.transform.scale(background, resolution)
     clock = pygame.time.Clock()
@@ -46,7 +48,7 @@ def execute_game(player):
                 exit()
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 pause_game(screen, width, height)
-                
+
         # Update game logic
         screen.blit(background, (0, 0))
         player.shoot(bullets)

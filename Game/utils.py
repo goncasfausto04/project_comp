@@ -4,7 +4,6 @@ import os
 from config import dark_red, deep_black, resolution, white
 
 
-
 # Function to draw a stick figure with a construction hat
 def draw_stick_figure_with_hat(screen, x, y):
     # head
@@ -14,12 +13,20 @@ def draw_stick_figure_with_hat(screen, x, y):
     pygame.draw.line(screen, (255, 255, 255), (x, y + 20), (x, y + 60), 2)  # Body
 
     # arms
-    pygame.draw.line(screen, (255, 255, 255), (x, y + 40), (x - 30, y + 40), 2)  # Left arm
-    pygame.draw.line(screen, (255, 255, 255), (x, y + 40), (x + 30, y + 40), 2)  # Right arm
+    pygame.draw.line(
+        screen, (255, 255, 255), (x, y + 40), (x - 30, y + 40), 2
+    )  # Left arm
+    pygame.draw.line(
+        screen, (255, 255, 255), (x, y + 40), (x + 30, y + 40), 2
+    )  # Right arm
 
     # legs
-    pygame.draw.line(screen, (255, 255, 255), (x, y + 60), (x - 20, y + 100), 2)  # Left leg
-    pygame.draw.line(screen, (255, 255, 255), (x, y + 60), (x + 20, y + 100), 2)  # Right leg
+    pygame.draw.line(
+        screen, (255, 255, 255), (x, y + 60), (x - 20, y + 100), 2
+    )  # Left leg
+    pygame.draw.line(
+        screen, (255, 255, 255), (x, y + 60), (x + 20, y + 100), 2
+    )  # Right leg
 
     # hat
     hat_color = (255, 215, 0)
@@ -38,12 +45,20 @@ def draw_normal_stick_figure(screen, x, y):
     pygame.draw.line(screen, (255, 255, 255), (x, y + 20), (x, y + 60), 2)  # Body
 
     # arms
-    pygame.draw.line(screen, (255, 255, 255), (x, y + 40), (x - 30, y + 40), 2)  # Left arm
-    pygame.draw.line(screen, (255, 255, 255), (x, y + 40), (x + 30, y + 40), 2)  # Right arm
+    pygame.draw.line(
+        screen, (255, 255, 255), (x, y + 40), (x - 30, y + 40), 2
+    )  # Left arm
+    pygame.draw.line(
+        screen, (255, 255, 255), (x, y + 40), (x + 30, y + 40), 2
+    )  # Right arm
 
     # legs
-    pygame.draw.line(screen, (255, 255, 255), (x, y + 60), (x - 20, y + 100), 2)  # Left leg
-    pygame.draw.line(screen, (255, 255, 255), (x, y + 60), (x + 20, y + 100), 2)  # Right leg
+    pygame.draw.line(
+        screen, (255, 255, 255), (x, y + 60), (x - 20, y + 100), 2
+    )  # Left leg
+    pygame.draw.line(
+        screen, (255, 255, 255), (x, y + 60), (x + 20, y + 100), 2
+    )  # Right leg
 
 
 def under_construction():
@@ -52,12 +67,12 @@ def under_construction():
     screen = pygame.display.set_mode(resolution)
 
     # setting up the fonts
-    corbelfont = pygame.font.SysFont('Corbel', 50)
-    conversationfont = pygame.font.SysFont('Ariel', 25)
+    corbelfont = pygame.font.SysFont("Corbel", 50)
+    conversationfont = pygame.font.SysFont("Ariel", 25)
 
     # setting my texts:
-    back_text = corbelfont.render('Back', True, white)
-    construction_text = corbelfont.render('Under Construction', True, white)
+    back_text = corbelfont.render("Back", True, white)
+    construction_text = corbelfont.render("Under Construction", True, white)
     first_speech = conversationfont.render("Can we fix it?", True, white)
     second_speech = conversationfont.render("Probably not...", True, white)
 
@@ -88,7 +103,7 @@ def under_construction():
         screen.fill(deep_black)
 
         # displaying the main UNDER CONSTRUCTION text
-        construction_rect = construction_text.get_rect(center=(760//2, 300))
+        construction_rect = construction_text.get_rect(center=(760 // 2, 300))
         screen.blit(construction_text, construction_rect)
 
         # drawing the back button
@@ -106,11 +121,12 @@ def under_construction():
         # finally, as always, updating the screen
         pygame.display.update()
 
+
 def pause_game(screen, width, height):
     """Pauses the game and displays a 'Paused' message."""
     # Set up the font
-    font_path = os.path.join(base_path, 'extras', 'Pixeboy.ttf')
-    font = pygame.font.Font(font_path , 100)
+    font_path = os.path.join(base_path, "extras", "Pixeboy.ttf")
+    font = pygame.font.Font(font_path, 100)
     text = font.render("Paused", True, (255, 255, 255))
     text_rect = text.get_rect(center=(width // 2, height // 2))
 
@@ -118,10 +134,11 @@ def pause_game(screen, width, height):
     screen.blit(text, text_rect)
     pygame.display.flip()
 
-    #Infinite loop until the user unpauses
+    # Infinite loop until the user unpauses
     while True:
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 return
-            
+
+
 base_path = os.path.dirname(__file__)

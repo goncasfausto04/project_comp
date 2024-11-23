@@ -6,7 +6,7 @@ import os
 
 def shed(player):
 
-    background_path = os.path.join(base_path, 'extras', 'Casino.png')
+    background_path = os.path.join(base_path, "extras", "Casino.png")
     background = pygame.image.load(background_path)
     background = pygame.transform.scale(background, resolution)
     screen = pygame.display.set_mode(resolution)
@@ -19,8 +19,8 @@ def shed(player):
     special_area = pygame.Rect(530, 30, 140, 140)
     running = True
 
-    #stop music
-    pygame.mixer.music.stop()	
+    # stop music
+    pygame.mixer.music.stop()
 
     while running:
         clock.tick(fps)
@@ -46,4 +46,3 @@ def shed(player):
 
         player_group.draw(screen)
         pygame.display.flip()
-
