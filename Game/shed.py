@@ -1,22 +1,23 @@
 import pygame
 from config import *
 from utils import *
+import os
 
 def shed(player):
     # setting up the background and the screen
-    background = pygame.image.load("Casino2.png")
-
+    background_path = os.path.join(base_path, "extras", "Casino.png")
     #scalling the background image into our selected resolution
-    background = pygame.transform.scale(background, resolution)
+    background = pygame.image.load(background_path)
 
     # setting up the screen
+    background = pygame.transform.scale(background, resolution)
     screen = pygame.display.set_mode(resolution)
 
     # setting up the clock for fps
     clock = pygame.time.Clock()
 
     # since i left the previuos area from the right, here i begin on the left
-    player.rect.left = 0
+    player.rect.left = 10
 
     #creating the player group and adding the player to it
     player_group = pygame.sprite.Group()
@@ -31,6 +32,9 @@ def shed(player):
 
     running = True
 
+    # stop music
+    pygame.mixer.music.stop()
+
     while running:
         clock.tick(fps)
         #displaying the farm background on the entirety of the screen
@@ -40,6 +44,9 @@ def shed(player):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
+                exit()
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                pause_game(screen, width, height)
 
         player_group.update()
 

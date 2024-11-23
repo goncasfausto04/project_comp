@@ -4,11 +4,12 @@ import pygame
 import math
 from bullet import Bullet
 
+
 # making Player a child of the Sprite class
 class Player(pygame.sprite.Sprite):
 
     def __init__(self):
-        #calling the mother class init
+        # calling the mother class init
         super().__init__()
 
         # VISUAL VARIABLES
