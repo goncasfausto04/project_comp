@@ -48,6 +48,10 @@ def execute_game(player):
                 exit()
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 pause_game(screen, width, height)
+            
+        # Handle changing bullet type (check for 1, 2, or 3 key press)
+        keys = pygame.key.get_pressed()
+        player.change_bullet_type(keys)
 
         # Update game logic
         screen.blit(background, (0, 0))
