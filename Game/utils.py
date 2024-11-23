@@ -104,3 +104,20 @@ def under_construction():
 
         # finally, as always, updating the screen
         pygame.display.update()
+
+def pause_game(screen, width, height):
+    """Pauses the game and displays a 'Paused' message."""
+    # Set up the font
+    font = pygame.font.Font('Pixeboy.ttf' , 100)
+    text = font.render("Paused", True, (255, 255, 255))
+    text_rect = text.get_rect(center=(width // 2, height // 2))
+
+    # Display the 'Paused' message
+    screen.blit(text, text_rect)
+    pygame.display.flip()
+
+    #Infinite loop until the user unpauses
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                return

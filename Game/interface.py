@@ -15,19 +15,27 @@ def interface():
     #setting the font
     corbelfont = pygame.font.SysFont('Corbel', 50) 
     comicsansfont = pygame.font.SysFont('Comic Sans MS', 50)
+    blockyfont = pygame.font.Font('Pixeboy.ttf' , 50)
+    blockyfontsmall = pygame.font.Font('Pixeboy.ttf' , 25)
+
 
     #rendering the text
-    wilderness_text = corbelfont.render('Wilderness Explorer', True, white)
-    quit_text = corbelfont.render('Quit', True, white)
-    credits_text = corbelfont.render('Credits', True, white)
-    rules_text = corbelfont.render('Rules', True, white)
-    options_text = corbelfont.render('Options', True, white)
-    title_text = comicsansfont.render('Computation_3 Project!', True, glowing_light_red)
+    wilderness_text = blockyfont.render('Stand or Slay', True, white)
+    quit_text = blockyfontsmall.render('Quit', True, white)
+    credits_text = blockyfontsmall.render('Credits', True, white)
+    rules_text = blockyfontsmall.render('Rules', True, white)
+    options_text = blockyfontsmall.render('Options', True, white)
+    title_text = blockyfont.render('Computation_3 Project!', True, glowing_light_red)
 
     #render music
     pygame.mixer.music.load('mainmusic.mp3')
     pygame.mixer.music.play(-1)
     pygame.mixer.music.set_pos(5)
+
+    #render background
+    background = pygame.image.load('menubg.jpg')
+    background = pygame.transform.scale(background, resolution)
+
 
 
 
@@ -67,10 +75,16 @@ def interface():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if 90 <= mouse[0] <= 230 and 480 <= mouse[1] <= 540:
                     under_construction()
+            
+            #escape key to return to main menu
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    return
+
 
                     
-        #fill the screen with black
-        screen.fill(deep_black)
+        #fill the screen with background
+        screen.blit(background, (0,0))
 
         #wilderess explorer button
         pygame.draw.rect(screen, dark_red, [90, 240, 540, 60])
@@ -135,7 +149,7 @@ def credits_():
             # checking if the user clicked the quit button
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if 450 <= mouse[0] <= 590 and 600 <= mouse[1] <= 660:
-                    interface()
+                    return
 
         # displaying my screen
         screen.fill(deep_black)
