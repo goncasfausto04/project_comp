@@ -3,7 +3,7 @@ from game import game_loop
 import pygame
 from utils import * # no need to import pygame because the import is in utils
 from config import * # importing colors and the like
-import moviepy
+import os
 
 def interface():
 
@@ -15,8 +15,9 @@ def interface():
     #setting the font
     corbelfont = pygame.font.SysFont('Corbel', 50) 
     comicsansfont = pygame.font.SysFont('Comic Sans MS', 50)
-    blockyfont = pygame.font.Font('Pixeboy.ttf' , 50)
-    blockyfontsmall = pygame.font.Font('Pixeboy.ttf' , 25)
+    blockyfontpath = os.path.join(base_path,"extras" ,'Pixeboy.ttf')
+    blockyfont = pygame.font.Font(blockyfontpath , 50)
+    blockyfontsmall = pygame.font.Font( blockyfontpath, 25)
 
 
     #rendering the text
@@ -28,12 +29,14 @@ def interface():
     title_text = blockyfont.render('Computation_3 Project!', True, glowing_light_red)
 
     #render music
-    pygame.mixer.music.load('mainmusic.mp3')
+    music_path = os.path.join(base_path, 'extras', 'mainmusic.mp3')
+    pygame.mixer.music.load(music_path)
     pygame.mixer.music.play(-1)
     pygame.mixer.music.set_pos(5)
 
     #render background
-    background = pygame.image.load('menubg.jpg')
+    background_path = os.path.join(base_path, 'extras', 'menubg.jpg')
+    background = pygame.image.load(background_path)
     background = pygame.transform.scale(background, resolution)
 
 

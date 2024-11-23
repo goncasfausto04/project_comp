@@ -1,4 +1,5 @@
 import pygame
+import os
 
 from config import dark_red, deep_black, resolution, white
 
@@ -108,7 +109,8 @@ def under_construction():
 def pause_game(screen, width, height):
     """Pauses the game and displays a 'Paused' message."""
     # Set up the font
-    font = pygame.font.Font('Pixeboy.ttf' , 100)
+    font_path = os.path.join(base_path, 'extras', 'Pixeboy.ttf')
+    font = pygame.font.Font(font_path , 100)
     text = font.render("Paused", True, (255, 255, 255))
     text_rect = text.get_rect(center=(width // 2, height // 2))
 
@@ -121,3 +123,5 @@ def pause_game(screen, width, height):
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 return
+            
+base_path = os.path.dirname(__file__)

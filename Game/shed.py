@@ -1,19 +1,26 @@
 import pygame
 from config import *
 from utils import *
+import os
+
 
 def shed(player):
-    background = pygame.image.load("Casino2.png")
+
+    background_path = os.path.join(base_path, 'extras', 'Casino.png')
+    background = pygame.image.load(background_path)
     background = pygame.transform.scale(background, resolution)
     screen = pygame.display.set_mode(resolution)
     clock = pygame.time.Clock()
 
-    player.rect.left = 0
+    player.rect.left = 10
     player_group = pygame.sprite.Group()
     player_group.add(player)
 
     special_area = pygame.Rect(530, 30, 140, 140)
     running = True
+
+    #stop music
+    pygame.mixer.music.stop()	
 
     while running:
         clock.tick(fps)

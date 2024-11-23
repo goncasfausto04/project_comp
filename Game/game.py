@@ -4,13 +4,14 @@ from player import Player
 from enemy import Enemy
 from shed import shed
 from utils import *
+import os
 
 #endless loop that will keep the game running
 def game_loop():
     #create player from the game
     player = Player()
     #by default star game in main area
-    current_state = "main"
+    current_state = "shed"
 
     while True:
         if current_state == "main":
@@ -19,8 +20,10 @@ def game_loop():
             current_state = shed(player)
 
 def execute_game(player):
+    base_path = os.path.dirname(__file__)
     pygame.mixer.music.stop()
-    background = pygame.image.load("ImageBackground.jpg")
+    background_path = os.path.join(base_path, 'extras', 'ImageBackground.jpg')
+    background = pygame.image.load(background_path)
     background = pygame.transform.scale(background, resolution)
     clock = pygame.time.Clock()
     screen = pygame.display.set_mode(resolution)
