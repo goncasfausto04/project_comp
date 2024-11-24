@@ -14,7 +14,7 @@ cute_purple = (128, 0, 128)
 green_ish = (0, 215, 10)
 
 # SCREEN RESOLUTION
-resolution = (720, 720)
+resolution = (1280, 720)
 width, height = resolution[0], resolution[1]
 fps = 60
 
@@ -22,3 +22,9 @@ fps = 60
 player_size = (50, 100)
 enemy_size = (40, 40)
 bullet_size = 10
+
+#accepeted resolutions 16:9
+resolution_list = [(854,480),(1280, 720), (1366, 768), (1600, 900), (1920, 1080)]
+
+#music volume
+music_volume = 0.025

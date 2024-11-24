@@ -16,7 +16,14 @@ def shed(player):
     player_group = pygame.sprite.Group()
     player_group.add(player)
 
-    special_area = pygame.Rect(530, 30, 140, 140)
+    # Define the special area dynamically based on resolution
+    special_area = pygame.Rect(
+    width - (width * 0.109) - (width * 0.02),  # x-coordinate (right margin of 2% from the edge)
+    height * 0.042,                           # y-coordinate (4.2% of screen height)
+    width * 0.109,                            # width (10.9% of screen width)
+    height * 0.194                            # height (19.4% of screen height)
+)
+
     running = True
 
     # stop music
@@ -37,9 +44,9 @@ def shed(player):
 
         if special_area.colliderect(player.rect):
             under_construction()
-            player.rect.top = 200
-            player.rect.left = 560
-
+            player.rect.top = height * 0.28  # Set top position to 28% of screen height
+            player.rect.left = width * 0.78 
+        
         if player.rect.left <= 0:
             player.rect.left = width - player.rect.width
             return "main"

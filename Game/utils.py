@@ -139,6 +139,10 @@ def pause_game(screen, width, height):
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 return
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
 
 
 base_path = os.path.dirname(__file__)
+
