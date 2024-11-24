@@ -4,6 +4,7 @@
 dark_red = (138, 0, 0)  # Dark red for buttons
 deep_black = (19, 20, 20)  # Almost black for background
 grey = (59, 60, 60)  # Dark grey for alternate buttons
+light_grey = (100, 100, 100)  # Light grey for text
 white = (254, 255, 255)  # White for readable text
 glowing_light_red = (239, 128, 128)  # Light red for brighter text
 blue = (0, 0, 255)
@@ -12,6 +13,7 @@ yellow = (255, 255, 0)
 red = (150, 0, 24)
 cute_purple = (128, 0, 128)
 green_ish = (0, 215, 10)
+
 
 # SCREEN RESOLUTION
 resolution = (1280, 720)

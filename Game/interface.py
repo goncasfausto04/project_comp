@@ -85,36 +85,38 @@ def interface():
         # Fill the screen with background
         screen.blit(background, (0, 0))
 
-        # Draw buttons
-        def draw_button(color, x_frac, y_frac, w_frac, h_frac, text, font):
+        # Draw buttons with hover effect
+        def draw_button(color, hover_color, x_frac, y_frac, w_frac, h_frac, text, font):
             x = width * x_frac
             y = height * y_frac
             w = width * w_frac
             h = height * h_frac
-            pygame.draw.rect(screen, color, [x, y, w, h])
+            current_color = hover_color if button_clicked(x_frac, y_frac, w_frac, h_frac) else color
+            pygame.draw.rect(screen, current_color, [x, y, w, h])
             text_rect = text.get_rect(center=(x + w // 2, y + h // 2))
             screen.blit(text, text_rect)
 
         # Wilderness game button
-        draw_button(dark_red, 0.125, 0.333, 0.75, 0.083, wilderness_text, blockyfont)
+        draw_button(dark_red, glowing_light_red, 0.125, 0.333, 0.75, 0.083, wilderness_text, blockyfont)
 
         # Rules button
-        draw_button(grey, 0.125, 0.667, 0.125, 0.083, rules_text, blockyfontsmall)
+        draw_button(grey, light_grey, 0.125, 0.667, 0.125, 0.083, rules_text, blockyfontsmall)
 
         # Quit button
-        draw_button(grey, 0.625, 0.833, 0.125, 0.083, quit_text, blockyfontsmall)
+        draw_button(grey, light_grey, 0.625, 0.833, 0.125, 0.083, quit_text, blockyfontsmall)
 
         # Options button
-        draw_button(grey, 0.125, 0.833, 0.125, 0.083, options_text, blockyfontsmall)
+        draw_button(grey, light_grey, 0.125, 0.833, 0.125, 0.083, options_text, blockyfontsmall)
 
         # Credits button
-        draw_button(grey, 0.625, 0.667, 0.125, 0.083, credits_text, blockyfontsmall)
+        draw_button(grey, light_grey, 0.625, 0.667, 0.125, 0.083, credits_text, blockyfontsmall)
 
         # Title text
         screen.blit(title_text, (width * 0.05, height * 0.02))
 
         # Update the screen
         pygame.display.update()
+
 
 
 def credits_():
