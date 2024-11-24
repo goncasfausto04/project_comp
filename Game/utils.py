@@ -120,8 +120,7 @@ def under_construction():
 
         # finally, as always, updating the screen
         pygame.display.update()
-
-
+    
 def pause_game(screen, width, height):
     """Pauses the game and displays a 'Paused' message."""
     # Set up the font

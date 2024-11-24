@@ -156,6 +156,7 @@ def credits_():
         pygame.display.update()
 
 
+
 def wilderness_explorer():
     game_loop()
 
