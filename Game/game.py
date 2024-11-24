@@ -1,8 +1,9 @@
 from config import *
 import pygame
 from player import Player
-from enemy import Enemy
+from enemy import *
 from shed import shed
+import random
 
 #endless loop that will keep the game running
 def game_loop():
@@ -68,16 +69,27 @@ def execute_game(player):
         #automatically shoot bullets from the player
         player.shoot(bullets)
 
-        # spawning enemies every two seconds
-        if enemy_cooldown <= 0:
-            # creating an enemy... would be so cool if there were more than one type... oh well...
-            enemy = Enemy()
+        for enemy in enemies:
+            enemy.draw(screen)  # Call the draw method for each enemy
 
-            # adding the enemy to the group
-            enemies.add(enemy)
-            
-            # in bullets, we use the fps to spawn every second. Here we double that, to spawn every two seconds
+        if enemy_cooldown <= 0:
+            # Define enemy types and their weights
+            enemy_types = [initialEnemy, fastEnemy, TankMonster, RangedMonster]
+            spawn_weights = [50, 20, 15, 15]  # Probabilities for each type (adjust as needed)
+
+            # Randomly select an enemy type based on weighted probability
+            enemy_type = random.choices(enemy_types, weights=spawn_weights, k=1)[0]
+
+            # Create an instance of the selected enemy
+            new_enemy = enemy_type()
+
+            # Add the enemy to the group
+            enemies.add(new_enemy)
+
+            # Reset the cooldown
             enemy_cooldown = 2 * fps
+        # Update the enemy cooldown
+        enemy_cooldown -= 1
 
         # updating the enemy cooldown
         enemy_cooldown -= 1            

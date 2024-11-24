@@ -7,10 +7,12 @@ class Enemy(pygame.sprite.Sprite):
 
     def __init__(self):
         super().__init__()
+        self.health = 10
+        self.speed = random.randint(3, 4)
+        self.damage = 15
+        self.color = None
         # creating a surface for the enemy
         self.image = pygame.Surface(enemy_size)
-        # filling the surface with chosen enemy color
-        self.image.fill(green_ish)
         # getting rectangle for positioning
         self.rect = self.image.get_rect()
 
@@ -19,11 +21,10 @@ class Enemy(pygame.sprite.Sprite):
         self.rect.x = random.randint(0, width - enemy_size[0])
         self.rect.y = random.randint(0, height - enemy_size[-1])
 
-        # setting a random initial speed for the enemy booo maybe different enemy types would be cool
-        self.speed = random.randint(2, 4)
-        #setting the health bar
-        self.health = 10
-
+    def draw(self, screen):
+        # Draw the enemy using its color attribute
+        self.image.fill(self.color)
+        screen.blit(self.image, self.rect)
     def update(self, player):
 
         """
@@ -42,5 +43,36 @@ class Enemy(pygame.sprite.Sprite):
         # moving the enemy towards the player --> like bullet
         self.rect.x += int(self.speed * math.cos(direction))
         self.rect.y += int(self.speed * math.sin(direction))
+
+
+
+class initialEnemy(Enemy):
+            def __init__(self):
+                super().__init__()
+                self.health = 5
+                self.speed = 2
+                self.damage = 10
+                self.color = (0, 255, 0)  # Green
+class fastEnemy(Enemy):
+            def __init__(self):
+                super().__init__()
+                self.health = 10
+                self.speed = random.randint(3, 4)
+                self.damage = 15
+                self.color = (255, 0, 0)  # Red
+class TankMonster(Enemy):
+            def __init__(self):
+                super().__init__()
+                self.health = 30
+                self.speed = 2
+                self.damage = 10
+                self.color = (0, 0, 255)  # Blue
+class RangedMonster(Enemy):
+            def __init__(self):
+                super().__init__()
+                self.health = 20
+                self.speed = 0
+                self.damage = 15
+                self.color = (255, 255, 0)
 
 
