@@ -20,7 +20,7 @@ def interface():
     blockyfontsmall = pygame.font.Font(blockyfontpath, int(height * 0.035))
 
     # Render the text
-    wilderness_text = blockyfont.render("Stand or Slay", True, white)
+    wilderness_text = blockyfont.render("Hit Or Stand", True, white)
     quit_text = blockyfontsmall.render("Quit", True, white)
     credits_text = blockyfontsmall.render("Credits", True, white)
     rules_text = blockyfontsmall.render("Rules", True, white)
