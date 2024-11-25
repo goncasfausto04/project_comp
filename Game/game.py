@@ -58,7 +58,7 @@ def execute_game(player, pet):
     kills = 0  # Tracks the number of kills
     font = pygame.font.SysFont('Arial', 30)  # Font for rendering text
 
-    damage_cooldown = 60  # Cooldown in frames (1 second at 60 FPS)
+    damage_cooldown = 35  # Cooldown in frames (1 second at 60 FPS (if it was 60))
     current_cooldown = 0  # Tracks the remaining cooldown time    
     
     while running:
@@ -69,6 +69,7 @@ def execute_game(player, pet):
         minutes = total_seconds // 60  # Calculate minutes
         seconds = total_seconds % 60  # Calculate seconds
         timer_text = font.render(f"Time: {minutes:02}:{seconds:02}", True, white)  # Format MM:SS
+
         # Handle events
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -91,11 +92,11 @@ def execute_game(player, pet):
         for enemy in enemies:
             enemy.draw(screen)  # Call the draw method for each enemy
 
-            # Detect collision and apply damage
+        # Detect collision and apply damage
       
         for enemy in enemies:
             enemy.move_towards_player(player)  # Move towards the player
-            enemy.handle_collision_with_player(player)  # Prevent overlap
+            # enemy.handle_collision_with_player(player)  # Prevent overlap
 
         collided_enemies = pygame.sprite.spritecollide(player, enemies, False)
 
@@ -103,6 +104,19 @@ def execute_game(player, pet):
             # Apply damage once for all collisions in the frame
             total_damage = sum(enemy.damage for enemy in collided_enemies)
             player.health -= total_damage
+            pet.health -= total_damage/3
+            current_cooldown = damage_cooldown  # Reset the cooldown
+
+            # Inimigos morrem instantaneamente ao colidir com o jogador
+            for enemy in collided_enemies:
+                enemy.kill()
+
+        collided_enemies = pygame.sprite.spritecollide(pet, enemies, False)
+
+        if collided_enemies and current_cooldown <= 0:
+            # Apply damage once for all collisions in the frame
+            total_damage = sum(enemy.damage for enemy in collided_enemies)
+            pet.health -= total_damage
             current_cooldown = damage_cooldown  # Reset the cooldown
 
         if current_cooldown > 0:
@@ -202,6 +216,7 @@ def execute_game(player, pet):
         for bullet in bullets:
             bullet.draw(screen)
         player.draw_health_bar(screen)
+        pet.draw_health_bar(screen)
         timer_text = font.render(f"Time: {minutes:02}:{seconds:02}", True, white)
         kills_text = font.render(f"Kills: {kills}", True, white)
         screen.blit(timer_text, (10, 10))  # Timer at top-left corner
@@ -209,3 +224,8 @@ def execute_game(player, pet):
         pygame.display.flip()
 
         pygame.display.flip()
+
+
+
+# Se o enemy for contra ti, ele n pode levar 1 de dano (como se fosse uma bala), ele morre instantaneamente
+# Em vez de power ups, podiamos por a vida do pet a regenerar um x valor de y em y tempo
