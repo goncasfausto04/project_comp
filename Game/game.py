@@ -57,6 +57,10 @@ def execute_game(player, pet):
     game_time_frames = 0  # Tracks elapsed time in seconds
     kills = 0  # Tracks the number of kills
     font = pygame.font.SysFont('Arial', 30)  # Font for rendering text
+
+    damage_cooldown = 60  # Cooldown in frames (1 second at 60 FPS)
+    current_cooldown = 0  # Tracks the remaining cooldown time    
+    
     while running:
         clock.tick(fps)
 
@@ -88,27 +92,27 @@ def execute_game(player, pet):
             enemy.draw(screen)  # Call the draw method for each enemy
 
             # Detect collision and apply damage
-        collided_enemies = pygame.sprite.spritecollide(player, enemies, False)
-        for enemy in collided_enemies:
-            player.health -= enemy.damage
-
+      
         for enemy in enemies:
             enemy.move_towards_player(player)  # Move towards the player
             enemy.handle_collision_with_player(player)  # Prevent overlap
 
-            # Player turn red for Collision
-        if collided_enemies:
-            player.image.fill((255, 0, 0))  # Vermelho ao tomar dano
+        collided_enemies = pygame.sprite.spritecollide(player, enemies, False)
+
+        if collided_enemies and current_cooldown <= 0:
+            # Apply damage once for all collisions in the frame
+            total_damage = sum(enemy.damage for enemy in collided_enemies)
+            player.health -= total_damage
+            current_cooldown = damage_cooldown  # Reset the cooldown
+
+        if current_cooldown > 0:
+            current_cooldown -= 1  # Reduce cooldown by 1 each frame
+
+        # Update player color to indicate damage state
+        if current_cooldown > 0:  # Player is in cooldown (damaged recently)
+            player.image.fill((255, 0, 0))  # Red
         else:
-            player.image.fill((0, 255, 0))  # Voltar ao verde
-
-
-        damage_cooldown = 30
-        if collided_enemies and damage_cooldown <= 0:
-            player.health -= sum(enemy.damage for enemy in collided_enemies)
-            damage_cooldown = 30  # Restart  cooldown
-
-        damage_cooldown -= 1  # Diminui o cooldown a cada frame
+            player.image.fill((0, 255, 0))  # Green
 
         if enemy_cooldown <= 0:
             # Define enemy types and their weights
