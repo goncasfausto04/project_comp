@@ -2,12 +2,11 @@ import pygame
 from config import *
 from utils import *
 import os
-from shop import shop
 
-def shed(player, pet):
+def shop(player, pet):
     # setting up the background and the screen
-    background_path = os.path.join(base_path, "extras", "Casino.png")
-    #scalling the background image into our selected resolution
+    background_path = os.path.join(base_path, "extras", "loja.jpeg")
+        #scalling the background image into our selected resolution
     background = pygame.image.load(background_path)
 
     # setting up the screen
@@ -56,24 +55,7 @@ def shed(player, pet):
         player_group.update()
         pet_group.update()
 
-        # Check if the player collides with the special area
-        if special_area.colliderect(player.rect):
-            player.rect.top = height * 0.28  # Set top position to 28% of screen height
-            player.rect.left = width * 0.78  # Set the player position
-
-            # Make sure the pet follows the player
-            pet.rect.top = player.rect.top
-            pet.rect.left = player.rect.left + 50  # Position pet relative to the player
-            
-            # Go to the shop area (example of what happens here)
-            return shop(player, pet)
-        
-        if player.rect.left <= 0:
-            player.rect.left = width - player.rect.width
-            pet.rect.left = player.rect.left + 50  # Pet follows the player
-            return "main"
-
-        # Draw the player and the pet
+                # Draw the player and the pet
         player_group.draw(screen)
         pet_group.draw(screen)
 

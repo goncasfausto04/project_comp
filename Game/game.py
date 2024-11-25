@@ -8,6 +8,7 @@ from utils import *
 import os
 from powerup import *
 import random
+from shop import *
 
 
 #endless loop that will keep the game running
@@ -25,7 +26,9 @@ def game_loop():
         if current_state == "main":
             current_state = execute_game(player, pet)
         elif current_state == "shed":
-            current_state = shed(player)
+            current_state = shed(player, pet)
+        elif current_state == "shop":
+            current_state = shop(player, pet)
 
 
 def execute_game(player, pet):
@@ -229,3 +232,4 @@ def execute_game(player, pet):
 
 # Se o enemy for contra ti, ele n pode levar 1 de dano (como se fosse uma bala), ele morre instantaneamente
 # Em vez de power ups, podiamos por a vida do pet a regenerar um x valor de y em y tempo
+# o Character passa de roxo a verde quando o player sai da shed e entra no game
