@@ -21,7 +21,7 @@ class Player(pygame.sprite.Sprite):
 
         # GAMEPLAY VARIABLES
         self.speed = 5
-        self.health = 100
+        self.health = 50
         self.bullet_cooldown = 0
 
     def update(self):

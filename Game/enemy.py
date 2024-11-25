@@ -28,21 +28,38 @@ class Enemy(pygame.sprite.Sprite):
     def update(self, player):
 
         """
-
         receiving the player as input so that we can assure the enemies have the players' direction
-
         """
         
-        #determining the direction (in radians) of the movement based on the player's position
-        dx = player.rect.x - self.rect.x
-        dy = player.rect.y - self.rect.y
-
+        # determining the direction (in radians) of the movement based on the player's position
+        #dx = player.rect.x - self.rect.x
+        #dy = player.rect.y - self.rect.y
         # getting the direction in radians
-        direction = math.atan2(dy, dx)
+        #direction = math.atan2(dy, dx)
 
         # moving the enemy towards the player --> like bullet
-        self.rect.x += int(self.speed * math.cos(direction))
-        self.rect.y += int(self.speed * math.sin(direction))
+        #self.rect.x += int(self.speed * math.cos(direction))
+        #self.rect.y += int(self.speed * math.sin(direction))
+
+    def move_towards_player(self, player):
+        # Calculate direction vector towards the player
+        dx = player.rect.centerx - self.rect.centerx
+        dy = player.rect.centery - self.rect.centery
+        distance = max(1, (dx ** 2 + dy ** 2) ** 0.5)  # Avoid division by zero
+
+        # Normalize the direction and move towards the player
+        self.rect.x += int(self.speed * dx / distance)
+        self.rect.y += int(self.speed * dy / distance)
+    def handle_collision_with_player(self, player):
+        if self.rect.colliderect(player.rect):
+            # Stop enemy from moving inside the player by "pushing it back"
+            dx = player.rect.centerx - self.rect.centerx
+            dy = player.rect.centery - self.rect.centery
+            distance = max(1, (dx ** 2 + dy ** 2) ** 0.5)
+
+            # Push the enemy away by reversing the movement
+            self.rect.x -= int(self.speed * dx / distance)
+            self.rect.y -= int(self.speed * dy / distance)
 
 
 

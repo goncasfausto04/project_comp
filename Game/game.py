@@ -65,12 +65,36 @@ def execute_game(player):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
+
         
         #automatically shoot bullets from the player
         player.shoot(bullets)
 
         for enemy in enemies:
             enemy.draw(screen)  # Call the draw method for each enemy
+
+            # Detect collision and apply damage
+        collided_enemies = pygame.sprite.spritecollide(player, enemies, False)
+        for enemy in collided_enemies:
+            player.health -= enemy.damage
+
+        for enemy in enemies:
+            enemy.move_towards_player(player)  # Move towards the player
+            enemy.handle_collision_with_player(player)  # Prevent overlap
+
+            # Player turn red for Collision
+        if collided_enemies:
+            player.image.fill((255, 0, 0))  # Vermelho ao tomar dano
+        else:
+            player.image.fill((0, 255, 0))  # Voltar ao verde
+
+
+        damage_cooldown = 30
+        if collided_enemies and damage_cooldown <= 0:
+            player.health -= sum(enemy.damage for enemy in collided_enemies)
+            damage_cooldown = 30  # Restart  cooldown
+
+        damage_cooldown -= 1  # Diminui o cooldown a cada frame
 
         if enemy_cooldown <= 0:
             # Define enemy types and their weights
@@ -132,6 +156,7 @@ def execute_game(player):
                 # checking if the enemy is ripperino
                 if enemy.health <= 0:
                     enemy.kill()
+
 
         pygame.display.flip()
 
