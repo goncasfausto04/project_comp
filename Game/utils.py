@@ -192,7 +192,9 @@ def play_video(video_path, resolution):
     cap.release()
     pygame.quit()
 
+
 base_path = os.path.dirname(__file__)
 video_path = os.path.join(base_path, "extras", "intro.mp4")
+
 
 

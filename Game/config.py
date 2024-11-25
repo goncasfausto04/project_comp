@@ -1,4 +1,7 @@
 # Config file used to set global variables and other settings
+import os
+
+base_path = os.path.dirname(__file__)
 
 # COLORS
 dark_red = (138, 0, 0)  # Dark red for buttons
@@ -29,3 +32,11 @@ bullet_size = 10
 #music volume
 music_volume = 0.025
 pet_size = (38, 38)
+
+#soundtrack list
+soundtrack1_path = os.path.join(base_path, "extras", "soundtrack1.mp3")
+soundtrack2_path = os.path.join(base_path, "extras", "soundtrack2.mp3")
+soundtrack3_path = os.path.join(base_path, "extras", "soundtrack3.mp3")
+soundtrack4_path = os.path.join(base_path, "extras", "soundtrack4.mp3")
+
+soundtrack = [soundtrack1_path, soundtrack2_path, soundtrack3_path, soundtrack4_path]

@@ -1,4 +1,3 @@
-from config import *
 import pygame
 from player import Player
 from enemy import *
@@ -12,14 +11,16 @@ import random
 
 #endless loop that will keep the game running
 def game_loop():
-    # create player from the game
+    # Initialize player and other game components
     player = Player()
-    # Create the bullets group
     bullets = pygame.sprite.Group()
-    # Create the pet instance, passing the player and the bullets group
     pet = Pet(player, bullets)  # Pass bullets group to the Pet
-    # by default star game in main area
     current_state = "shed"
+    
+    # Play soundtrack
+    pygame.mixer.music.load(random.choice(soundtrack))  # Load a random soundtrack
+    pygame.mixer.music.set_volume(music_volume)  # Set the desired volume
+    pygame.mixer.music.play(-1)  # Loop the soundtrack indefinitely
 
     while True:
         if current_state == "main":
@@ -28,9 +29,9 @@ def game_loop():
             current_state = shed(player)
 
 
+
 def execute_game(player, pet):
     base_path = os.path.dirname(__file__)
-    pygame.mixer.music.stop()
     background_path = os.path.join(base_path, "extras", "ImageBackground.jpg")
     background = pygame.image.load(background_path)
     background = pygame.transform.scale(background, resolution)
@@ -60,6 +61,7 @@ def execute_game(player, pet):
 
     damage_cooldown = 60  # Cooldown in frames (1 second at 60 FPS)
     current_cooldown = 0  # Tracks the remaining cooldown time    
+
     
     while running:
         clock.tick(fps)

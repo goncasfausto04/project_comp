@@ -32,7 +32,6 @@ def shed(player):
     running = True
 
     # stop music
-    pygame.mixer.music.stop()
 
     while running:
         clock.tick(fps)
