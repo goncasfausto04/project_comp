@@ -47,12 +47,24 @@ def execute_game(player, pet):
     enemy_cooldown = 0
     running = True
     powerups_group = pygame.sprite.Group()  # Group to hold power-up sprites
-    spawn_timer = 0  # Timer to track power-up spawn opportunities
+
+    powerup_spawn_timer = 0  # Timer for power-ups
+    health_drop_spawn_timer = 0  # Timer for health drops
     spawn_rate = 200  # Frames between spawn attempts (e.g., every ~3.3 seconds at 60 FPS)
     spawn_chance = 100  # Percentage rarity of power-up (lower is rarer, e.g., 10% here)
+
+    game_time = 0
+    game_time_frames = 0  # Tracks elapsed time in seconds
+    kills = 0  # Tracks the number of kills
+    font = pygame.font.SysFont('Arial', 30)  # Font for rendering text
     while running:
         clock.tick(fps)
 
+        game_time_frames += 1  # Increment the timer based on frames
+        total_seconds = game_time_frames // fps  # Convert frames to seconds
+        minutes = total_seconds // 60  # Calculate minutes
+        seconds = total_seconds % 60  # Calculate seconds
+        timer_text = font.render(f"Time: {minutes:02}:{seconds:02}", True, white)  # Format MM:SS
         # Handle events
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -120,15 +132,33 @@ def execute_game(player, pet):
         # updating the enemy cooldown
         enemy_cooldown -= 1
 
-        spawn_timer += 1  # Increment spawn timer
-        if spawn_timer >= spawn_rate:
-            # Spawn power-up if chance allows
-            if random.randint(1, spawn_chance) <= 10:  # 10% chance to spawn
+        powerup_spawn_timer += 1
+        if powerup_spawn_timer >= spawn_rate:  # Power-up spawn timer
+            if random.randint(1, spawn_chance) <= 10:  # 10% chance for power-up
                 x = random.randint(50, width - 50)
                 y = random.randint(50, height - 50)
                 powerup = PowerUp(x, y)
                 powerups_group.add(powerup)
-            spawn_timer = 0  # Reset spawn timer
+            powerup_spawn_timer = 0  # Reset power-up timer
+
+        # === Health Drop Spawn Logic ===
+        health_drop_spawn_timer += 1
+        if health_drop_spawn_timer >= spawn_rate:  # Health drop spawn timer
+            if random.randint(1, spawn_chance // 2) <= 20:  # 20% chance for health drop
+                x = random.randint(50, width - 50)
+                y = random.randint(50, height - 50)
+                health_drop = HealthDrop(x, y)
+                powerups_group.add(health_drop)
+            health_drop_spawn_timer = 0  # Reset health drop timer
+
+        # Handle collisions with power-ups and health drops
+        collected_powerups = pygame.sprite.spritecollide(player, powerups_group, True)
+        for item in collected_powerups:
+            if isinstance(item, PowerUp):  # Activate power-up
+                player.activate_powerup()
+            elif isinstance(item, HealthDrop):  # Increase health, but not above max health
+                player.health = min(player.health + 20, player.max_health)
+
         if pygame.sprite.spritecollide(player, powerups_group, True):  # True removes power-up
             player.activate_powerup()  # Activate invincibility for the player
 
@@ -144,6 +174,7 @@ def execute_game(player, pet):
             collided_enemies = pygame.sprite.spritecollide(player, enemies, True)  # True removes enemy
             for enemy in collided_enemies:
                 enemy.kill()  # Remove enemy on collision
+                kills +=1
 
         # drawing the player and enemies sprites on the screen
         player_group.draw(screen)
@@ -158,14 +189,19 @@ def execute_game(player, pet):
                 bullet.kill()
                 if enemy.health <= 0:
                     enemy.kill()
-
+                    kills += 1
         # Draw game objects
+
         player_group.draw(screen)
         enemies.draw(screen)
         pet_group.draw(screen)
         for bullet in bullets:
             bullet.draw(screen)
         player.draw_health_bar(screen)
+        timer_text = font.render(f"Time: {minutes:02}:{seconds:02}", True, white)
+        kills_text = font.render(f"Kills: {kills}", True, white)
+        screen.blit(timer_text, (10, 10))  # Timer at top-left corner
+        screen.blit(kills_text, (10, 40))  # Kill counter below timer
         pygame.display.flip()
 
         pygame.display.flip()
