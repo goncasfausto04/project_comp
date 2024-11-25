@@ -95,7 +95,6 @@ def execute_game(player, pet):
       
         for enemy in enemies:
             enemy.move_towards_player(player)  # Move towards the player
-            enemy.handle_collision_with_player(player)  # Prevent overlap
 
         collided_enemies = pygame.sprite.spritecollide(player, enemies, False)
 

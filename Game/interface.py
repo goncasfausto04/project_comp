@@ -172,25 +172,11 @@ def options():
 
     # Render texts
     volume_text = corbelfont.render("Music Volume:", True, white)
-    resolution_text = corbelfont.render("Resolution:", True, white)
     back_text = corbelfont.render("Back", True, white)
 
     # Volume level
     volume_level = pygame.mixer.music.get_volume()  # Get current volume (0.0 to 1.0)
     max_volume = 0.5  # Set the maximum volume for the slider
-
-    # Supported resolutions
-    supported_resolutions = [(800, 600), (1280, 720), (1920, 1080)]
-    resolution_buttons = []
-
-    # Create resolution buttons
-    button_width = width * 0.3
-    button_height = height * 0.08
-    button_y_start = height * 0.4
-    for idx, res in enumerate(supported_resolutions):
-        x = width * 0.35
-        y = button_y_start + idx * (button_height + 10)
-        resolution_buttons.append((pygame.Rect(x, y, button_width, button_height), res))
 
     # Main loop
     while True:
@@ -212,13 +198,6 @@ def options():
                     volume_level = max(0, min(relative_position * max_volume, max_volume))
                     pygame.mixer.music.set_volume(volume_level)
 
-                # Check for resolution button clicks
-                for button, res in resolution_buttons:
-                    if button.collidepoint(mouse):
-                        resolution = res
-                        width, height = resolution
-                        screen = pygame.display.set_mode(resolution)  # Apply new resolution
-
                 # Back button click
                 back_button = pygame.Rect(width * 0.3, height * 0.8, width * 0.4, 40)
                 if back_button.collidepoint(mouse):
@@ -239,19 +218,11 @@ def options():
         back_button = pygame.Rect(width * 0.3, height * 0.8, width * 0.4, 40)
         pygame.draw.rect(screen, grey, back_button)
         back_rect = back_text.get_rect(center=back_button.center)
-        screen.blit(back_text, back_rect)
-
-        # Draw resolution buttons
-        for button, res in resolution_buttons:
-            button_color = light_grey if button.collidepoint(mouse) else grey
-            pygame.draw.rect(screen, button_color, button)
-            res_text = smallfont.render(f"{res[0]}x{res[1]}", True, white)
-            res_text_rect = res_text.get_rect(center=button.center)
-            screen.blit(res_text, res_text_rect)
+        screen.blit(back_text, back_rect)        
 
         # Draw static texts
         screen.blit(volume_text, (width * 0.1, height * 0.7 - 30))
-        screen.blit(resolution_text, (width * 0.1, button_y_start - 40))
+
 
         # Update the screen
         pygame.display.update()
