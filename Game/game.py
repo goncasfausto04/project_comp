@@ -65,7 +65,7 @@ def execute_game(player, pet):
         player.shoot(bullets)
         pet.update()  # Update the pet's behavior (follows player, fires randomly)
         pet_group.update()  # Update the pet group
-        pet.pet_shoot()  # Pet shoots bullets
+        pet.pet_shoot(bullets)  # Pet shoots bullets
 
         if enemy_cooldown <= 0:
             enemy = Enemy()

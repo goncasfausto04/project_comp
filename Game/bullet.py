@@ -63,4 +63,3 @@ class pet_bullet(Bullet):
         super().__init__(x, y, direction)
         self.color = yellow
         self.speed = 8
-        self.radius = 5

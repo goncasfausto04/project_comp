@@ -25,7 +25,7 @@ class Pet(pygame.sprite.Sprite):
         self.speed = 2.4  # Speed at which the pet moves towards the player
         self.min_distance = min_distance  # Minimum distance the pet will keep from the player
         self.bullet_cooldown = 0  # Cooldown for firing bullets
-        self.fire_rate = 50 # Cooldown in frames (you can adjust)
+        self.fire_rate = 120 # Cooldown in frames (you can adjust)
         self.bullet_type = pet_bullet
         self.bullets = bullets  # Pass the bullets group
 
@@ -41,49 +41,21 @@ class Pet(pygame.sprite.Sprite):
             self.rect.x += int(self.speed * math.cos(direction))
             self.rect.y += int(self.speed * math.sin(direction))
 
-        # Handle firing bullets randomly
-        if self.bullet_cooldown <= 0:
-            self.fire_random_bullet()
-            self.bullet_cooldown = self.fire_rate  # Reset cooldown
-        else:
-            self.bullet_cooldown -= 1  # Decrease cooldown each frame
-    
 
     def pet_shoot(self, bullets):
         """
-        bullets --> pygame group where i will add bullets
+        Shoots bullets in four directions (right, left, up, down) if cooldown allows.
         """
-        # cooldown ==> how many frames i need to wait until i can shoot again
         if self.bullet_cooldown <= 0:
-            self.fire_random_bullet()
-            self.bullet_cooldown = self.fire_rate  # Reset cooldown
+            bullet_class = self.bullet_type
 
-            # === defining the directions in which the bullets will fly ===
-            # These 4 directions are, in order, right, left, up, down
-            for angle in [0, math.pi, math.pi / 2, 3 * math.pi / 2]:
-
-                # === creating a bullet for each angle ===
-
-                # I will use self.rect.centerx to make the x position of the bullet the same as the x position of the player, thus making the bullet come out of them.
-                # finally, the direction of the bullet is the angle
-                bullet = self.bullet_type(self.rect.centerx, self.rect.centery, angle)
-                # adding the bullet to the bullets pygame group
+            for _ in range(2):  # Fire 4 bullets in random directions
+                angle = random.uniform(0, 2 * math.pi)  # Generate a random angle in radians
+                bullet = bullet_class(self.rect.centerx, self.rect.centery, angle)
                 bullets.add(bullet)
 
             # resetting the cooldown
-            self.bullet_cooldown = self.fire_rate
-
-            self.bullet_cooldown -= 1
-            # adding the bullet to the bullets pygame group
-            bullets.add(bullet)
-
-            # resetting the cooldown
-            self.bullet_cooldown = self.fire_rate[self.bullet_type]
+            self.bullet_cooldown =  self.fire_rate
 
         self.bullet_cooldown -= 1
-
-    def fire_random_bullet(self):
-            """Fire a bullet in a random direction."""
-            angle = random.uniform(0, 2 * math.pi)  # Random angle in radians (0 to 2pi)
-            bullet = self.bullet_type(self.rect.centerx, self.rect.centery, angle)
-            self.bullets.add(bullet)  # Add the bullet to the sprite group
+        
