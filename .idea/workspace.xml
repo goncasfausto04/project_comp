@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="02861831-455b-4aa6-8b8b-5e9b7065d3b1" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/Game/game.py" afterDir="false" />
-    </list>
+    <list default="true" id="02861831-455b-4aa6-8b8b-5e9b7065d3b1" name="Changes" comment="fiz um timer minutos:segundos e um contador de inimigos mortos que estão no topo esquerdo do ecrã" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -62,6 +59,19 @@
       <option name="presentableId" value="Default" />
       <updated>1732219336136</updated>
     </task>
+    <task id="LOCAL-00001" summary="fiz um timer minutos:segundos e um contador de inimigos mortos que estão no topo esquerdo do ecrã">
+      <option name="closed" value="true" />
+      <created>1732543474715</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1732543474715</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="fiz um timer minutos:segundos e um contador de inimigos mortos que estão no topo esquerdo do ecrã" />
+    <option name="LAST_COMMIT_MESSAGE" value="fiz um timer minutos:segundos e um contador de inimigos mortos que estão no topo esquerdo do ecrã" />
   </component>
 </project>
