@@ -5,12 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="02861831-455b-4aa6-8b8b-5e9b7065d3b1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Game/powerup.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game/enemy.py" beforeDir="false" afterPath="$PROJECT_DIR$/Game/enemy.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Game/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/Game/game.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game/player.py" beforeDir="false" afterPath="$PROJECT_DIR$/Game/player.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,7 +37,7 @@
     "Python.main.executor": "Run",
     "Python.player.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "luismainbranch",
+    "git-widget-placeholder": "luisv2",
     "last_opened_file_path": "C:/Users/Asus/Documents/GitHub/project_comp"
   }
 }]]></component>

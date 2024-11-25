@@ -50,9 +50,19 @@ def execute_game(player, pet):
     spawn_timer = 0  # Timer to track power-up spawn opportunities
     spawn_rate = 200  # Frames between spawn attempts (e.g., every ~3.3 seconds at 60 FPS)
     spawn_chance = 100  # Percentage rarity of power-up (lower is rarer, e.g., 10% here)
+
+    game_time = 0
+    game_time_frames = 0  # Tracks elapsed time in seconds
+    kills = 0  # Tracks the number of kills
+    font = pygame.font.SysFont('Arial', 30)  # Font for rendering text
     while running:
         clock.tick(fps)
 
+        game_time_frames += 1  # Increment the timer based on frames
+        total_seconds = game_time_frames // fps  # Convert frames to seconds
+        minutes = total_seconds // 60  # Calculate minutes
+        seconds = total_seconds % 60  # Calculate seconds
+        timer_text = font.render(f"Time: {minutes:02}:{seconds:02}", True, white)  # Format MM:SS
         # Handle events
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -105,6 +115,7 @@ def execute_game(player, pet):
             collided_enemies = pygame.sprite.spritecollide(player, enemies, True)  # True removes enemy
             for enemy in collided_enemies:
                 enemy.kill()  # Remove enemy on collision
+                kills +=1
 
         # drawing the player and enemies sprites on the screen
         player_group.draw(screen)
@@ -119,14 +130,19 @@ def execute_game(player, pet):
                 bullet.kill()
                 if enemy.health <= 0:
                     enemy.kill()
-
+                    kills += 1
         # Draw game objects
+
         player_group.draw(screen)
         enemies.draw(screen)
         pet_group.draw(screen)
         for bullet in bullets:
             bullet.draw(screen)
         player.draw_health_bar(screen)
+        timer_text = font.render(f"Time: {minutes:02}:{seconds:02}", True, white)
+        kills_text = font.render(f"Kills: {kills}", True, white)
+        screen.blit(timer_text, (10, 10))  # Timer at top-left corner
+        screen.blit(kills_text, (10, 40))  # Kill counter below timer
         pygame.display.flip()
 
         pygame.display.flip()
