@@ -1,7 +1,7 @@
 from config import *
 import pygame
 from player import Player
-from enemy import Enemy
+from enemy import *
 from shed import shed
 from pet import Pet  # Import the Pet class
 from utils import *
@@ -72,10 +72,49 @@ def execute_game(player, pet):
         pet_group.update()  # Update the pet group
         pet.pet_shoot(bullets)  # Pet shoots bullets
 
+        for enemy in enemies:
+            enemy.draw(screen)  # Call the draw method for each enemy
+
+            # Detect collision and apply damage
+        collided_enemies = pygame.sprite.spritecollide(player, enemies, False)
+        for enemy in collided_enemies:
+            player.health -= enemy.damage
+
+        for enemy in enemies:
+            enemy.move_towards_player(player)  # Move towards the player
+            enemy.handle_collision_with_player(player)  # Prevent overlap
+
+            # Player turn red for Collision
+        if collided_enemies:
+            player.image.fill((255, 0, 0))  # Vermelho ao tomar dano
+        else:
+            player.image.fill((0, 255, 0))  # Voltar ao verde
+
+
+        damage_cooldown = 30
+        if collided_enemies and damage_cooldown <= 0:
+            player.health -= sum(enemy.damage for enemy in collided_enemies)
+            damage_cooldown = 30  # Restart  cooldown
+
+        damage_cooldown -= 1  # Diminui o cooldown a cada frame
+
         if enemy_cooldown <= 0:
-            enemy = Enemy()
-            enemies.add(enemy)
+            # Define enemy types and their weights
+            enemy_types = [initialEnemy, fastEnemy, TankMonster, RangedMonster]
+            spawn_weights = [50, 20, 15, 15]  # Probabilities for each type (adjust as needed)
+
+            # Randomly select an enemy type based on weighted probability
+            enemy_type = random.choices(enemy_types, weights=spawn_weights, k=1)[0]
+
+            # Create an instance of the selected enemy
+            new_enemy = enemy_type()
+
+            # Add the enemy to the group
+            enemies.add(new_enemy)
+
+            # Reset the cooldown
             enemy_cooldown = 2 * fps
+        # Update the enemy cooldown
         enemy_cooldown -= 1
 
         # updating the enemy cooldown
