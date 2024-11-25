@@ -1,7 +1,10 @@
 from interface import *
+from utils import *
+
 
 
 def main():
+    play_video(video_path,resolution)
     interface()
 
 

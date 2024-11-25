@@ -12,6 +12,8 @@ def interface():
     # Create the screen at the set resolution
     screen = pygame.display.set_mode(resolution)
 
+   
+
     # Set fonts
     corbelfont = pygame.font.SysFont("Corbel", int(height * 0.07))
     comicsansfont = pygame.font.SysFont("Comic Sans MS", int(height * 0.07))
@@ -39,6 +41,13 @@ def interface():
     background = pygame.image.load(background_path)
     background = pygame.transform.scale(background, resolution)
 
+    chime_path = os.path.join(base_path, "extras", "chime1.mp3")
+    chime_sound = pygame.mixer.Sound(chime_path)
+
+    chime2_path = os.path.join(base_path, "extras", "chime2.mp3")
+    chime2_sound = pygame.mixer.Sound(chime2_path)
+
+
     # Main loop
     while True:
         mouse = pygame.mouse.get_pos()  # Get mouse position
@@ -59,22 +68,27 @@ def interface():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 # Quit button
                 if button_clicked(0.625, 0.833, 0.125, 0.083):
+                    chime_sound.play()
                     pygame.quit()
 
                 # Credits button
                 if button_clicked(0.625, 0.667, 0.125, 0.083):
+                    chime_sound.play()
                     credits_()
-
+                    
                 # Wilderness game button
                 if button_clicked(0.125, 0.333, 0.75, 0.083):
+                    chime2_sound.play()
                     wilderness_explorer()
 
                 # Options button
                 if button_clicked(0.125, 0.833, 0.125, 0.083):
+                    chime_sound.play()
                     options()
 
                 # Rules button
                 if button_clicked(0.125, 0.667, 0.125, 0.083):
+                    chime_sound.play()
                     under_construction()
 
             # Escape key to return to main menu
@@ -178,6 +192,9 @@ def options():
     volume_level = pygame.mixer.music.get_volume()  # Get current volume (0.0 to 1.0)
     max_volume = 0.5  # Set the maximum volume for the slider
 
+    chime_path = os.path.join(base_path, "extras", "chime1.mp3")
+    chime_sound = pygame.mixer.Sound(chime_path)
+
     # Main loop
     while True:
         # Get mouse position
@@ -201,6 +218,7 @@ def options():
                 # Back button click
                 back_button = pygame.Rect(width * 0.3, height * 0.8, width * 0.4, 40)
                 if back_button.collidepoint(mouse):
+                    chime_sound.play()
                     return
 
         # Drawing the background

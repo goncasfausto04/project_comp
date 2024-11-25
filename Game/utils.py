@@ -1,5 +1,7 @@
 import pygame
 import os
+import sys
+import cv2
 
 from config import dark_red, deep_black, resolution, white
 
@@ -143,4 +145,54 @@ def pause_game(screen, width, height):
                 exit()
 
 
+def play_video(video_path, resolution):
+    # Initialize Pygame
+    pygame.init()
+
+    # Load the video using OpenCV
+    cap = cv2.VideoCapture(video_path)
+
+    # Get video properties
+    fps = cap.get(cv2.CAP_PROP_FPS)
+
+    # Set up the Pygame window
+    screen = pygame.display.set_mode(resolution)
+    pygame.display.set_caption('Video Player')
+
+    # Main loop
+    running = True
+    clock = pygame.time.Clock()
+
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+
+        ret, frame = cap.read()
+        if not ret:
+            break
+
+        # Resize the frame to fit the resolution
+        frame = cv2.resize(frame, resolution)
+
+        # Convert the frame to RGB format
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        frame = pygame.surfarray.make_surface(frame)
+        frame = pygame.transform.rotate(frame, -90)
+        frame = pygame.transform.flip(frame, True, False)
+
+        # Display the frame
+        screen.blit(frame, (0, 0))
+        pygame.display.update()
+
+        # Control the frame rate
+        clock.tick(fps)
+
+    # Clean up
+    cap.release()
+    pygame.quit()
+
 base_path = os.path.dirname(__file__)
+video_path = os.path.join(base_path, "extras", "intro.mp4")
+
+
