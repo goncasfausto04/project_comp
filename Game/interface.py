@@ -228,7 +228,7 @@ def options():
 
     # Volume level
     volume_level = pygame.mixer.music.get_volume()  # Get current volume (0.0 to 1.0)
-    max_volume = 0.5  # Set the maximum volume for the slider
+    max_volume = 1  # Set the maximum volume for the slider
 
     chime_path = os.path.join(base_path, "extras", "chime1.mp3")
     chime_sound = pygame.mixer.Sound(chime_path)

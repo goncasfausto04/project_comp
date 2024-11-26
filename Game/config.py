@@ -31,7 +31,7 @@ bullet_size = 10
 
 
 #music volume
-music_volume = 0.025
+music_volume = 0.5
 pet_size = (38, 38)
 
 #soundtrack list

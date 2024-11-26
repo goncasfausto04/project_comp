@@ -1,0 +1,4 @@
+handle volume because it resets 
+same with resolution
+
+handle the intro so it doesnt start and stop pygame
