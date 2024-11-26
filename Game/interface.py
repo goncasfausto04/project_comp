@@ -12,11 +12,7 @@ def interface():
     # Create the screen at the set resolution
     screen = pygame.display.set_mode(resolution)
 
-   
-
     # Set fonts
-    corbelfont = pygame.font.SysFont("Corbel", int(height * 0.07))
-    comicsansfont = pygame.font.SysFont("Comic Sans MS", int(height * 0.07))
     blockyfontpath = os.path.join(base_path, "extras", "Pixeboy.ttf")
     blockyfont = pygame.font.Font(blockyfontpath, int(height * 0.07))
     blockyfontsmall = pygame.font.Font(blockyfontpath, int(height * 0.035))
@@ -27,7 +23,7 @@ def interface():
     credits_text = blockyfontsmall.render("Credits", True, white)
     rules_text = blockyfontsmall.render("Rules", True, white)
     options_text = blockyfontsmall.render("Options", True, white)
-    title_text = blockyfont.render("Computation_3 Project!", True, glowing_light_red)
+    title_text = blockyfont.render("Computation_3 Project!", True, glowing_yellow)
 
     # Render music
     music_path = os.path.join(base_path, "extras", "mainmusic.mp3")
@@ -46,6 +42,8 @@ def interface():
 
     chime2_path = os.path.join(base_path, "extras", "chime2.mp3")
     chime2_sound = pygame.mixer.Sound(chime2_path)
+
+    pygame.display.set_caption("Hit Or Stand")
 
 
     # Main loop
@@ -67,12 +65,12 @@ def interface():
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 # Quit button
-                if button_clicked(0.625, 0.833, 0.125, 0.083):
+                if button_clicked(0.75-(0.125/2), 0.833, 0.125, 0.083):
                     chime_sound.play()
                     pygame.quit()
 
                 # Credits button
-                if button_clicked(0.625, 0.667, 0.125, 0.083):
+                if button_clicked(0.75-(0.125/2), 0.667, 0.125, 0.083):
                     chime_sound.play()
                     credits_()
                     
@@ -82,12 +80,12 @@ def interface():
                     wilderness_explorer()
 
                 # Options button
-                if button_clicked(0.125, 0.833, 0.125, 0.083):
+                if button_clicked(0.25-(0.125/2), 0.833, 0.125, 0.083):
                     chime_sound.play()
                     options()
 
                 # Rules button
-                if button_clicked(0.125, 0.667, 0.125, 0.083):
+                if button_clicked(0.25-(0.125/2), 0.667, 0.125, 0.083):
                     chime_sound.play()
                     under_construction()
 
@@ -106,7 +104,15 @@ def interface():
             w = width * w_frac
             h = height * h_frac
             current_color = hover_color if button_clicked(x_frac, y_frac, w_frac, h_frac) else color
-            pygame.draw.rect(screen, current_color, [x, y, w, h])
+            
+            # Draw rounded rectangle for the button
+            pygame.draw.rect(screen, current_color, [x, y, w, h], border_radius=10)
+            
+            # Draw border for the button
+            border_color = white if button_clicked(x_frac, y_frac, w_frac, h_frac) else black
+            pygame.draw.rect(screen, border_color, [x, y, w, h], 2, border_radius=10)
+            
+            # Draw the text on the button
             text_rect = text.get_rect(center=(x + w // 2, y + h // 2))
             screen.blit(text, text_rect)
 
@@ -114,16 +120,16 @@ def interface():
         draw_button(dark_red, glowing_light_red, 0.125, 0.333, 0.75, 0.083, wilderness_text, blockyfont)
 
         # Rules button
-        draw_button(grey, light_grey, 0.125, 0.667, 0.125, 0.083, rules_text, blockyfontsmall)
+        draw_button(grey, light_grey,  0.25-(0.125/2), 0.667, 0.125, 0.083, rules_text, blockyfontsmall)
 
         # Quit button
-        draw_button(grey, light_grey, 0.625, 0.833, 0.125, 0.083, quit_text, blockyfontsmall)
+        draw_button(grey, light_grey, 0.75-(0.125/2), 0.833, 0.125, 0.083, quit_text, blockyfontsmall)
 
         # Options button
-        draw_button(grey, light_grey, 0.125, 0.833, 0.125, 0.083, options_text, blockyfontsmall)
+        draw_button(grey, light_grey, 0.25- (0.125/2), 0.833, 0.125, 0.083, options_text, blockyfontsmall)
 
         # Credits button
-        draw_button(grey, light_grey, 0.625, 0.667, 0.125, 0.083, credits_text, blockyfontsmall)
+        draw_button(grey, light_grey, 0.75- (0.125/2), 0.667, 0.125, 0.083, credits_text, blockyfontsmall)
 
         # Title text
         screen.blit(title_text, (width * 0.05, height * 0.02))
@@ -135,18 +141,50 @@ def interface():
 
 def credits_():
     screen = pygame.display.set_mode(resolution)
-    corbelfont = pygame.font.SysFont("Corbel", int(height * 0.07))
-    comicsansfont = pygame.font.SysFont("Comic Sans MS", int(height * 0.035))
+   
 
-    augusto_text = comicsansfont.render(
+    blockyfontpath = os.path.join(base_path, "extras", "Pixeboy.ttf")
+    blockyfont = pygame.font.Font(blockyfontpath, int(height * 0.07))
+
+    chime = os.path.join(base_path, "extras", "chime1.mp3")
+    chime_sound = pygame.mixer.Sound(chime)
+
+
+    augusto_text = blockyfont.render(
         "Augusto Santos, ajrsantos@novaims.unl.pt", True, white
     )
-    diogo_text = comicsansfont.render(
+    diogo_text = blockyfont.render(
         "Diogo Rastreio, drasteiro@novaims.unl.pt", True, white
     )
-    liah_text = comicsansfont.render(
+    liah_text = blockyfont.render(
         "Liah Rosenfeld, lrosenfeld@novaims.unl.pt", True, white
     )
+
+    def draw_button(color, hover_color, x_frac, y_frac, w_frac, h_frac, text, font):
+        x = width * x_frac
+        y = height * y_frac
+        w = width * w_frac
+        h = height * h_frac
+        current_color = hover_color if button_clicked(x_frac, y_frac, w_frac, h_frac) else color
+        
+        # Draw rounded rectangle for the button
+        pygame.draw.rect(screen, current_color, [x, y, w, h], border_radius=10)
+        
+        # Draw border for the button
+        border_color = white if button_clicked(x_frac, y_frac, w_frac, h_frac) else black
+        pygame.draw.rect(screen, border_color, [x, y, w, h], 2, border_radius=10)
+        
+        # Draw the text on the button
+        text_rect = text.get_rect(center=(x + w // 2, y + h // 2))
+        screen.blit(text, text_rect)
+
+    def button_clicked(x_frac, y_frac, w_frac, h_frac):
+        x = width * x_frac
+        y = height * y_frac
+        w = width * w_frac
+        h = height * h_frac
+        return x <= mouse[0] <= x + w and y <= mouse[1] <= y + h
+
 
     while True:
         mouse = pygame.mouse.get_pos()
@@ -155,6 +193,7 @@ def credits_():
                 pygame.quit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if width * 0.625 <= mouse[0] <= width * 0.75 and height * 0.833 <= mouse[1] <= height * 0.916:
+                    chime_sound.play()
                     return
 
         screen.fill(deep_black)
@@ -162,10 +201,7 @@ def credits_():
         screen.blit(diogo_text, (width * 0.05, height * 0.15))
         screen.blit(liah_text, (width * 0.05, height * 0.2))
 
-        pygame.draw.rect(screen, dark_red, [width * 0.625, height * 0.833, width * 0.125, height * 0.083])
-        back_text = corbelfont.render("Back", True, white)
-        back_rect = back_text.get_rect(center=(width * 0.6875, height * 0.875))
-        screen.blit(back_text, back_rect)
+        draw_button(dark_red, glowing_light_red, 0.625, 0.833, 0.125, 0.083, blockyfont.render("Back", True, white), blockyfont)
 
         pygame.display.update()
 
@@ -181,12 +217,14 @@ def options():
     screen = pygame.display.set_mode(resolution)
 
     # Set fonts
-    corbelfont = pygame.font.SysFont("Corbel", 40)
-    smallfont = pygame.font.SysFont("Corbel", 30)
+    
+    blockyfontpath = os.path.join(base_path, "extras", "Pixeboy.ttf")
+    blockyfont = pygame.font.Font(blockyfontpath, int(height * 0.07))
+    blockyfontsmall = pygame.font.Font(blockyfontpath, int(height * 0.05))
 
     # Render texts
-    volume_text = corbelfont.render("Music Volume:", True, white)
-    back_text = corbelfont.render("Back", True, white)
+    volume_text = blockyfontsmall.render("Music Volume:", True, white)
+    back_text = blockyfont.render("Back", True, white)
 
     # Volume level
     volume_level = pygame.mixer.music.get_volume()  # Get current volume (0.0 to 1.0)
@@ -194,6 +232,31 @@ def options():
 
     chime_path = os.path.join(base_path, "extras", "chime1.mp3")
     chime_sound = pygame.mixer.Sound(chime_path)
+
+    def draw_button(color, hover_color, x_frac, y_frac, w_frac, h_frac, text, font):
+        x = width * x_frac
+        y = height * y_frac
+        w = width * w_frac
+        h = height * h_frac
+        current_color = hover_color if button_clicked(x_frac, y_frac, w_frac, h_frac) else color
+        
+        # Draw rounded rectangle for the button
+        pygame.draw.rect(screen, current_color, [x, y, w, h], border_radius=10)
+        
+        # Draw border for the button
+        border_color = white if button_clicked(x_frac, y_frac, w_frac, h_frac) else black
+        pygame.draw.rect(screen, border_color, [x, y, w, h], 2, border_radius=10)
+        
+        # Draw the text on the button
+        text_rect = text.get_rect(center=(x + w // 2, y + h // 2))
+        screen.blit(text, text_rect)
+
+    def button_clicked(x_frac, y_frac, w_frac, h_frac):
+        x = width * x_frac
+        y = height * y_frac
+        w = width * w_frac
+        h = height * h_frac
+        return x <= mouse[0] <= x + w and y <= mouse[1] <= y + h
 
     # Main loop
     while True:
@@ -216,7 +279,7 @@ def options():
                     pygame.mixer.music.set_volume(volume_level)
 
                 # Back button click
-                back_button = pygame.Rect(width * 0.3, height * 0.8, width * 0.4, 40)
+                back_button = pygame.Rect(width * 0.3, height * 0.8, width * 0.4, height * 0.1)
                 if back_button.collidepoint(mouse):
                     chime_sound.play()
                     return
@@ -233,13 +296,10 @@ def options():
         pygame.draw.rect(screen, dark_red, filled_bar)
 
         # Draw Back button
-        back_button = pygame.Rect(width * 0.3, height * 0.8, width * 0.4, 40)
-        pygame.draw.rect(screen, grey, back_button)
-        back_rect = back_text.get_rect(center=back_button.center)
-        screen.blit(back_text, back_rect)        
+        draw_button(dark_red, glowing_light_red, 0.3, 0.8, 0.4, 0.1, back_text, blockyfont)
 
         # Draw static texts
-        screen.blit(volume_text, (width * 0.1, height * 0.7 - 30))
+        screen.blit(volume_text, (width * 0.1, height * 0.7 ))
 
 
         # Update the screen

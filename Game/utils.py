@@ -2,8 +2,7 @@ import pygame
 import os
 import sys
 import cv2
-
-from config import dark_red, deep_black, resolution, white
+from config import *
 
 
 # Function to draw a stick figure with a construction hat
@@ -163,6 +162,8 @@ def play_video(video_path, resolution):
     running = True
     clock = pygame.time.Clock()
 
+    pygame.display.set_caption("Hit or Stand")
+
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -195,6 +196,3 @@ def play_video(video_path, resolution):
 
 base_path = os.path.dirname(__file__)
 video_path = os.path.join(base_path, "extras", "intro.mp4")
-
-
-

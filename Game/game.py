@@ -37,7 +37,7 @@ def execute_game(player, pet):
     background = pygame.transform.scale(background, resolution)
     clock = pygame.time.Clock()
     screen = pygame.display.set_mode(resolution)
-    pygame.display.set_caption("Endless Wilderness Explorer")
+    pygame.display.set_caption("Hit or Stand")
 
     player_group = pygame.sprite.Group()
     player_group.add(player)

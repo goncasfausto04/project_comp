@@ -16,7 +16,8 @@ yellow = (255, 255, 0)
 red = (150, 0, 24)
 cute_purple = (128, 0, 128)
 green_ish = (0, 215, 10)
-
+black = (0, 0, 0)
+glowing_yellow = (255, 255, 0)
 
 # SCREEN RESOLUTION
 resolution = (1280, 720)
