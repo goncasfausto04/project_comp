@@ -25,14 +25,14 @@ width, height = resolution[0], resolution[1]
 fps = 60
 
 # SIZES
-player_size = (50, 100)
-enemy_size = (40, 40)
-bullet_size = 10
+player_size = (int(width * 0.03), int(height * 0.1))  # Smaller player size
+enemy_size = (int(width * 0.025), int(height * 0.045))  # Smaller enemy size
+bullet_size = int(width * 0.006)  # Smaller bullet size
+powerup_size = (int(width * 0.025), int(height * 0.045))  # Smaller power-up size
 
-
-#music volume
+# music volume
 music_volume = 0.5
-pet_size = (38, 38)
+pet_size = (int(width * 0.025), int(height * 0.045))  # Smaller pet size
 
 #soundtrack list
 soundtrack1_path = os.path.join(base_path, "extras", "soundtrack1.mp3")

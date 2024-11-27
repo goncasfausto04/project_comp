@@ -61,7 +61,6 @@ def draw_normal_stick_figure(screen, x, y):
         screen, (255, 255, 255), (x, y + 60), (x + 20, y + 100), 2
     )  # Right leg
 
-
 def under_construction():
 
     # creating the screen at 720x720 pixels
@@ -144,7 +143,6 @@ def pause_game(screen, width, height):
             if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
-
 
 def play_video(video_path, resolution,sound_path):
     

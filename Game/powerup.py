@@ -6,7 +6,7 @@ class PowerUp(pygame.sprite.Sprite):
 
     def __init__(self, x, y):
         super().__init__()
-        self.image = pygame.Surface((30, 30))  # Power-up size
+        self.image = pygame.Surface(powerup_size)  # Power-up size
         self.image.fill(dark_red)  # Power-up color
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
@@ -18,7 +18,7 @@ class PowerUp(pygame.sprite.Sprite):
 class HealthDrop(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
-        self.image = pygame.Surface((enemy_size[0] // 2, enemy_size[1] // 2))  # Half size of an enemy
+        self.image = pygame.Surface(powerup_size)  # Half size of an enemy
         self.image.fill(green_ish)
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
