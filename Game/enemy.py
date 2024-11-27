@@ -50,7 +50,7 @@ class Enemy(pygame.sprite.Sprite):
         # Normalize the direction and move towards the player
         self.rect.x += int(self.speed * dx / distance)
         self.rect.y += int(self.speed * dy / distance)
-        
+    """
     def handle_collision_with_player(self, player):
         if self.rect.colliderect(player.rect):
             # Stop enemy from moving inside the player by "pushing it back"
@@ -61,6 +61,8 @@ class Enemy(pygame.sprite.Sprite):
             # Push the enemy away by reversing the movement
             self.rect.x -= int(self.speed * dx / distance)
             self.rect.y -= int(self.speed * dy / distance)
+    """
+
 
 class initialEnemy(Enemy):
             def __init__(self):

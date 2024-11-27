@@ -23,6 +23,8 @@ class Pet(pygame.sprite.Sprite):
         # GAMEPLAY VARIABLES
         self.player = player  # Reference to the player
         self.speed = 2.4  # Speed at which the pet moves towards the player
+        self.health = 180
+        self.max_health = 180
         self.min_distance = min_distance  # Minimum distance the pet will keep from the player
         self.bullet_cooldown = 0  # Cooldown for firing bullets
         self.fire_rate = 120 # Cooldown in frames (you can adjust)
@@ -58,4 +60,21 @@ class Pet(pygame.sprite.Sprite):
             self.bullet_cooldown =  self.fire_rate
 
         self.bullet_cooldown -= 1
+    
+    def draw_health_bar(self, screen):
+        """
+        Draws a health bar below the player's sprite.
+        """
+        bar_width = 25  # Width of the health bar
+        bar_height = 4  # Height of the health bar
+        health_ratio = self.health / self.max_health  # Fraction of health remaining
+
+        # Positioning the health bar below the player
+        bar_x = self.rect.centerx - bar_width // 2
+        bar_y = self.rect.bottom + 5  # Just below the bottom of the player sprite
+
+        # Draw the red background (full bar)
+        pygame.draw.rect(screen, red, (bar_x, bar_y, bar_width, bar_height))
+        # Draw the green foreground (current health)
+        pygame.draw.rect(screen, green, (bar_x, bar_y, int(bar_width * health_ratio), bar_height))
         
