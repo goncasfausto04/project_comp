@@ -6,4 +6,4 @@ handle the intro so it doesnt start and stop pygame
 
 save states?? save settings??
 
-what to put on rules? its a game like?!?! Can we put any other stuff there
+what to put on rules? its a game like tf?!?! Can we put any other stuff there for example a tutorial
