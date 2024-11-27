@@ -2,9 +2,6 @@ import pygame
 from config import *
 from utils import *
 import os
-from blackjack import blackjack
-
-pygame.init()
 
 def shed(player):
     # setting up the background and the screen
@@ -50,7 +47,7 @@ def shed(player):
         player_group.update()
 
         if special_area.colliderect(player.rect):
-            blackjack()
+            under_construction()
             player.rect.top = height * 0.28  # Set top position to 28% of screen height
             player.rect.left = width * 0.78 
         
