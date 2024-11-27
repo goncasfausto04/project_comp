@@ -99,7 +99,7 @@ def shop():
         # Update the screen
         pygame.display.update()
 
-def weapons_shop():
+def weapons_shop(player):
     pygame.init()
     screen = pygame.display.set_mode(resolution)
     font = pygame.font.SysFont("Corbel", int(height * 0.07))
