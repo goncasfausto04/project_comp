@@ -111,7 +111,7 @@ def game_logic(player_hand, dealer_hand, player_stands):
 
 
 
-def main():
+def blackjack():
     global player_money
     running = True
     clock = pygame.time.Clock()
@@ -180,4 +180,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    blackjack()

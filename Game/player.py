@@ -32,6 +32,7 @@ class Player(pygame.sprite.Sprite):
 
         self.powerup_active = False
         self.powerup_timer = 0
+        self.coins = 500
 
     def activate_powerup(self):
         """
