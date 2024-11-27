@@ -2,7 +2,7 @@ import pygame
 from config import *
 from utils import *
 import os
-from shop import shop
+from shop import *
 
 def shed(player, pet):
     # setting up the background and the screen
@@ -66,7 +66,7 @@ def shed(player, pet):
             pet.rect.left = player.rect.left + 50  # Position pet relative to the player
             
             # Go to the shop area (example of what happens here)
-            return shop(player, pet)
+            return shop()
         
         if player.rect.left <= 0:
             player.rect.left = width - player.rect.width

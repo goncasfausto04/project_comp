@@ -29,7 +29,7 @@ class Player(pygame.sprite.Sprite):
         self.bullet_cooldown = 0
         self.bullet_type = "pistol"
         self.fire_rate = {"pistol": 50, "shotgun": 90, "machinegun": 20}  # Cooldown in frames
-        self.coins = 100
+        self.coins = 400
 
         self.powerup_active = False
         self.powerup_timer = 0
