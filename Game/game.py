@@ -8,7 +8,7 @@ from utils import *
 import os
 from powerup import *
 import random
-from shop import *
+from shop import shop
 
 
 #endless loop that will keep the game running
@@ -28,7 +28,7 @@ def game_loop():
         elif current_state == "shed":
             current_state = shed(player, pet)
         elif current_state == "shop":
-            current_state = shop(player, pet)
+            current_state = shop(player)
 
 
 def execute_game(player, pet):

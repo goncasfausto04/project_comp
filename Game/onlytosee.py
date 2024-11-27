@@ -1,3 +1,4 @@
+
 def shop():
     # Initialize pygame
     pygame.init()

@@ -31,3 +31,4 @@ resolution_list = [(854,480),(1280, 720), (1366, 768), (1600, 900), (1920, 1080)
 #music volume
 music_volume = 0.025
 pet_size = (50, 50)
+

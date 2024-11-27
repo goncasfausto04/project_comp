@@ -66,7 +66,7 @@ def shed(player, pet):
             pet.rect.left = player.rect.left + 50  # Position pet relative to the player
             
             # Go to the shop area (example of what happens here)
-            return shop()
+            return shop(player)
         
         if player.rect.left <= 0:
             player.rect.left = width - player.rect.width

@@ -3,6 +3,9 @@ import pygame
 from utils import *  # no need to import pygame because the import is in utils
 from config import *  # importing colors and the like
 import os
+from game import *
+from player import Player
+
 
 def button_clicked(x_frac, y_frac, w_frac, h_frac, mouse):
     x = width * x_frac
@@ -11,7 +14,7 @@ def button_clicked(x_frac, y_frac, w_frac, h_frac, mouse):
     h = height * h_frac
     return x <= mouse[0] <= x + w and y <= mouse[1] <= y + h
 
-def shop():
+def shop(player):
     # Initialize pygame
     pygame.init()
 
@@ -60,7 +63,7 @@ def shop():
                 
                 # Weapons button
                 if button_clicked(0.125, 0.333, 0.125, 0.083, mouse):
-                    weapons_shop()
+                    weapons_shop(player)
                 
                 # Pets button
                 if button_clicked(0.125, 0.5, 0.125, 0.083, mouse):
@@ -99,7 +102,7 @@ def shop():
         # Update the screen
         pygame.display.update()
 
-def weapons_shop():
+def weapons_shop(player):
     pygame.init()
     screen = pygame.display.set_mode(resolution)
     font = pygame.font.SysFont("Corbel", int(height * 0.07))
@@ -113,9 +116,6 @@ def weapons_shop():
         "Shotgun": 300,
         "Machine Gun": 500,
     }
-
-    # Mock player currency
-    player_money = 400  # Adjust based on your game logic
 
     def draw_button(x_frac, y_frac, w_frac, h_frac, text, hover_color, base_color, mouse):
         x = width * x_frac
@@ -159,7 +159,7 @@ def weapons_shop():
 
         # Drawing
         screen.blit(background, (0, 0))
-        money_text = font.render(f"Money: ${player_money}", True, white)
+        money_text = font.render(f"Money: ${player.coins}", True, white)
         screen.blit(money_text, (width * 0.05, height * 0.05))
 
         draw_button(0.2, 0.3, 0.6, 0.1, "Pistol - $100", red, dark_red, mouse)
