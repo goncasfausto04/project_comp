@@ -35,12 +35,6 @@ def shop(player):
     goback_text = blockyfontsmall.render("Go Back", True, white)
     title_text = blockyfont.render("Shopping Street", True, glowing_light_red)
 
-    # Render music
-    music_path = os.path.join(base_path, "extras", "mainmusic.mp3")
-    pygame.mixer.music.load(music_path)
-    pygame.mixer.music.play(-1)
-    pygame.mixer.music.set_pos(5)
-    pygame.mixer.music.set_volume(music_volume)
 
     # Render background
     background_path = os.path.join(base_path, "extras", "loja.jpeg")
@@ -71,7 +65,7 @@ def shop(player):
 
                 # Go back button
                 if button_clicked(0.625, 0.833, 0.125, 0.083, mouse):
-                    return # Exit the shop
+                    return "shedshop" # Exit the shop
 
         # Fill the screen with background
         screen.blit(background, (0, 0))

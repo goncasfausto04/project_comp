@@ -1,7 +1,7 @@
 import pygame
 from player import Player
 from enemy import *
-from shed import shed
+from shed import shed, topshed
 from pet import Pet  # Import the Pet class
 from utils import *
 import os
@@ -30,6 +30,8 @@ def game_loop():
             current_state = shed(player, pet)
         elif current_state == "shop":
             current_state = shop(player)
+        elif current_state == "shedshop":
+            current_state = topshed(player, pet)
 
 
 
@@ -112,9 +114,6 @@ def execute_game(player, pet):
             pet.health -= total_damage/3
             current_cooldown = damage_cooldown  # Reset the cooldown
 
-            # Inimigos morrem instantaneamente ao colidir com o jogador
-            for enemy in collided_enemies:
-                enemy.kill()
 
         collided_enemies = pygame.sprite.spritecollide(pet, enemies, False)
 
