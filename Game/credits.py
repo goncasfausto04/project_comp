@@ -83,16 +83,19 @@ def credits_():
                     return
 
         screen.fill(deep_black)
-        screen.blit(professors_text, (width * 0.05, height * 0.05))
-        screen.blit(augusto_text, (width * 0.05, height * 0.1))
-        screen.blit(diogo_text, (width * 0.05, height * 0.15))
-        screen.blit(liah_text, (width * 0.05, height * 0.2))
-        screen.blit(students_text, (width * 0.05, height * 0.25))
-        screen.blit(goncalo_text, (width * 0.05, height * 0.25))
-        screen.blit(bernardo_text, (width * 0.05, height * 0.3))
-        screen.blit(henrique_text, (width * 0.05, height * 0.35))
-        screen.blit(luis_text, (width * 0.05, height * 0.4))
-        render_text_wrapped_from_surface(screen, body_text,blockyfont,white,x=width * 0.05, y=height * 0.45, max_width=width * 0.9)        
+        screen.blit(professors_text, (width * 0.1, height * 0.07))
+        screen.blit(augusto_text, (width * 0.1, height * 0.13))
+        screen.blit(diogo_text, (width * 0.1, height * 0.19))
+        screen.blit(liah_text, (width * 0.1, height * 0.25))
+
+        screen.blit(students_text, (width * 0.1, height * 0.4))
+        screen.blit(goncalo_text, (width * 0.1, height * 0.46))
+        screen.blit(bernardo_text, (width * 0.1, height * 0.52))
+        screen.blit(henrique_text, (width * 0.1, height * 0.58))
+        screen.blit(luis_text, (width * 0.1, height * 0.64))
+
+
+        render_text_wrapped_from_surface(screen, body_text, blockyfont, white, x=width * 0.1, y=height * 0.71, max_width=width * 0.8)
         draw_button(dark_red, glowing_light_red, 0.625, 0.833, 0.125, 0.083, blockyfont.render("Back", True, white), blockyfont)
 
         pygame.display.update()
