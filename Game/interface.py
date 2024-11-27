@@ -4,6 +4,7 @@ import pygame
 from utils import *  # no need to import pygame because the import is in utils
 from config import *  # importing colors and the like
 import os
+from credits import credits_
 
 def interface():
     # Initialize pygame
@@ -136,75 +137,6 @@ def interface():
 
         # Update the screen
         pygame.display.update()
-
-
-
-def credits_():
-    screen = pygame.display.set_mode(resolution)
-   
-
-    blockyfontpath = os.path.join(base_path, "extras", "Pixeboy.ttf")
-    blockyfont = pygame.font.Font(blockyfontpath, int(height * 0.07))
-
-    chime = os.path.join(base_path, "extras", "chime1.mp3")
-    chime_sound = pygame.mixer.Sound(chime)
-
-
-    augusto_text = blockyfont.render(
-        "Augusto Santos, ajrsantos@novaims.unl.pt", True, white
-    )
-    diogo_text = blockyfont.render(
-        "Diogo Rastreio, drasteiro@novaims.unl.pt", True, white
-    )
-    liah_text = blockyfont.render(
-        "Liah Rosenfeld, lrosenfeld@novaims.unl.pt", True, white
-    )
-
-    def draw_button(color, hover_color, x_frac, y_frac, w_frac, h_frac, text, font):
-        x = width * x_frac
-        y = height * y_frac
-        w = width * w_frac
-        h = height * h_frac
-        current_color = hover_color if button_clicked(x_frac, y_frac, w_frac, h_frac) else color
-        
-        # Draw rounded rectangle for the button
-        pygame.draw.rect(screen, current_color, [x, y, w, h], border_radius=10)
-        
-        # Draw border for the button
-        border_color = white if button_clicked(x_frac, y_frac, w_frac, h_frac) else black
-        pygame.draw.rect(screen, border_color, [x, y, w, h], 2, border_radius=10)
-        
-        # Draw the text on the button
-        text_rect = text.get_rect(center=(x + w // 2, y + h // 2))
-        screen.blit(text, text_rect)
-
-    def button_clicked(x_frac, y_frac, w_frac, h_frac):
-        x = width * x_frac
-        y = height * y_frac
-        w = width * w_frac
-        h = height * h_frac
-        return x <= mouse[0] <= x + w and y <= mouse[1] <= y + h
-
-
-    while True:
-        mouse = pygame.mouse.get_pos()
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if width * 0.625 <= mouse[0] <= width * 0.75 and height * 0.833 <= mouse[1] <= height * 0.916:
-                    chime_sound.play()
-                    return
-
-        screen.fill(deep_black)
-        screen.blit(augusto_text, (width * 0.05, height * 0.1))
-        screen.blit(diogo_text, (width * 0.05, height * 0.15))
-        screen.blit(liah_text, (width * 0.05, height * 0.2))
-
-        draw_button(dark_red, glowing_light_red, 0.625, 0.833, 0.125, 0.083, blockyfont.render("Back", True, white), blockyfont)
-
-        pygame.display.update()
-
 
 
 def wilderness_explorer():

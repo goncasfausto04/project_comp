@@ -62,8 +62,6 @@ class Enemy(pygame.sprite.Sprite):
             self.rect.x -= int(self.speed * dx / distance)
             self.rect.y -= int(self.speed * dy / distance)
 
-
-
 class initialEnemy(Enemy):
             def __init__(self):
                 super().__init__()
@@ -71,6 +69,7 @@ class initialEnemy(Enemy):
                 self.speed = 2
                 self.damage = 10
                 self.color = (0, 255, 0)  # Green
+
 class fastEnemy(Enemy):
             def __init__(self):
                 super().__init__()
@@ -78,6 +77,7 @@ class fastEnemy(Enemy):
                 self.speed = random.randint(3, 4)
                 self.damage = 15
                 self.color = (255, 0, 0)  # Red
+
 class TankMonster(Enemy):
             def __init__(self):
                 super().__init__()
@@ -85,6 +85,7 @@ class TankMonster(Enemy):
                 self.speed = 2
                 self.damage = 10
                 self.color = (0, 0, 255)  # Blue
+
 class RangedMonster(Enemy):
             def __init__(self):
                 super().__init__()

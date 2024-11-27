@@ -4,7 +4,7 @@ from utils import *
 
 
 def main():
-    play_video(video_path,resolution)
+    play_video(video_path,resolution,sound_path)
     interface()
 
 

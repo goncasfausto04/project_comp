@@ -123,7 +123,9 @@ def under_construction():
         pygame.display.update()
     
 def pause_game(screen, width, height):
-    """Pauses the game and displays a 'Paused' message."""
+    
+    """Pauses the game and displays a 'Paused' message. """
+    
     # Set up the font
     font_path = os.path.join(base_path, "extras", "Pixeboy.ttf")
     font = pygame.font.Font(font_path, 100)
@@ -144,7 +146,10 @@ def pause_game(screen, width, height):
                 exit()
 
 
-def play_video(video_path, resolution):
+def play_video(video_path, resolution,sound_path):
+    
+    """ Play a video using Pygame and OpenCV. """
+
     # Initialize Pygame
     pygame.init()
 
@@ -162,9 +167,15 @@ def play_video(video_path, resolution):
     running = True
     clock = pygame.time.Clock()
 
+    #play sound
+    pygame.mixer.music.load(sound_path)
+    pygame.mixer.music.play()
+
+
     pygame.display.set_caption("Hit or Stand")
 
     while running:
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -196,3 +207,29 @@ def play_video(video_path, resolution):
 
 base_path = os.path.dirname(__file__)
 video_path = os.path.join(base_path, "extras", "intro.mp4")
+sound_path = os.path.join(base_path, "extras", "wind.mp3")
+
+def render_text_wrapped_from_surface(screen, text, font, color, x, y, max_width):
+   
+    """ Renders text dynamically across multiple lines if it exceeds max_width."""
+
+    words = text.split()  # Split the text into individual words
+    lines = []  # Store lines of text
+    current_line = ""  # Current line being built
+
+    for word in words:
+        # Check if adding the next word exceeds the maximum width
+        if font.size(current_line + word)[0] <= max_width:
+            current_line += word + " "
+        else:
+            lines.append(current_line)  # Save the current line
+            current_line = word + " "  # Start a new line
+
+    # Add the last line if there’s leftover text
+    if current_line:
+        lines.append(current_line)
+
+    # Render each line of text
+    for i, line in enumerate(lines):
+        line_surface = font.render(line, True, color)
+        screen.blit(line_surface, (x, y + i * font.size(line)[1]))  # Offset each line by its height

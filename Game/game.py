@@ -177,6 +177,7 @@ def execute_game(player, pet):
             return "shed"  # Transition to the shed
         if player.powerup_active:  # If the player is invincible
             collided_enemies = pygame.sprite.spritecollide(player, enemies, True)  # True removes enemy
+
             for enemy in collided_enemies:
                 enemy.kill()  # Remove enemy on collision
                 kills +=1
