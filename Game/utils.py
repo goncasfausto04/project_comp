@@ -242,15 +242,16 @@ def button_clicked(x_frac, y_frac, w_frac, h_frac, mouse):
     h = height * h_frac
     return x <= mouse[0] <= x + w and y <= mouse[1] <= y + h
 
-def draw_buttonutils(color, hover_color, x_frac, y_frac, w_frac, h_frac, text, font,mouse,screen):
+
+def draw_buttonutils(
+    color, hover_color, x_frac, y_frac, w_frac, h_frac, text, font, mouse, screen
+):
     x = width * x_frac
     y = height * y_frac
     w = width * w_frac
     h = height * h_frac
     current_color = (
-        hover_color
-        if button_clicked(x_frac, y_frac, w_frac, h_frac, mouse)
-        else color
+        hover_color if button_clicked(x_frac, y_frac, w_frac, h_frac, mouse) else color
     )
 
     # Draw rounded rectangle for the button

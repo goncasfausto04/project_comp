@@ -115,7 +115,6 @@ def interface():
             # Fill the screen with background
             screen.blit(background, (0, 0))
 
-           
             # Wilderness game button
             draw_buttonutils(
                 dark_red,
@@ -218,8 +217,6 @@ def options():
     chime_path = os.path.join(base_path, "extras", "chime1.mp3")
     chime_sound = pygame.mixer.Sound(chime_path)
 
-    
-
     # Main loop
     while True:
         # Get mouse position
@@ -268,7 +265,16 @@ def options():
 
         # Draw Back button
         draw_buttonutils(
-            dark_red, glowing_light_red, 0.3, 0.8, 0.4, 0.1, back_text, blockyfont,mouse,screen
+            dark_red,
+            glowing_light_red,
+            0.3,
+            0.8,
+            0.4,
+            0.1,
+            back_text,
+            blockyfont,
+            mouse,
+            screen,
         )
 
         # Draw static texts

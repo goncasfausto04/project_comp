@@ -27,7 +27,7 @@ class Pet(pygame.sprite.Sprite):
 
         # GAMEPLAY VARIABLES
         self.player = player  # Reference to the player
-        self.speed = 2.4  # Speed at which the pet moves towards the player
+        self.speed = 2.1  # Speed at which the pet moves towards the player
         self.health = 180
         self.max_health = 180
         self.min_distance = (

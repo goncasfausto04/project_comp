@@ -61,24 +61,61 @@ def shop(player):
 
         # Fill the screen with background
         screen.blit(background, (0, 0))
-        
 
         # Skins button
         draw_buttonutils(
-            dark_red, red, 0.125, 0.167, 0.125, 0.083, skins_text, blockyfontsmall, mouse, screen
+            dark_red,
+            red,
+            0.125,
+            0.167,
+            0.125,
+            0.083,
+            skins_text,
+            blockyfontsmall,
+            mouse,
+            screen,
         )
 
         # Weapons button
         draw_buttonutils(
-            dark_red, red, 0.125, 0.333, 0.125, 0.083, bullets_text, blockyfontsmall, mouse, screen
+            dark_red,
+            red,
+            0.125,
+            0.333,
+            0.125,
+            0.083,
+            bullets_text,
+            blockyfontsmall,
+            mouse,
+            screen,
         )
 
         # Pets button
-        draw_buttonutils(dark_red, red, 0.125, 0.5, 0.125, 0.083, pets_text, blockyfontsmall, mouse, screen)
+        draw_buttonutils(
+            dark_red,
+            red,
+            0.125,
+            0.5,
+            0.125,
+            0.083,
+            pets_text,
+            blockyfontsmall,
+            mouse,
+            screen,
+        )
 
         # Go back button
         draw_buttonutils(
-            dark_red, red, 0.625, 0.833, 0.125, 0.083, goback_text, blockyfontsmall, mouse, screen
+            dark_red,
+            red,
+            0.625,
+            0.833,
+            0.125,
+            0.083,
+            goback_text,
+            blockyfontsmall,
+            mouse,
+            screen,
         )
 
         # Update the screen
@@ -88,7 +125,9 @@ def shop(player):
 def weapons_shop(player):
     pygame.init()
     screen = pygame.display.set_mode(resolution)
-    blockyfont = pygame.font.Font(os.path.join(base_path, "extras", "Pixeboy.ttf"), int(height * 0.07))
+    blockyfont = pygame.font.Font(
+        os.path.join(base_path, "extras", "Pixeboy.ttf"), int(height * 0.07)
+    )
     background_path = os.path.join(base_path, "extras", "weaponshop.png")
     background = pygame.image.load(background_path)
     background = pygame.transform.scale(background, resolution)
@@ -149,9 +188,26 @@ def weapons_shop(player):
         machinegun_text = blockyfont.render("Machine Gun - $500", True, white)
         goback_text = blockyfont.render("Go Back", True, white)
 
-        draw_buttonutils(red, dark_red, 0.2, 0.3, 0.6, 0.1, pistol_text, blockyfont, mouse, screen)
-        draw_buttonutils(red, dark_red, 0.2, 0.45, 0.6, 0.1, shotgun_text, blockyfont, mouse, screen)
-        draw_buttonutils(red, dark_red, 0.2, 0.6, 0.6, 0.1, machinegun_text, blockyfont, mouse, screen)
-        draw_buttonutils(red, dark_red, 0.75, 0.85, 0.2, 0.1, goback_text, blockyfont, mouse, screen)
+        draw_buttonutils(
+            red, dark_red, 0.2, 0.3, 0.6, 0.1, pistol_text, blockyfont, mouse, screen
+        )
+        draw_buttonutils(
+            red, dark_red, 0.2, 0.45, 0.6, 0.1, shotgun_text, blockyfont, mouse, screen
+        )
+        draw_buttonutils(
+            red,
+            dark_red,
+            0.2,
+            0.6,
+            0.6,
+            0.1,
+            machinegun_text,
+            blockyfont,
+            mouse,
+            screen,
+        )
+        draw_buttonutils(
+            red, dark_red, 0.75, 0.85, 0.2, 0.1, goback_text, blockyfont, mouse, screen
+        )
 
         pygame.display.update()

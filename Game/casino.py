@@ -64,23 +64,60 @@ def casino(player):
         # Fill the screen with background
         screen.blit(background, (0, 0))
 
-
         # Skins button
         draw_buttonutils(
-            dark_red, red, 0.125, 0.167, 0.125, 0.083, skins_text, blockyfontsmall, mouse, screen
+            dark_red,
+            red,
+            0.125,
+            0.167,
+            0.125,
+            0.083,
+            skins_text,
+            blockyfontsmall,
+            mouse,
+            screen,
         )
 
         # Weapons button
         draw_buttonutils(
-            dark_red, red, 0.125, 0.333, 0.125, 0.083, bullets_text, blockyfontsmall, mouse, screen
+            dark_red,
+            red,
+            0.125,
+            0.333,
+            0.125,
+            0.083,
+            bullets_text,
+            blockyfontsmall,
+            mouse,
+            screen,
         )
 
         # Pets button
-        draw_buttonutils(dark_red, red, 0.125, 0.5, 0.125, 0.083, pets_text, blockyfontsmall, mouse, screen)
+        draw_buttonutils(
+            dark_red,
+            red,
+            0.125,
+            0.5,
+            0.125,
+            0.083,
+            pets_text,
+            blockyfontsmall,
+            mouse,
+            screen,
+        )
 
         # Go back button
         draw_buttonutils(
-            dark_red, red, 0.625, 0.833, 0.125, 0.083, goback_text, blockyfontsmall, mouse, screen
+            dark_red,
+            red,
+            0.625,
+            0.833,
+            0.125,
+            0.083,
+            goback_text,
+            blockyfontsmall,
+            mouse,
+            screen,
         )
 
         # Update the screen
