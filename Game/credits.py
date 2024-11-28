@@ -33,38 +33,6 @@ def credits_():
 
     body_text = "This game was developed as a project for the course of Computation 3, we hope you envjoy the gameplay as much we enjoyed to develop it!"
 
-    def draw_button(color, hover_color, x_frac, y_frac, w_frac, h_frac, text, font):
-        """Draws a button on the screen with the given parameters."""
-
-        x = width * x_frac
-        y = height * y_frac
-        w = width * w_frac
-        h = height * h_frac
-        current_color = (
-            hover_color if button_clicked(x_frac, y_frac, w_frac, h_frac) else color
-        )
-
-        # Draw rounded rectangle for the button
-        pygame.draw.rect(screen, current_color, [x, y, w, h], border_radius=10)
-
-        # Draw border for the button
-        border_color = (
-            white if button_clicked(x_frac, y_frac, w_frac, h_frac) else black
-        )
-        pygame.draw.rect(screen, border_color, [x, y, w, h], 2, border_radius=10)
-
-        # Draw the text on the button
-        text_rect = text.get_rect(center=(x + w // 2, y + h // 2))
-        screen.blit(text, text_rect)
-
-    def button_clicked(x_frac, y_frac, w_frac, h_frac):
-        """Returns True if the button is clicked, False otherwise."""
-
-        x = width * x_frac
-        y = height * y_frac
-        w = width * w_frac
-        h = height * h_frac
-        return x <= mouse[0] <= x + w and y <= mouse[1] <= y + h
 
     while True:
         mouse = pygame.mouse.get_pos()
@@ -100,7 +68,7 @@ def credits_():
             y=height * 0.71,
             max_width=width * 0.8,
         )
-        draw_button(
+        draw_buttonutils(
             dark_red,
             glowing_light_red,
             0.625,
@@ -109,6 +77,8 @@ def credits_():
             0.083,
             blockyfont.render("Back", True, white),
             blockyfont,
+            mouse,
+            screen,
         )
 
         pygame.display.update()
