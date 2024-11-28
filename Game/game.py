@@ -1,7 +1,7 @@
 import pygame
 from player import Player
 from enemy import *
-from shed import shed, topshed, bottomshed
+from shed import shed
 from pet import Pet  # Import the Pet class
 from utils import *
 import os
@@ -16,7 +16,7 @@ def game_loop():
     player = Player()
     bullets = pygame.sprite.Group()
     pet = Pet(player, bullets)  # Pass bullets group to the Pet
-    current_state = "shed"
+    current_state = "initial"
     
     # Play soundtrack
     pygame.mixer.music.load(random.choice(soundtrack))  # Load a random soundtrack
@@ -26,14 +26,16 @@ def game_loop():
     while True:
         if current_state == "main":
             current_state = execute_game(player, pet)
+        elif current_state == "initial":
+            current_state = shed(player, pet,(width * 0.5, height * 0.5))
         elif current_state == "shed":
-            current_state = shed(player, pet)
+            current_state = shed(player, pet,((width * 0.01), (height * 0.5)))
         elif current_state == "shop":
             current_state = shop(player)
         elif current_state == "shedshop":
-            current_state = topshed(player, pet)
+            current_state = shed(player, pet,((width *(1 - 0.170)),(height * 0.25)))
         elif current_state == "shedcasino":
-            current_state = bottomshed(player, pet)
+            current_state = shed(player, pet,((width *(1 - 0.170)),(height * 0.75)))
 
 
 
