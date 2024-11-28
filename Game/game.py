@@ -62,6 +62,16 @@ def execute_game(player, pet):
     health_drop_spawn_timer = 0  # Timer for health drops
     spawn_rate = 200  # Frames between spawn attempts (e.g., every ~3.3 seconds at 60 FPS)
     spawn_chance = 100  # Percentage rarity of power-up (lower is rarer, e.g., 10% here)
+    level = 1
+    exp = 0
+    exp_required = 10  # Experience needed for level 1
+    exp_multiplier = 1.2
+
+    bar_width = 600
+    bar_height = 30
+    bar_x = (width - bar_width) // 2
+    bar_y = 50
+
 
     game_time = 0
     game_time_frames = 0  # Tracks elapsed time in seconds
@@ -71,6 +81,18 @@ def execute_game(player, pet):
     damage_cooldown = 35  # Cooldown in frames (1 second at 60 FPS (if it was 60))
     player_cooldown = 0  # Tracks the remaining cooldown time for the player
     pet_cooldown = 0  # Tracks the remaining cooldown time for the pet
+
+    def draw_level_up_bar(screen):
+        # Draw the background bar (empty)
+        pygame.draw.rect(screen, deep_black, (bar_x, bar_y, bar_width, bar_height))
+
+        # Calculate the width of the filled part of the bar
+        fill_width = (exp / exp_required) * bar_width
+        pygame.draw.rect(screen, green, (bar_x, bar_y, fill_width, bar_height))
+
+        # Draw the text showing the current level and experience
+        level_text = font.render(f'Level: {level}  EXP: {exp}/{int(exp_required)}', True, white)
+        screen.blit(level_text, (width // 2 - level_text.get_width() // 2, bar_y + bar_height + 10))
 
     while running:
         clock.tick(fps)
@@ -102,6 +124,13 @@ def execute_game(player, pet):
 
         for enemy in enemies:
             enemy.draw(screen)  # Call the draw method for each enemy
+
+        if exp >= exp_required:
+            level += 1
+            exp -= exp_required
+            exp_required = int(exp_required * exp_multiplier)  # Increase the XP required for the next level
+            player.max_health += 10
+            pet.health = pet.max_health
 
         # Detect collision and apply damage
         for enemy in enemies:
@@ -198,6 +227,7 @@ def execute_game(player, pet):
             for enemy in collided_enemies:
                 enemy.kill()  # Remove enemy on collision
                 kills += 1
+                exp += 1
 
         # drawing the player and enemies sprites on the screen
         player_group.draw(screen)
@@ -213,8 +243,10 @@ def execute_game(player, pet):
                 if enemy.health <= 0:
                     enemy.kill()
                     kills += 1
+                    exp += 1
 
         # Draw game objects
+        draw_level_up_bar(screen)
         player_group.draw(screen)
         enemies.draw(screen)
         pet_group.draw(screen)
