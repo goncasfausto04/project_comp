@@ -1,14 +1,1 @@
 
-handle volume because it resets 
-same with resolution
-
-handle the intro so it doesnt start and stop pygame
-
-save states?? save settings??
-
-what to put on rules? its a game like tf?!?! Can we put any other stuff there for example a tutorial
-
-how to apply the casino games, if hard fuck it we ball 
-
-is the way we handle the leaving the shop correct?
-

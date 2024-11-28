@@ -8,6 +8,7 @@ import os
 from powerup import *
 import random
 from shop import shop
+import config
 
 
 #endless loop that will keep the game running
@@ -20,7 +21,7 @@ def game_loop():
     
     # Play soundtrack
     pygame.mixer.music.load(random.choice(soundtrack))  # Load a random soundtrack
-    pygame.mixer.music.set_volume(music_volume)  # Set the desired volume
+    pygame.mixer.music.set_volume(config.music_volume)  # Set the desired volume
     pygame.mixer.music.play(-1)  # Loop the soundtrack indefinitely
 
     while True:

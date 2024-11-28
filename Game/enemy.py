@@ -26,6 +26,8 @@ class Enemy(pygame.sprite.Sprite):
         # Draw the enemy using its color attribute
         self.image.fill(self.color)
         screen.blit(self.image, self.rect)
+
+        
     def update(self, player):
         """
         receiving the player as input so that we can assure the enemies have the players' direction

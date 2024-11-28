@@ -5,6 +5,7 @@ from utils import *  # no need to import pygame because the import is in utils
 from config import *  # importing colors and the like
 import os
 from credits import credits_
+import config
 
 def interface():
     # Initialize pygame
@@ -143,7 +144,6 @@ def wilderness_explorer():
     game_loop()
 
 def options():
-    global resolution, width, height  # Allow modification of global variables
 
     # Initialize the screen for options
     screen = pygame.display.set_mode(resolution)
@@ -165,6 +165,14 @@ def options():
     chime_path = os.path.join(base_path, "extras", "chime1.mp3")
     chime_sound = pygame.mixer.Sound(chime_path)
 
+    #resolution buttons
+    resolution_text = blockyfontsmall.render("Resolution", True, white)
+    resolution_text1 = blockyfontsmall.render("1024x576", True, white)
+    resolution_text2 = blockyfontsmall.render("1280x720", True, white)
+    resolution_text3 = blockyfontsmall.render("1366x768", True, white)
+    resolution_text4 = blockyfontsmall.render("1600x900", True, white)
+
+
     def draw_button(color, hover_color, x_frac, y_frac, w_frac, h_frac, text, font):
         x = width * x_frac
         y = height * y_frac
@@ -182,6 +190,8 @@ def options():
         # Draw the text on the button
         text_rect = text.get_rect(center=(x + w // 2, y + h // 2))
         screen.blit(text, text_rect)
+
+
 
     def button_clicked(x_frac, y_frac, w_frac, h_frac):
         x = width * x_frac
@@ -208,7 +218,9 @@ def options():
                     # Map the mouse x-position to the volume level within the range [0, max_volume]
                     relative_position = (mouse[0] - volume_bar.x) / volume_bar.width
                     volume_level = max(0, min(relative_position * max_volume, max_volume))
+                    config.music_volume = volume_level
                     pygame.mixer.music.set_volume(volume_level)
+                
 
                 # Back button click
                 back_button = pygame.Rect(width * 0.3, height * 0.8, width * 0.4, height * 0.1)
