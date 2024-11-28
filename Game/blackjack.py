@@ -3,15 +3,22 @@ import random
 import time
 from config import *
 from player import Player
+import config
 
 
 
 
 def blackjack(player):
+
+
     # Initialize Pygame
     pygame.init()
 
     # Screen settings
+
+    # Get the current resolution from config
+    resolution = config.resolution
+    width, height = resolution[0], resolution[1]
 
     WIDTH = resolution[0]
     HEIGHT = resolution[1]

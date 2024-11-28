@@ -2,12 +2,17 @@ import pygame
 import random
 from config import *
 from player import Player
+import config
 
 
 def slots(player):
 
         # Initialize Pygame
     pygame.init()
+
+    # Get the current resolution from config
+    resolution = config.resolution
+    width, height = resolution[0], resolution[1]
 
     # Screen settings (16:9 aspect ratio)
     WIDTH = resolution[0]
