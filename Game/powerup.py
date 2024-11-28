@@ -15,6 +15,7 @@ class PowerUp(pygame.sprite.Sprite):
         # You can add movement or other effects here if needed
         pass
 
+
 class HealthDrop(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()

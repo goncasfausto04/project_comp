@@ -8,6 +8,7 @@ from player import Player
 from blackjack import blackjack
 from slots import slots
 
+
 def casino(player):
     # Initialize pygame
     pygame.init()
@@ -29,7 +30,6 @@ def casino(player):
     goback_text = blockyfontsmall.render("Go Back", True, white)
     title_text = blockyfont.render("Shopping Street", True, glowing_light_red)
 
-
     # Render background
     background_path = os.path.join(base_path, "extras", "casinobg.png")
     background = pygame.image.load(background_path)
@@ -48,44 +48,40 @@ def casino(player):
                 # Skins button
                 if button_clicked(0.125, 0.167, 0.125, 0.083, mouse):
                     slots(player)
-                
+
                 # Weapons button
                 if button_clicked(0.125, 0.333, 0.125, 0.083, mouse):
                     blackjack(player)
-                
+
                 # Pets button
                 if button_clicked(0.125, 0.5, 0.125, 0.083, mouse):
                     under_construction()
 
                 # Go back button
                 if button_clicked(0.625, 0.833, 0.125, 0.083, mouse):
-                    return "shedcasino" # Exit the shop
+                    return "shedcasino"  # Exit the shop
 
         # Fill the screen with background
         screen.blit(background, (0, 0))
 
-        # Draw buttons with hover effect
-        def draw_button(color, hover_color, x_frac, y_frac, w_frac, h_frac, text, font):
-            x = width * x_frac
-            y = height * y_frac
-            w = width * w_frac
-            h = height * h_frac
-            current_color = hover_color if button_clicked(x_frac, y_frac, w_frac, h_frac, mouse) else color
-            pygame.draw.rect(screen, current_color, [x, y, w, h])
-            text_rect = text.get_rect(center=(x + w // 2, y + h // 2))
-            screen.blit(text, text_rect)
 
         # Skins button
-        draw_button(dark_red, red, 0.125, 0.167, 0.125, 0.083, skins_text, blockyfontsmall)
+        draw_buttonutils(
+            dark_red, red, 0.125, 0.167, 0.125, 0.083, skins_text, blockyfontsmall, mouse, screen
+        )
 
         # Weapons button
-        draw_button(dark_red, red, 0.125, 0.333, 0.125, 0.083, bullets_text, blockyfontsmall)
+        draw_buttonutils(
+            dark_red, red, 0.125, 0.333, 0.125, 0.083, bullets_text, blockyfontsmall, mouse, screen
+        )
 
         # Pets button
-        draw_button(dark_red, red, 0.125, 0.5, 0.125, 0.083, pets_text, blockyfontsmall)
+        draw_buttonutils(dark_red, red, 0.125, 0.5, 0.125, 0.083, pets_text, blockyfontsmall, mouse, screen)
 
         # Go back button
-        draw_button(dark_red, red, 0.625, 0.833, 0.125, 0.083, goback_text, blockyfontsmall)
+        draw_buttonutils(
+            dark_red, red, 0.625, 0.833, 0.125, 0.083, goback_text, blockyfontsmall, mouse, screen
+        )
 
         # Update the screen
         pygame.display.update()

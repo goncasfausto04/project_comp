@@ -11,14 +11,14 @@ from shop import shop
 import config
 
 
-#endless loop that will keep the game running
+# endless loop that will keep the game running
 def game_loop():
     # Initialize player and other game components
     player = Player()
     bullets = pygame.sprite.Group()
     pet = Pet(player, bullets)  # Pass bullets group to the Pet
     current_state = "initial"
-    
+
     # Play soundtrack
     pygame.mixer.music.load(random.choice(soundtrack))  # Load a random soundtrack
     pygame.mixer.music.set_volume(config.music_volume)  # Set the desired volume
@@ -28,16 +28,15 @@ def game_loop():
         if current_state == "main":
             current_state = execute_game(player, pet)
         elif current_state == "initial":
-            current_state = shed(player, pet,(width * 0.5, height * 0.5))
+            current_state = shed(player, pet, (width * 0.5, height * 0.5))
         elif current_state == "shed":
-            current_state = shed(player, pet,((width * 0.01), (height * 0.5)))
+            current_state = shed(player, pet, ((width * 0.01), (height * 0.5)))
         elif current_state == "shop":
             current_state = shop(player)
         elif current_state == "shedshop":
-            current_state = shed(player, pet,((width *(1 - 0.170)),(height * 0.25)))
+            current_state = shed(player, pet, ((width * (1 - 0.170)), (height * 0.25)))
         elif current_state == "shedcasino":
-            current_state = shed(player, pet,((width *(1 - 0.170)),(height * 0.75)))
-
+            current_state = shed(player, pet, ((width * (1 - 0.170)), (height * 0.75)))
 
 
 def execute_game(player, pet):
@@ -61,13 +60,15 @@ def execute_game(player, pet):
 
     powerup_spawn_timer = 0  # Timer for power-ups
     health_drop_spawn_timer = 0  # Timer for health drops
-    spawn_rate = 200  # Frames between spawn attempts (e.g., every ~3.3 seconds at 60 FPS)
+    spawn_rate = (
+        200  # Frames between spawn attempts (e.g., every ~3.3 seconds at 60 FPS)
+    )
     spawn_chance = 100  # Percentage rarity of power-up (lower is rarer, e.g., 10% here)
 
     game_time = 0
     game_time_frames = 0  # Tracks elapsed time in seconds
     kills = 0  # Tracks the number of kills
-    font = pygame.font.SysFont('Arial', 30)  # Font for rendering text
+    font = pygame.font.SysFont("Arial", 30)  # Font for rendering text
 
     damage_cooldown = 35  # Cooldown in frames (1 second at 60 FPS (if it was 60))
     player_cooldown = 0  # Tracks the remaining cooldown time for the player
@@ -80,7 +81,9 @@ def execute_game(player, pet):
         total_seconds = game_time_frames // fps  # Convert frames to seconds
         minutes = total_seconds // 60  # Calculate minutes
         seconds = total_seconds % 60  # Calculate seconds
-        timer_text = font.render(f"Time: {minutes:02}:{seconds:02}", True, white)  # Format MM:SS
+        timer_text = font.render(
+            f"Time: {minutes:02}:{seconds:02}", True, white
+        )  # Format MM:SS
 
         # Handle events
         for event in pygame.event.get():
@@ -89,7 +92,7 @@ def execute_game(player, pet):
                 exit()
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 pause_game(screen, width, height)
-            
+
         # Handle changing bullet type (check for 1, 2, or 3 key press)
         keys = pygame.key.get_pressed()
         player.change_bullet_type(keys)
@@ -140,7 +143,12 @@ def execute_game(player, pet):
         if enemy_cooldown <= 0:
             # Define enemy types and their weights
             enemy_types = [initialEnemy, fastEnemy, TankMonster, RangedMonster]
-            spawn_weights = [50, 20, 15, 15]  # Probabilities for each type (adjust as needed)
+            spawn_weights = [
+                50,
+                20,
+                15,
+                15,
+            ]  # Probabilities for each type (adjust as needed)
 
             # Randomly select an enemy type based on weighted probability
             enemy_type = random.choices(enemy_types, weights=spawn_weights, k=1)[0]
@@ -180,10 +188,14 @@ def execute_game(player, pet):
         for item in collected_powerups:
             if isinstance(item, PowerUp):  # Activate power-up
                 player.activate_powerup()
-            elif isinstance(item, HealthDrop):  # Increase health, but not above max health
+            elif isinstance(
+                item, HealthDrop
+            ):  # Increase health, but not above max health
                 player.health = min(player.health + 20, player.max_health)
 
-        if pygame.sprite.spritecollide(player, powerups_group, True):  # True removes power-up
+        if pygame.sprite.spritecollide(
+            player, powerups_group, True
+        ):  # True removes power-up
             player.activate_powerup()  # Activate invincibility for the player
 
         # updating positions and visuals
@@ -194,7 +206,9 @@ def execute_game(player, pet):
         if player.rect.right >= width:
             return "shed"  # Transition to the shed
         if player.powerup_active:  # If the player is invincible
-            collided_enemies = pygame.sprite.spritecollide(player, enemies, True)  # True removes enemy
+            collided_enemies = pygame.sprite.spritecollide(
+                player, enemies, True
+            )  # True removes enemy
 
             for enemy in collided_enemies:
                 enemy.kill()  # Remove enemy on collision
@@ -230,6 +244,7 @@ def execute_game(player, pet):
         pygame.display.flip()
 
         pygame.display.flip()
+
 
 # Se o enemy for contra ti, ele n pode levar 1 de dano (como se fosse uma bala), ele morre instantaneamente
 # Em vez de power ups, podiamos por a vida do pet a regenerar um x valor de y em y tempo

@@ -39,6 +39,7 @@ class Bullet(pygame.sprite.Sprite):
         # drawing the bullet on the screen
         pygame.draw.circle(screen, self.color, self.rect.center, self.radius)
 
+
 # creating 3 different types of bullets
 class pistol(Bullet):
     def __init__(self, x, y, direction):
@@ -46,17 +47,20 @@ class pistol(Bullet):
         self.color = red
         self.speed = 7
 
+
 class shotgun(Bullet):
     def __init__(self, x, y, direction):
         super().__init__(x, y, direction)
         self.color = blue
         self.speed = 7
 
+
 class machinegun(Bullet):
     def __init__(self, x, y, direction):
         super().__init__(x, y, direction)
         self.color = green
         self.speed = 7
+
 
 class pet_bullet(Bullet):
     def __init__(self, x, y, direction):

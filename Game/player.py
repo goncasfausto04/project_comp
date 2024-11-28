@@ -6,7 +6,6 @@ from bullet import Bullet
 from bullet import pistol, shotgun, machinegun
 
 
-
 # making Player a child of the Sprite class
 class Player(pygame.sprite.Sprite):
 
@@ -28,7 +27,11 @@ class Player(pygame.sprite.Sprite):
         self.max_health = 100
         self.bullet_cooldown = 0
         self.bullet_type = "pistol"
-        self.fire_rate = {"pistol": 50, "shotgun": 90, "machinegun": 20}  # Cooldown in frames
+        self.fire_rate = {
+            "pistol": 50,
+            "shotgun": 90,
+            "machinegun": 20,
+        }  # Cooldown in frames
         self.coins = 400
 
         self.powerup_active = False
@@ -42,6 +45,7 @@ class Player(pygame.sprite.Sprite):
         self.powerup_active = True
         self.powerup_timer = 15 * fps  # 15 seconds worth of frames
         self.image.fill(dark_red)
+
     def update(self):
 
         # getting the keys input:
@@ -62,7 +66,6 @@ class Player(pygame.sprite.Sprite):
                 self.powerup_active = False  # Deactivate power-up
                 self.image.fill(cute_purple)  # Revert to original color
 
-
     def change_bullet_type(self, keys):
         if keys[pygame.K_1]:
             self.bullet_type = "pistol"
@@ -77,8 +80,11 @@ class Player(pygame.sprite.Sprite):
         """
         # cooldown ==> how many frames i need to wait until i can shoot again
         if self.bullet_cooldown <= 0:
-            bullet_class = {"pistol": pistol, "shotgun": shotgun, "machinegun": machinegun}[self.bullet_type]
-
+            bullet_class = {
+                "pistol": pistol,
+                "shotgun": shotgun,
+                "machinegun": machinegun,
+            }[self.bullet_type]
 
             # === defining the directions in wich the bullets will fly ===
             # These 4 directions are, in order, right, left, up, down
@@ -112,4 +118,6 @@ class Player(pygame.sprite.Sprite):
         # Draw the red background (full bar)
         pygame.draw.rect(screen, red, (bar_x, bar_y, bar_width, bar_height))
         # Draw the green foreground (current health)
-        pygame.draw.rect(screen, green, (bar_x, bar_y, int(bar_width * health_ratio), bar_height))
+        pygame.draw.rect(
+            screen, green, (bar_x, bar_y, int(bar_width * health_ratio), bar_height)
+        )

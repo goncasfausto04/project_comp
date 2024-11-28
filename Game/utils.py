@@ -61,6 +61,7 @@ def draw_normal_stick_figure(screen, x, y):
         screen, (255, 255, 255), (x, y + 60), (x + 20, y + 100), 2
     )  # Right leg
 
+
 def under_construction():
 
     # creating the screen at 720x720 pixels
@@ -120,11 +121,11 @@ def under_construction():
 
         # finally, as always, updating the screen
         pygame.display.update()
-    
+
+
 def pause_game(screen, width, height):
-    
-    """Pauses the game and displays a 'Paused' message. """
-    
+    """Pauses the game and displays a 'Paused' message."""
+
     # Set up the font
     font_path = os.path.join(base_path, "extras", "Pixeboy.ttf")
     font = pygame.font.Font(font_path, 100)
@@ -144,9 +145,9 @@ def pause_game(screen, width, height):
                 pygame.quit()
                 exit()
 
-def play_video(video_path, resolution,sound_path):
-    
-    """ Play a video using Pygame and OpenCV. """
+
+def play_video(video_path, resolution, sound_path):
+    """Play a video using Pygame and OpenCV."""
 
     # Initialize Pygame
     pygame.init()
@@ -159,16 +160,15 @@ def play_video(video_path, resolution,sound_path):
 
     # Set up the Pygame window
     screen = pygame.display.set_mode(resolution)
-    pygame.display.set_caption('Video Player')
+    pygame.display.set_caption("Video Player")
 
     # Main loop
     running = True
     clock = pygame.time.Clock()
 
-    #play sound
+    # play sound
     pygame.mixer.music.load(sound_path)
     pygame.mixer.music.play()
-
 
     pygame.display.set_caption("Hit or Stand")
 
@@ -207,9 +207,9 @@ base_path = os.path.dirname(__file__)
 video_path = os.path.join(base_path, "extras", "intro.mp4")
 sound_path = os.path.join(base_path, "extras", "wind.mp3")
 
+
 def render_text_wrapped_from_surface(screen, text, font, color, x, y, max_width):
-   
-    """ Renders text dynamically across multiple lines if it exceeds max_width."""
+    """Renders text dynamically across multiple lines if it exceeds max_width."""
 
     words = text.split()  # Split the text into individual words
     lines = []  # Store lines of text
@@ -230,7 +230,10 @@ def render_text_wrapped_from_surface(screen, text, font, color, x, y, max_width)
     # Render each line of text
     for i, line in enumerate(lines):
         line_surface = font.render(line, True, color)
-        screen.blit(line_surface, (x, y + i * font.size(line)[1]))  # Offset each line by its height
+        screen.blit(
+            line_surface, (x, y + i * font.size(line)[1])
+        )  # Offset each line by its height
+
 
 def button_clicked(x_frac, y_frac, w_frac, h_frac, mouse):
     x = width * x_frac
@@ -238,3 +241,27 @@ def button_clicked(x_frac, y_frac, w_frac, h_frac, mouse):
     w = width * w_frac
     h = height * h_frac
     return x <= mouse[0] <= x + w and y <= mouse[1] <= y + h
+
+def draw_buttonutils(color, hover_color, x_frac, y_frac, w_frac, h_frac, text, font,mouse,screen):
+    x = width * x_frac
+    y = height * y_frac
+    w = width * w_frac
+    h = height * h_frac
+    current_color = (
+        hover_color
+        if button_clicked(x_frac, y_frac, w_frac, h_frac, mouse)
+        else color
+    )
+
+    # Draw rounded rectangle for the button
+    pygame.draw.rect(screen, current_color, [x, y, w, h], border_radius=10)
+
+    # Draw border for the button
+    border_color = (
+        white if button_clicked(x_frac, y_frac, w_frac, h_frac, mouse) else black
+    )
+    pygame.draw.rect(screen, border_color, [x, y, w, h], 2, border_radius=10)
+
+    # Draw the text on the button
+    text_rect = text.get_rect(center=(x + w // 2, y + h // 2))
+    screen.blit(text, text_rect)
