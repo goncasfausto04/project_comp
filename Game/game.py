@@ -67,10 +67,10 @@ def execute_game(player, pet):
     exp_required = 10  # Experience needed for level 1
     exp_multiplier = 1.2
 
-    bar_width = 600
-    bar_height = 30
+    bar_width = 300
+    bar_height = 10
     bar_x = (width - bar_width) // 2
-    bar_y = 50
+    bar_y = height - bar_height - 50
 
 
     game_time = 0
