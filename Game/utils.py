@@ -231,3 +231,10 @@ def render_text_wrapped_from_surface(screen, text, font, color, x, y, max_width)
     for i, line in enumerate(lines):
         line_surface = font.render(line, True, color)
         screen.blit(line_surface, (x, y + i * font.size(line)[1]))  # Offset each line by its height
+
+def button_clicked(x_frac, y_frac, w_frac, h_frac, mouse):
+    x = width * x_frac
+    y = height * y_frac
+    w = width * w_frac
+    h = height * h_frac
+    return x <= mouse[0] <= x + w and y <= mouse[1] <= y + h

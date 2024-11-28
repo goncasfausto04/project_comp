@@ -1,42 +1,3 @@
-import pygame
-from player import Player
-from enemy import *
-from shed import shed, topshed, bottomshed
-from pet import Pet  # Import the Pet class
-from utils import *
-import os
-from powerup import *
-import random
-from shop import shop
-
-
-#endless loop that will keep the game running
-def game_loop():
-    # Initialize player and other game components
-    player = Player()
-    bullets = pygame.sprite.Group()
-    pet = Pet(player, bullets)  # Pass bullets group to the Pet
-    current_state = "shed"
-    
-    # Play soundtrack
-    pygame.mixer.music.load(random.choice(soundtrack))  # Load a random soundtrack
-    pygame.mixer.music.set_volume(music_volume)  # Set the desired volume
-    pygame.mixer.music.play(-1)  # Loop the soundtrack indefinitely
-
-    while True:
-        if current_state == "main":
-            current_state = execute_game(player, pet)
-        elif current_state == "shed":
-            current_state = shed(player, pet)
-        elif current_state == "shop":
-            current_state = shop(player)
-        elif current_state == "shedshop":
-            current_state = topshed(player, pet)
-        elif current_state == "shedcasino":
-            current_state = bottomshed(player, pet)
-
-
-
 def execute_game(player, pet):
     base_path = os.path.dirname(__file__)
     background_path = os.path.join(base_path, "extras", "ImageBackground.jpg")
@@ -67,9 +28,9 @@ def execute_game(player, pet):
     font = pygame.font.SysFont('Arial', 30)  # Font for rendering text
 
     damage_cooldown = 35  # Cooldown in frames (1 second at 60 FPS (if it was 60))
-    player_cooldown = 0  # Tracks the remaining cooldown time for the player
-    pet_cooldown = 0  # Tracks the remaining cooldown time for the pet
+    current_cooldown = 0  # Tracks the remaining cooldown time    
 
+    
     while running:
         clock.tick(fps)
 
@@ -102,34 +63,34 @@ def execute_game(player, pet):
             enemy.draw(screen)  # Call the draw method for each enemy
 
         # Detect collision and apply damage
+      
         for enemy in enemies:
             enemy.move_towards_player(player)  # Move towards the player
+            # enemy.handle_collision_with_player(player)  # Prevent overlap
 
         collided_enemies = pygame.sprite.spritecollide(player, enemies, False)
 
-        if collided_enemies and player_cooldown <= 0:
+        if collided_enemies and current_cooldown <= 0:
             # Apply damage once for all collisions in the frame
             total_damage = sum(enemy.damage for enemy in collided_enemies)
             player.health -= total_damage
-            pet.health -= total_damage / 3
-            player_cooldown = damage_cooldown  # Reset the player's cooldown
+            pet.health -= total_damage/3
+            current_cooldown = damage_cooldown  # Reset the cooldown
+
 
         collided_enemies = pygame.sprite.spritecollide(pet, enemies, False)
 
-        if collided_enemies and pet_cooldown <= 0:
+        if collided_enemies and current_cooldown <= 0:
             # Apply damage once for all collisions in the frame
             total_damage = sum(enemy.damage for enemy in collided_enemies)
             pet.health -= total_damage
-            pet_cooldown = damage_cooldown  # Reset the pet's cooldown
+            current_cooldown = damage_cooldown  # Reset the cooldown
 
-        if player_cooldown > 0:
-            player_cooldown -= 1  # Reduce player's cooldown by 1 each frame
-
-        if pet_cooldown > 0:
-            pet_cooldown -= 1  # Reduce pet's cooldown by 1 each frame
+        if current_cooldown > 0:
+            current_cooldown -= 1  # Reduce cooldown by 1 each frame
 
         # Update player color to indicate damage state
-        if player_cooldown > 0:  # Player is in cooldown (damaged recently)
+        if current_cooldown > 0:  # Player is in cooldown (damaged recently)
             player.image.fill((255, 0, 0))  # Red
         else:
             player.image.fill((0, 255, 0))  # Green
@@ -151,6 +112,9 @@ def execute_game(player, pet):
             # Reset the cooldown
             enemy_cooldown = 2 * fps
         # Update the enemy cooldown
+        enemy_cooldown -= 1
+
+        # updating the enemy cooldown
         enemy_cooldown -= 1
 
         powerup_spawn_timer += 1
@@ -184,6 +148,7 @@ def execute_game(player, pet):
             player.activate_powerup()  # Activate invincibility for the player
 
         # updating positions and visuals
+        #calling the .update() method of all the instances in the player group
         player_group.update()
         bullets.update()
         enemies.update(player)
@@ -195,7 +160,7 @@ def execute_game(player, pet):
 
             for enemy in collided_enemies:
                 enemy.kill()  # Remove enemy on collision
-                kills += 1
+                kills +=1
 
         # drawing the player and enemies sprites on the screen
         player_group.draw(screen)
@@ -211,8 +176,8 @@ def execute_game(player, pet):
                 if enemy.health <= 0:
                     enemy.kill()
                     kills += 1
-
         # Draw game objects
+
         player_group.draw(screen)
         enemies.draw(screen)
         pet_group.draw(screen)
@@ -227,6 +192,8 @@ def execute_game(player, pet):
         pygame.display.flip()
 
         pygame.display.flip()
+
+
 
 # Se o enemy for contra ti, ele n pode levar 1 de dano (como se fosse uma bala), ele morre instantaneamente
 # Em vez de power ups, podiamos por a vida do pet a regenerar um x valor de y em y tempo

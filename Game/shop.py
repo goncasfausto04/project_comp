@@ -7,13 +7,6 @@ from game import *
 from player import Player
 
 
-def button_clicked(x_frac, y_frac, w_frac, h_frac, mouse):
-    x = width * x_frac
-    y = height * y_frac
-    w = width * w_frac
-    h = height * h_frac
-    return x <= mouse[0] <= x + w and y <= mouse[1] <= y + h
-
 def shop(player):
     # Initialize pygame
     pygame.init()
@@ -100,7 +93,7 @@ def weapons_shop(player):
     pygame.init()
     screen = pygame.display.set_mode(resolution)
     font = pygame.font.SysFont("Corbel", int(height * 0.07))
-    background_path = os.path.join(base_path, "extras", "casino.png")
+    background_path = os.path.join(base_path, "extras", "weaponshop.png")
     background = pygame.image.load(background_path)
     background = pygame.transform.scale(background, resolution)
 

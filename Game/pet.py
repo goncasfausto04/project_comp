@@ -43,6 +43,12 @@ class Pet(pygame.sprite.Sprite):
             self.rect.x += int(self.speed * math.cos(direction))
             self.rect.y += int(self.speed * math.sin(direction))
 
+        # Make pet go back when colliding with player
+        if self.rect.colliderect(self.player.rect):
+            direction = math.atan2(dy, dx)  # Calculate direction again
+            self.rect.x -= int(self.speed * math.cos(direction))
+            self.rect.y -= int(self.speed * math.sin(direction))
+        
 
     def pet_shoot(self, bullets):
         """
