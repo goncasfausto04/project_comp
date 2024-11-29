@@ -10,6 +10,8 @@ import random
 from shop import shop
 
 
+
+
 #endless loop that will keep the game running
 def game_loop():
     # Initialize player and other game components
@@ -22,6 +24,10 @@ def game_loop():
     pygame.mixer.music.load(random.choice(soundtrack))  # Load a random soundtrack
     pygame.mixer.music.set_volume(music_volume)  # Set the desired volume
     pygame.mixer.music.play(-1)  # Loop the soundtrack indefinitely
+
+    spawn_interval = 2 * fps  # Intervalo inicial entre spawns (2 segundos)
+    phase_duration = 30  # Duração de cada fase em segundos
+    current_phase = 0  # Fase inicial do jogo
 
     while True:
         if current_state == "main":
@@ -36,7 +42,6 @@ def game_loop():
             current_state = shed(player, pet,((width *(1 - 0.170)),(height * 0.25)))
         elif current_state == "shedcasino":
             current_state = shed(player, pet,((width *(1 - 0.170)),(height * 0.75)))
-
 
 
 def execute_game(player, pet):
@@ -80,6 +85,7 @@ def execute_game(player, pet):
         minutes = total_seconds // 60  # Calculate minutes
         seconds = total_seconds % 60  # Calculate seconds
         timer_text = font.render(f"Time: {minutes:02}:{seconds:02}", True, white)  # Format MM:SS
+
 
         # Handle events
         for event in pygame.event.get():
@@ -136,23 +142,65 @@ def execute_game(player, pet):
         else:
             player.image.fill((0, 255, 0))  # Green
 
+        # Enemies spawn rate
+
+        enemy_types = [initialEnemy, fastEnemy, TankMonster, RangedMonster,DuplicateMonster]
         if enemy_cooldown <= 0:
-            # Define enemy types and their weights
-            enemy_types = [initialEnemy, fastEnemy, TankMonster, RangedMonster]
-            spawn_weights = [50, 20, 15, 15]  # Probabilities for each type (adjust as needed)
+            # Ajuste da taxa de spawn e do número de inimigos baseados no tempo de jogo
+            if total_seconds < 60:  # Menos de 1 minuto
+                spawn_weights = [70, 20, 10, 0, 0]  # Maioria initialEnemy, nada de RangedMonster
+                num_enemies_to_spawn = 1  # Spawn 1 enemy
+                enemy_cooldown = 2 * fps  # Taxa de spawn mais lenta
+            elif total_seconds < 120:  # Entre 1 e 2 minutos
+                spawn_weights = [50, 30, 15, 5, 0]  # Mais fastEnemy e TankMonster
+                num_enemies_to_spawn = 1
+                enemy_cooldown = int(1.8 * fps)  # Aumenta a taxa de spawn
+            elif total_seconds < 180:  # Entre 2 e 3 minutos
+                spawn_weights = [40, 30, 20, 10, 5]  # Equilibrado entre todos os tipos
+                num_enemies_to_spawn = 2
+                enemy_cooldown = int(1.5 * fps)  # Taxa de spawn mais rápida
+            elif total_seconds < 240:  # Entre 3 e 4 minutos
+                spawn_weights = [30, 30, 25, 15, 5]  # Mais TankMonster e RangedMonster
+                num_enemies_to_spawn = 2
+                enemy_cooldown = int(1.3 * fps)  # Taxa de spawn bem rápida
+            elif total_seconds < 300:  # Entre 4 e 5 minutos
+                spawn_weights = [25, 25, 30, 20, 10]  # Balanceado, mais RangedMonster
+                num_enemies_to_spawn = 3
+                enemy_cooldown = int(1.1 * fps)  # Taxa de spawn muito rápida
+            elif total_seconds < 360:
+                spawn_weights = [20, 25, 30, 25, 15]  # Introduz mais RangedMonster e TankMonster
+                num_enemies_to_spawn = 3
+                enemy_cooldown = fps  # Taxa de spawn máxima
+            elif total_seconds < 420:
+                spawn_weights = [20, 20, 30, 30, 20]  # Maioria TankMonster e RangedMonster
+                num_enemies_to_spawn = 4
+                enemy_cooldown = fps  # Spawn a cada frame
+            elif total_seconds < 480:
+                spawn_weights = [15, 15, 35, 35, 20]  # Foco em TankMonster e RangedMonster
+                num_enemies_to_spawn = 4
+                enemy_cooldown = fps  # Spawn contínuo
+            elif total_seconds < 540:
+                spawn_weights = [10, 10, 40, 40,
+                                 25]  # Poucos initialEnemy e fastEnemy, muitos TankMonster e RangedMonster
+                num_enemies_to_spawn = 4
+                enemy_cooldown = fps  # Spawn em cada frame
+            else:  # Depois de 9 minutos
+                spawn_weights = [5, 5, 45, 45, 35]  # Prioriza os inimigos mais fortes
+                num_enemies_to_spawn = 5
+                enemy_cooldown = int(fps * 0.8)  # Spawn super rápido
 
-            # Randomly select an enemy type based on weighted probability
-            enemy_type = random.choices(enemy_types, weights=spawn_weights, k=1)[0]
+            # Seleciona e cria os inimigos de acordo com a quantidade determinada
+            for _ in range(num_enemies_to_spawn):
+                # Seleciona aleatoriamente o tipo de inimigo baseado nos pesos ajustados
+                enemy_type = random.choices(enemy_types, weights=spawn_weights, k=1)[0]
 
-            # Create an instance of the selected enemy
-            new_enemy = enemy_type()
+                # Cria uma instância do inimigo selecionado
+                new_enemy = enemy_type()
 
-            # Add the enemy to the group
-            enemies.add(new_enemy)
+                # Adiciona o inimigo ao grupo de inimigos
+                enemies.add(new_enemy)
 
-            # Reset the cooldown
-            enemy_cooldown = 2 * fps
-        # Update the enemy cooldown
+        # Atualiza o cooldown de spawn de inimigos
         enemy_cooldown -= 1
 
         powerup_spawn_timer += 1

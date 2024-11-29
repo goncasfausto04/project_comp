@@ -5,11 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1d699021-e9bd-4ae1-a9ba-2425fab7b445" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game/enemy.py" beforeDir="false" afterPath="$PROJECT_DIR$/Game/enemy.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/Game/game.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game/player.py" beforeDir="false" afterPath="$PROJECT_DIR$/Game/player.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,6 +19,9 @@
   &quot;associatedIndex&quot;: 4
 }</component>
   <component name="ProjectId" id="2pIiYOHz5pyWwEfDAFCydNGs6gu" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -35,7 +34,8 @@
     "Python.player.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "Bernardo__branch",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "Bernardov3",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -62,6 +62,8 @@
       <workItem from="1732460038063" duration="258000" />
       <workItem from="1732460308427" duration="1706000" />
       <workItem from="1732535109122" duration="2017000" />
+      <workItem from="1732638051518" duration="1562000" />
+      <workItem from="1732811935383" duration="3404000" />
     </task>
     <servers />
   </component>
@@ -69,7 +71,7 @@
     <option name="version" value="3" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/project_comp3Final$main.coverage" NAME="main Coverage Results" MODIFIED="1732543300966" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Game" />
+    <SUITE FILE_PATH="coverage/project_comp3Final$main.coverage" NAME="main Coverage Results" MODIFIED="1732814755423" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Game" />
     <SUITE FILE_PATH="coverage/project_comp3Final$player.coverage" NAME="player Coverage Results" MODIFIED="1732543287278" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Game" />
     <SUITE FILE_PATH="coverage/project_comp3Final$game.coverage" NAME="game Coverage Results" MODIFIED="1732543235757" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Game" />
     <SUITE FILE_PATH="coverage/project_comp3Final$enemy.coverage" NAME="enemy Coverage Results" MODIFIED="1732542422876" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Game" />

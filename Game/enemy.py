@@ -97,3 +97,13 @@ class RangedMonster(Enemy):
                 self.color = (255, 255, 0)
 
 
+class DuplicateMonster(Enemy):
+    def __init__(self):
+        super().__init__()
+        self.health = 30
+        self.speed = 2
+        self.damage = 10
+        self.color = (58, 58, 58)  # Blue
+
+
+
