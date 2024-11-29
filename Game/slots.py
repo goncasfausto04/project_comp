@@ -42,10 +42,11 @@ def slots(player):
     symbols = [RED, GREEN, BLUE]
 
     # Font for messages
-    font_size = int(WIDTH * 0.06)  # 6% of the screen width
+    font_size = int(WIDTH * 0.04)  # 6% of the screen width
     money_font_size = int(WIDTH * 0.045)  # 4.5% of the screen width
-    font = pygame.font.SysFont(None, font_size)
-    money_font = pygame.font.SysFont(None, money_font_size)
+    blockyfontpath = os.path.join(base_path, "extras", "Pixeboy.ttf")
+    font = pygame.font.Font(blockyfontpath, font_size)
+    money_font = pygame.font.Font(blockyfontpath, font_size)
 
     # Initial money amount
 
@@ -116,7 +117,7 @@ def slots(player):
         text = "Press SPACE to Spin!"
         text_x = WIDTH // 2 - font.render(text, True, WHITE).get_width() // 2
         text_y = SLOTS_Y - HEIGHT * 0.1  # Adjusted to be closer to the slots
-        back_text = "Press BACKSPACE to go back"
+        back_text = "Press Esc to go back"
         draw_text_with_outline(screen, text, font, WHITE, BLACK, text_x, text_y)
         draw_text_with_outline(
             screen,
@@ -174,7 +175,7 @@ def slots(player):
                         player.coins += 100
                     else:
                         player.coins -= 50
-                elif event.key == pygame.K_BACKSPACE:
+                elif event.key == pygame.K_ESCAPE:
                     return "shedcasino"
 
         draw_slot_machine(results, message)

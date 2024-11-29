@@ -72,7 +72,6 @@ def execute_game(player, pet):
 
     damage_cooldown = 35  # Cooldown in frames (1 second at 60 FPS (if it was 60))
     player_cooldown = 0  # Tracks the remaining cooldown time for the player
-    pet_cooldown = 0  # Tracks the remaining cooldown time for the pet
 
     while running:
         clock.tick(fps)
@@ -117,22 +116,12 @@ def execute_game(player, pet):
             # Apply damage once for all collisions in the frame
             total_damage = sum(enemy.damage for enemy in collided_enemies)
             player.health -= total_damage
-            pet.health -= total_damage / 3
             player_cooldown = damage_cooldown  # Reset the player's cooldown
 
-        collided_enemies = pygame.sprite.spritecollide(pet, enemies, False)
-
-        if collided_enemies and pet_cooldown <= 0:
-            # Apply damage once for all collisions in the frame
-            total_damage = sum(enemy.damage for enemy in collided_enemies)
-            pet.health -= total_damage
-            pet_cooldown = damage_cooldown  # Reset the pet's cooldown
-
+    
         if player_cooldown > 0:
             player_cooldown -= 1  # Reduce player's cooldown by 1 each frame
 
-        if pet_cooldown > 0:
-            pet_cooldown -= 1  # Reduce pet's cooldown by 1 each frame
 
         # Update player color to indicate damage state
         if player_cooldown > 0:  # Player is in cooldown (damaged recently)
@@ -236,7 +225,6 @@ def execute_game(player, pet):
         for bullet in bullets:
             bullet.draw(screen)
         player.draw_health_bar(screen)
-        pet.draw_health_bar(screen)
         timer_text = font.render(f"Time: {minutes:02}:{seconds:02}", True, white)
         kills_text = font.render(f"Kills: {kills}", True, white)
         screen.blit(timer_text, (10, 10))  # Timer at top-left corner

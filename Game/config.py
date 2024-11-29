@@ -32,7 +32,7 @@ powerup_size = (int(width * 0.025), int(height * 0.045))  # Smaller power-up siz
 
 # music volume
 music_volume = 0.5
-pet_size = (int(width * 0.025), int(height * 0.045))  # Smaller pet size
+pet_size = (int(width * 0.035), int(height * 0.065))  # Smaller pet size
 
 # soundtrack list
 soundtrack1_path = os.path.join(base_path, "extras", "soundtrack1.mp3")
