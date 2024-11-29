@@ -7,7 +7,14 @@ from powerup import *
 from shed import shed
 from utils import *
 
+
+
 def tutorial():
+
+    # Play soundtrack
+    pygame.mixer.music.load(random.choice(soundtrack))  # Load a random soundtrack
+    pygame.mixer.music.set_volume(config.music_volume)  # Set the desired volume
+    pygame.mixer.music.play(-1)  # Loop the soundtrack indefinitely
 
     # creating the player group and adding the player to it
     player = Player()
@@ -22,6 +29,8 @@ def tutorial():
     screen = pygame.display.set_mode(config.resolution)
     clock = pygame.time.Clock()
 
+    blockyfont = pygame.font.Font(os.path.join(base_path, "extras", "Pixeboy.ttf"), 32)
+
     # set up spawn location
     player.rect.left = (config.width * 0.5)
 
@@ -32,19 +41,14 @@ def tutorial():
         config.height * 0.194,  # height (19.4% of screen height)
     )
 
+    promptcount = 0
+
     running = True
 
     while running:
         clock.tick(config.fps)
         screen.blit(background, (0, 0))
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                exit()
-            elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                return
-
+            
         # Update player position based on key presses
         player.update()
 
@@ -53,5 +57,20 @@ def tutorial():
 
         # draw the special area
         pygame.draw.rect(screen, (0, 255, 0), special_area, 2)
+
+        if promptcount == 0:
+            prompt(screen, config.width, config.height * 1.5, "Welcome to the tutorial!")
+            promptcount += 1
+        elif promptcount == 1:
+            prompt(screen, config.width, config.height * 1.5, "Use WASD to move around.")
+            promptcount += 1
+
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                return
 
         pygame.display.flip()

@@ -56,12 +56,6 @@ def shed(player, pet, spawn_location):
         clock.tick(fps)
         screen.blit(background, (0, 0))
 
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                exit()
-            elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                pause_game(screen, width, height)
 
         # Update the player and pet groups
         player_group.update()
@@ -89,5 +83,12 @@ def shed(player, pet, spawn_location):
 
         # draw casino area
         pygame.draw.rect(screen, (0, 255, 0), casino_area, 2)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                pause_game(screen, width, height)
 
         pygame.display.flip()

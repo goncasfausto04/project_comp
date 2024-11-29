@@ -265,3 +265,39 @@ def draw_buttonutils(
     # Draw the text on the button
     text_rect = text.get_rect(center=(x + w // 2, y + h // 2))
     screen.blit(text, text_rect)
+
+def prompt(screen, width, height, content):
+
+    # Set up the font
+    font_path = os.path.join(base_path, "extras", "Pixeboy.ttf")
+    font = pygame.font.Font(font_path, 25)
+    text = font.render(content, True, (0, 0, 0))  # Black text
+    text_rect = text.get_rect(center=(width // 2, height // 2))
+
+    # Define the background box (padding around the text)
+    box_padding = 20
+    box_rect = pygame.Rect(
+        text_rect.left - box_padding,
+        text_rect.top - box_padding,
+        text_rect.width + 2 * box_padding,
+        text_rect.height + 2 * box_padding,
+    )
+
+    # Draw the box with white fill and black outline
+    pygame.draw.rect(screen, (255, 255, 255), box_rect)  # White box
+    pygame.draw.rect(screen, (0, 0, 0), box_rect, 3)     # Black outline (3 px thick)
+
+    # Draw the text on top of the box
+    screen.blit(text, text_rect)
+    pygame.display.flip()
+
+    # Infinite loop until the user unpauses
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN and (event.key == pygame.K_ESCAPE or event.key == pygame.K_RETURN):
+                return
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                return
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()

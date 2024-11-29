@@ -227,7 +227,6 @@ def execute_game(player, pet):
         kills_text = font.render(f"Kills: {kills}", True, white)
         screen.blit(timer_text, (10, 10))  # Timer at top-left corner
         screen.blit(kills_text, (10, 40))  # Kill counter below timer
-        pygame.display.flip()
 
         pygame.display.flip()
 
