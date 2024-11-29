@@ -17,7 +17,7 @@ def shed(player, pet, spawn_location):
     screen = pygame.display.set_mode(resolution)
     clock = pygame.time.Clock()
 
-    # since i left the previuos area from the right, here i begin on the left
+    #set up spawn location
     player.rect.left = spawn_location[0]
     pet.rect.left = spawn_location[0] + 50  # Pet starts to the right of the player
 

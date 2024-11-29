@@ -6,6 +6,7 @@ from config import *  # importing colors and the like
 import os
 from credits import credits_
 import config
+from tutorial import tutorial
 
 
 def interface():
@@ -26,7 +27,7 @@ def interface():
         wilderness_text = blockyfont.render("Hit Or Stand", True, white)
         quit_text = blockyfontsmall.render("Quit", True, white)
         credits_text = blockyfontsmall.render("Credits", True, white)
-        rules_text = blockyfontsmall.render("Rules", True, white)
+        rules_text = blockyfontsmall.render("Tutorial", True, white)
         options_text = blockyfontsmall.render("Options", True, white)
         title_text = blockyfont.render("Computation_3 Project!", True, glowing_yellow)
 
@@ -95,7 +96,7 @@ def interface():
                         wilderness_text = blockyfont.render("Hit Or Stand", True, white)
                         quit_text = blockyfontsmall.render("Quit", True, white)
                         credits_text = blockyfontsmall.render("Credits", True, white)
-                        rules_text = blockyfontsmall.render("Rules", True, white)
+                        rules_text = blockyfontsmall.render("Tutorial", True, white)
                         options_text = blockyfontsmall.render("Options", True, white)
                         title_text = blockyfont.render(
                             "Computation_3 Project!", True, glowing_yellow
@@ -109,7 +110,7 @@ def interface():
                     # Rules button
                     if button_clicked(0.25 - (0.125 / 2), 0.667, 0.125, 0.083, mouse):
                         chime_sound.play()
-                        under_construction()
+                        tutorial()
 
                 # Escape key to return to main menu
                 if event.type == pygame.KEYDOWN:
