@@ -20,18 +20,7 @@ def slots(player):
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Slot Machine")
 
-    # Colors
-    WHITE = (255, 255, 255)
-    BLACK = (0, 0, 0)
-    RED = (255, 0, 0)
-    GREEN = (0, 255, 0)
-    BLUE = (0, 0, 255)
-    DARK_GRAY = (50, 50, 50)
-    LIGHT_GRAY = (200, 200, 200)
-    DARK_GREEN = (0, 100, 0)
-    OLIVE_GREEN = (107, 142, 35)
-
-    # Slot settings (smaller slots)
+    # Slot settings
     SLOT_WIDTH, SLOT_HEIGHT = 100, 100  # Smaller slots
     SLOTS_X = [
         WIDTH // 4 - SLOT_WIDTH // 2,
@@ -39,7 +28,7 @@ def slots(player):
         3 * WIDTH // 4 - SLOT_WIDTH // 2,
     ]
     SLOTS_Y = HEIGHT // 2 - SLOT_HEIGHT // 2
-    symbols = [RED, GREEN, BLUE]
+    symbols = [red, green, blue]
 
     # Font for messages
     font_size = int(WIDTH * 0.04)  # 6% of the screen width
@@ -47,8 +36,6 @@ def slots(player):
     blockyfontpath = os.path.join(base_path, "extras", "Pixeboy.ttf")
     font = pygame.font.Font(blockyfontpath, font_size)
     money_font = pygame.font.Font(blockyfontpath, font_size)
-
-    # Initial money amount
 
     def draw_gradient_rect(surface, rect, color1, color2):
         """Draws a rectangle with a vertical gradient."""
@@ -82,7 +69,7 @@ def slots(player):
 
     def draw_slot_machine(results, message=None):
         """Draws the slot machine with the results and optional message."""
-        draw_gradient_background(screen, DARK_GREEN, OLIVE_GREEN)
+        draw_gradient_background(screen, dark_green, olive_green)
 
         # Calculate the width of the background rectangle dynamically
         total_width = SLOTS_X[-1] + SLOT_WIDTH - SLOTS_X[0] + 40  # 40 for padding
@@ -94,55 +81,55 @@ def slots(player):
         )  # Padding around all three slots
 
         # Draw a single white background rectangle behind all three slots
-        pygame.draw.rect(screen, LIGHT_GRAY, background_rect)
+        pygame.draw.rect(screen, light_grey, background_rect)
 
         # Draw a border around the white rectangle
-        pygame.draw.rect(screen, BLACK, background_rect, 5)  # Border thickness of 5
+        pygame.draw.rect(screen, black, background_rect, 5)  # Border thickness of 5
 
         # Draw slots with shadows and borders
         for i, color in enumerate(results):
             shadow_rect = (SLOTS_X[i] + 5, SLOTS_Y + 5, SLOT_WIDTH, SLOT_HEIGHT)
-            pygame.draw.rect(screen, BLACK, shadow_rect)
+            pygame.draw.rect(screen, black, shadow_rect)
             draw_gradient_rect(
                 screen,
                 (SLOTS_X[i], SLOTS_Y, SLOT_WIDTH, SLOT_HEIGHT),
-                LIGHT_GRAY,
+                light_gray,
                 color,
             )
             pygame.draw.rect(
-                screen, BLACK, (SLOTS_X[i], SLOTS_Y, SLOT_WIDTH, SLOT_HEIGHT), 5
+                screen, black, (SLOTS_X[i], SLOTS_Y, SLOT_WIDTH, SLOT_HEIGHT), 5
             )
 
         # Display instructions with outline
         text = "Press SPACE to Spin!"
-        text_x = WIDTH // 2 - font.render(text, True, WHITE).get_width() // 2
+        text_x = WIDTH // 2 - font.render(text, True, white).get_width() // 2
         text_y = SLOTS_Y - HEIGHT * 0.1  # Adjusted to be closer to the slots
         back_text = "Press Esc to go back"
-        draw_text_with_outline(screen, text, font, WHITE, BLACK, text_x, text_y)
+        draw_text_with_outline(screen, text, font, white, black, text_x, text_y)
         draw_text_with_outline(
             screen,
             back_text,
             font,
-            WHITE,
-            BLACK,
-            WIDTH // 2 - font.render(back_text, True, WHITE).get_width() // 2,
+            white,
+            black,
+            WIDTH // 2 - font.render(back_text, True, white).get_width() // 2,
             HEIGHT - 50,
         )
 
         # Display win/lose message if present
         if message:
-            message_text = font.render(message, True, WHITE)
+            message_text = font.render(message, True, white)
             screen.blit(
                 message_text, (WIDTH // 2 - message_text.get_width() // 2, HEIGHT - 100)
             )
 
         # Display player's money
-        money_text = money_font.render(f"Money: ${player.coins}", True, WHITE)
+        money_text = money_font.render(f"Money: ${player.coins}", True, white)
         screen.blit(money_text, (20, 20))
 
     def spin_slots():
         """Animates the spinning slots and returns the final results."""
-        results = [WHITE, WHITE, WHITE]
+        results = [white, white, white]
 
         for i in range(15):  # Fewer frames for quicker spins
             results = [random.choice(symbols) for _ in range(3)]
@@ -160,7 +147,7 @@ def slots(player):
             return "You Lose!"
 
     running = True
-    results = [WHITE, WHITE, WHITE]
+    results = [white, white, white]
     message = None
 
     while running:

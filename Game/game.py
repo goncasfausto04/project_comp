@@ -118,10 +118,8 @@ def execute_game(player, pet):
             player.health -= total_damage
             player_cooldown = damage_cooldown  # Reset the player's cooldown
 
-    
         if player_cooldown > 0:
             player_cooldown -= 1  # Reduce player's cooldown by 1 each frame
-
 
         # Update player color to indicate damage state
         if player_cooldown > 0:  # Player is in cooldown (damaged recently)

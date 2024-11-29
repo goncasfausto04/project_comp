@@ -202,8 +202,6 @@ def play_video(video_path, resolution, sound_path):
     cap.release()
 
 
-
-
 base_path = os.path.dirname(__file__)
 video_path = os.path.join(base_path, "extras", "intro.mp4")
 sound_path = os.path.join(base_path, "extras", "wind.mp3")

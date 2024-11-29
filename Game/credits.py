@@ -33,7 +33,6 @@ def credits_():
 
     body_text = "This game was developed as a project for the course of Computation 3, we hope you envjoy the gameplay as much we enjoyed to develop it!"
 
-
     while True:
         mouse = pygame.mouse.get_pos()
         for event in pygame.event.get():

@@ -44,9 +44,13 @@ def interface():
 
         chime_path = os.path.join(base_path, "extras", "chime1.mp3")
         chime_sound = pygame.mixer.Sound(chime_path)
+        chime_sound.set_volume(config.music_volume)
 
         chime2_path = os.path.join(base_path, "extras", "chime2.mp3")
         chime2_sound = pygame.mixer.Sound(chime2_path)
+        chime2_sound.set_volume(config.music_volume)
+
+
 
         pygame.display.set_caption("Hit Or Stand")
 
@@ -216,6 +220,7 @@ def options():
 
     chime_path = os.path.join(base_path, "extras", "chime1.mp3")
     chime_sound = pygame.mixer.Sound(chime_path)
+    
 
     # Main loop
     while True:
