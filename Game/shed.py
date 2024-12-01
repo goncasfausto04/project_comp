@@ -11,6 +11,16 @@ def shed(player, pet, spawn_location):
     background_path = os.path.join(base_path, "extras", "shedbg.png")
     # scalling the background image into our selected resolution
     background = pygame.image.load(background_path)
+    casino_path = os.path.join(base_path, "extras", "casino1.png")
+    casino_image = pygame.image.load(casino_path)
+    casino_image = pygame.transform.scale(
+        casino_image, (int(width * 0.2), int(height * 0.3))
+    )
+    special_area_path = os.path.join(base_path, "extras", "gunshop1.png")
+    special_area_img = pygame.image.load(special_area_path)
+    special_area_img = pygame.transform.scale(
+        special_area_img, (int(width * 0.2), int(height * 0.3))
+    )
 
     # setting up the screen
     background = pygame.transform.scale(background, resolution)
@@ -34,18 +44,18 @@ def shed(player, pet, spawn_location):
         width
         - (width * 0.109)
         - (width * 0.02),  # x-coordinate (right margin of 2% from the edge)
-        height * 0.042,  # y-coordinate (4.2% of screen height)
-        width * 0.109,  # width (10.9% of screen width)
-        height * 0.194,  # height (19.4% of screen height)
+        height * 0.19,  # y-coordinate (4.2% of screen height)
+        width * 0.035,  # width (10.9% of screen width)
+        height * 0.09,  # height (19.4% of screen height)
     )
 
     casino_area = pygame.Rect(
         width
-        - (width * 0.109)
+        - (width * 0.120)
         - (width * 0.02),  # x-coordinate (right margin of 2% from the edge)
-        height * (0.75),  # y-coordinate (4.2% of screen height)
-        width * 0.109,  # width (10.9% of screen width)
-        height * 0.194,
+        height * (0.85),  # y-coordinate (4.2% of screen height)
+        width * 0.05,  # width (10.9% of screen width)
+        height * 0.07,
     )
 
     running = True
@@ -55,6 +65,14 @@ def shed(player, pet, spawn_location):
     while running:
         clock.tick(fps)
         screen.blit(background, (0, 0))
+        screen.blit(
+            casino_image,
+            (width - (width * 0.2) - (width * 0.02), height - height * (0.35)),
+        )
+        screen.blit(
+            special_area_img,
+            (width - (width * 0.2) - (width * 0.02), height - height * (0.95)),
+        )
 
         # Update the player and pet groups
         player_group.update()

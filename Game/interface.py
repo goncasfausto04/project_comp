@@ -12,7 +12,7 @@ from tutorial import tutorial
 def interface():
 
     play_video(video_path, resolution, sound_path)
-    
+
     while True:
         # Initialize pygame
         pygame.init()
