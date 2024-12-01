@@ -8,7 +8,6 @@ from shed import shed
 from utils import *
 
 
-
 def tutorial():
 
     # Play soundtrack
@@ -32,27 +31,29 @@ def tutorial():
     blockyfont = pygame.font.Font(os.path.join(base_path, "extras", "Pixeboy.ttf"), 32)
 
     # set up spawn location
-    player.rect.left = (config.width * 0.5)
+    player.rect.left = config.width * 0.5
 
     special_area = pygame.Rect(
-        config.width - (config.width * 0.109) - (config.width * 0.02),  # x-coordinate (right margin of 2% from the edge)
+        config.width
+        - (config.width * 0.109)
+        - (config.width * 0.02),  # x-coordinate (right margin of 2% from the edge)
         config.height * 0.042,  # y-coordinate (4.2% of screen height)
         config.width * 0.109,  # width (10.9% of screen width)
         config.height * 0.194,  # height (19.4% of screen height)
     )
 
     promptcount = 0
-    wasd_keys_pressed = set() 
+    wasd_keys_pressed = set()
     running = True
 
     while running:
         clock.tick(config.fps)
         screen.blit(background, (0, 0))
-            
+
         # Update player position based on key presses
         player.update()
 
-        # Draw the player 
+        # Draw the player
         player_group.draw(screen)
 
         # draw the special area
@@ -61,15 +62,23 @@ def tutorial():
         print("promptcount:", promptcount)
 
         if promptcount == 0:
-            prompt(screen, config.width, config.height * 1.5, "Welcome to the tutorial!")
+            prompt(
+                screen, config.width, config.height * 1.5, "Welcome to the tutorial!"
+            )
             promptcount += 1
         elif promptcount == 1:
-            prompt(screen, config.width, config.height * 1.5, "Use WASD to move around.")
+            prompt(
+                screen, config.width, config.height * 1.5, "Use WASD to move around."
+            )
             promptcount += 1
         elif promptcount == 3:
-            prompt(screen, config.width, config.height * 1.5, "Press ESC to exit the tutorial.")
+            prompt(
+                screen,
+                config.width,
+                config.height * 1.5,
+                "Press ESC to exit the tutorial.",
+            )
             promptcount += 1
-
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -80,10 +89,13 @@ def tutorial():
                     return
                 elif event.key in [pygame.K_w, pygame.K_a, pygame.K_s, pygame.K_d]:
                     wasd_keys_pressed.add(event.key)
-                
+
                 # Check if all WASD keys have been pressed
-                if wasd_keys_pressed == {pygame.K_w, pygame.K_a, pygame.K_s, pygame.K_d} and promptcount == 2:
+                if (
+                    wasd_keys_pressed
+                    == {pygame.K_w, pygame.K_a, pygame.K_s, pygame.K_d}
+                    and promptcount == 2
+                ):
                     promptcount += 1  # Advance to next part when all keys pressed
-    
 
         pygame.display.flip()

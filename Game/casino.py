@@ -24,9 +24,8 @@ def casino(player):
     blockyfontsmall = pygame.font.Font(blockyfontpath, int(height * 0.035))
 
     # Render the text
-    skins_text = blockyfontsmall.render("Slot Machine", True, white)
-    bullets_text = blockyfontsmall.render("BlackJack", True, white)
-    pets_text = blockyfontsmall.render("Nada Ainda", True, white)
+    slots_text = blockyfontsmall.render("Slot Machine", True, white)
+    blackjack_text = blockyfontsmall.render("BlackJack", True, white)
     goback_text = blockyfontsmall.render("Go Back", True, white)
     title_text = blockyfont.render("Shopping Street", True, glowing_light_red)
 
@@ -53,10 +52,6 @@ def casino(player):
                 if button_clicked(0.125, 0.333, 0.125, 0.083, mouse):
                     blackjack(player)
 
-                # Pets button
-                if button_clicked(0.125, 0.5, 0.125, 0.083, mouse):
-                    under_construction()
-
                 # Go back button
                 if button_clicked(0.625, 0.833, 0.125, 0.083, mouse):
                     return "shedcasino"  # Exit the shop
@@ -64,7 +59,7 @@ def casino(player):
         # Fill the screen with background
         screen.blit(background, (0, 0))
 
-        # Skins button
+        # slots button
         draw_buttonutils(
             dark_red,
             red,
@@ -72,13 +67,13 @@ def casino(player):
             0.167,
             0.125,
             0.083,
-            skins_text,
+            slots_text,
             blockyfontsmall,
             mouse,
             screen,
         )
 
-        # Weapons button
+        # blackjack button
         draw_buttonutils(
             dark_red,
             red,
@@ -86,21 +81,7 @@ def casino(player):
             0.333,
             0.125,
             0.083,
-            bullets_text,
-            blockyfontsmall,
-            mouse,
-            screen,
-        )
-
-        # Pets button
-        draw_buttonutils(
-            dark_red,
-            red,
-            0.125,
-            0.5,
-            0.125,
-            0.083,
-            pets_text,
+            blackjack_text,
             blockyfontsmall,
             mouse,
             screen,

@@ -3,6 +3,7 @@ import random
 from config import *
 from player import Player
 import config
+from utils import *
 
 
 def slots(player):
@@ -36,6 +37,9 @@ def slots(player):
     blockyfontpath = os.path.join(base_path, "extras", "Pixeboy.ttf")
     font = pygame.font.Font(blockyfontpath, font_size)
     money_font = pygame.font.Font(blockyfontpath, font_size)
+
+    FONT = pygame.font.Font(blockyfontpath, int(WIDTH * 0.04))
+    SMALL_FONT = pygame.font.Font(blockyfontpath, int(WIDTH * 0.03))
 
     def draw_gradient_rect(surface, rect, color1, color2):
         """Draws a rectangle with a vertical gradient."""
@@ -115,6 +119,7 @@ def slots(player):
             WIDTH // 2 - font.render(back_text, True, white).get_width() // 2,
             HEIGHT - 50,
         )
+        draw_text(f"Bet: ${bet}", WIDTH * 0.039, HEIGHT * 0.1, SMALL_FONT, gold)
 
         # Display win/lose message if present
         if message:
@@ -146,24 +151,121 @@ def slots(player):
         else:
             return "You Lose!"
 
+    def draw_text(text, x, y, font=FONT, color=white, center=False):
+        """Draws text on the screen, with optional centering."""
+        label = font.render(text, True, color)
+        if center:
+            x -= label.get_width() // 2  # Adjust x to center the text
+        screen.blit(label, (x, y))
+
     running = True
     results = [white, white, white]
     message = None
+
+    bet = 0
+
+    def set_bet():
+        nonlocal bet
+        bet = 0
+        typing = True
+        input_box_width = 200
+        input_box_height = 40
+        input_box = pygame.Rect(
+            WIDTH // 2 - input_box_width // 2,
+            HEIGHT // 2 - input_box_height // 2,
+            input_box_width,
+            input_box_height,
+        )
+        input_text = ""
+
+        while typing:
+
+            screen.fill(green)
+
+            # Display available money
+            draw_text(
+                f"Available Money: ${player.coins}",
+                WIDTH // 2,
+                HEIGHT // 2 - 100,
+                SMALL_FONT,
+                gold,
+                True,
+            )
+            draw_text(
+                "Set your bet:", WIDTH // 2, HEIGHT // 2 - 50, SMALL_FONT, white, True
+            )
+            draw_text(
+                "Press Enter to Confirm",
+                WIDTH // 2,
+                HEIGHT // 2 + 50,
+                SMALL_FONT,
+                white,
+                True,
+            )
+            draw_text(
+                "Type 0 to play just for fun",
+                WIDTH // 2,
+                HEIGHT // 2 + 100,
+                SMALL_FONT,
+                white,
+                True,
+            )
+
+            pygame.draw.rect(screen, white, input_box)
+            txt_surface = SMALL_FONT.render(input_text, True, black)
+            screen.blit(txt_surface, (input_box.x + 5, input_box.y + 5))
+            input_box.w = max(input_box_width, txt_surface.get_width() + 10)
+
+            pygame.display.flip()
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    exit()
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_RETURN:
+                        if input_text.isdigit() and int(input_text) <= player.coins:
+                            bet = int(input_text)
+                            typing = False
+                        else:
+                            draw_text(
+                                "Invalid Bet! Must be a number within available funds.",
+                                WIDTH // 2 - 220,
+                                HEIGHT // 2 + 70,
+                                SMALL_FONT,
+                                red,
+                                True,
+                            )
+                    elif event.key == pygame.K_BACKSPACE:
+                        input_text = input_text[:-1]
+                    elif event.key == pygame.K_ESCAPE:
+                        typing = (
+                            False  # Exit the bet input screen without setting a bet.
+                        )
+                        return
+                    else:
+                        input_text += event.unicode
+
+    set_bet()
 
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
+                if event.key == pygame.K_SPACE and player.coins >= bet:
                     results = spin_slots()
                     message = check_results(results)
                     if message == "You Win!":
-                        player.coins += 100
+                        player.coins += bet * 3
                     else:
-                        player.coins -= 50
+                        player.coins -= bet
+
                 elif event.key == pygame.K_ESCAPE:
                     return "shedcasino"
+
+                else:
+                    message = "Insufficient Funds!"
 
         draw_slot_machine(results, message)
         pygame.display.flip()

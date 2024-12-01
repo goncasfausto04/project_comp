@@ -17,7 +17,7 @@ def shed(player, pet, spawn_location):
     screen = pygame.display.set_mode(resolution)
     clock = pygame.time.Clock()
 
-    #set up spawn location
+    # set up spawn location
     player.rect.left = spawn_location[0]
     pet.rect.left = spawn_location[0] + 50  # Pet starts to the right of the player
 
@@ -55,7 +55,6 @@ def shed(player, pet, spawn_location):
     while running:
         clock.tick(fps)
         screen.blit(background, (0, 0))
-
 
         # Update the player and pet groups
         player_group.update()
