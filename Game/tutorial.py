@@ -42,7 +42,7 @@ def tutorial():
     )
 
     promptcount = 0
-
+    wasd_keys_pressed = set() 
     running = True
 
     while running:
@@ -58,11 +58,16 @@ def tutorial():
         # draw the special area
         pygame.draw.rect(screen, (0, 255, 0), special_area, 2)
 
+        print("promptcount:", promptcount)
+
         if promptcount == 0:
             prompt(screen, config.width, config.height * 1.5, "Welcome to the tutorial!")
             promptcount += 1
         elif promptcount == 1:
             prompt(screen, config.width, config.height * 1.5, "Use WASD to move around.")
+            promptcount += 1
+        elif promptcount == 3:
+            prompt(screen, config.width, config.height * 1.5, "Press ESC to exit the tutorial.")
             promptcount += 1
 
 
@@ -70,7 +75,15 @@ def tutorial():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
-            elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                return
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    return
+                elif event.key in [pygame.K_w, pygame.K_a, pygame.K_s, pygame.K_d]:
+                    wasd_keys_pressed.add(event.key)
+                
+                # Check if all WASD keys have been pressed
+                if wasd_keys_pressed == {pygame.K_w, pygame.K_a, pygame.K_s, pygame.K_d} and promptcount == 2:
+                    promptcount += 1  # Advance to next part when all keys pressed
+    
 
         pygame.display.flip()
