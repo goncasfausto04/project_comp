@@ -37,7 +37,7 @@ bullet_size = int(width * 0.006)  # Smaller bullet size
 powerup_size = (int(width * 0.025), int(height * 0.045))  # Smaller power-up size
 
 # music volume
-music_volume = 0.5
+music_volume = 0.2
 pet_size = (int(width * 0.035), int(height * 0.065))  # Smaller pet size
 
 # soundtrack list
