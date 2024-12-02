@@ -132,8 +132,6 @@ def execute_game(player, pet):
             level += 1
             exp -= exp_required
             exp_required = int(exp_required * exp_multiplier)  # Increase the XP required for the next level
-            player.max_health += 10
-            pet.health = pet.max_health
 
         # Detect collision and apply damage
         for enemy in enemies:
