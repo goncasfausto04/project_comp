@@ -20,6 +20,6 @@ class HealthDrop(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
         self.image = pygame.Surface(powerup_size)  # Half size of an enemy
-        #self.image.fill(green_ish)
+        self.image.fill(green_ish)
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)

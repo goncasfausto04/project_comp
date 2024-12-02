@@ -22,8 +22,16 @@ class Player(pygame.sprite.Sprite):
             path = os.path.join(sprites_path, f"Idle__00{i}.png")
             image = pygame.image.load(path)
             self.sprites_idle.append(pygame.transform.scale(image, (player_size)))
+
+        self.sprites_run = [] 
+        for i in range(0, 9):
+            path = os.path.join(sprites_path, f"Run__00{i}.png")
+            image = pygame.image.load(path)
+            self.sprites_run.append(pygame.transform.scale(image, (player_size[0] * 1.7, player_size[1])))
         
         self.curernt_sprite_idle = 0
+        self.curernt_sprite_run = 0
+
         self.image = self.sprites_idle[self.curernt_sprite_idle]
         self.rect = self.image.get_rect()
         self.rect.center = (width // 2, height // 2)
@@ -71,15 +79,27 @@ class Player(pygame.sprite.Sprite):
             self.powerup_timer -= 1
             if self.powerup_timer <= 0:
                 self.powerup_active = False  # Deactivate power-up
-                self.image.fill(cute_purple)  # Revert to original color
+                #self.image.fill(cute_purple)  # Revert to original color
 
-        self.curernt_sprite_idle += 1
         
 
-        if self.curernt_sprite_idle >= len(self.sprites_idle):
-            self.curernt_sprite_idle = 0
+        if not any(keys):
+            self.curernt_sprite_idle += 1
+            if self.curernt_sprite_idle >= len(self.sprites_idle):
+                self.curernt_sprite_idle = 0
+            self.image = self.sprites_idle[int(self.curernt_sprite_idle)]
+        
+        if keys[pygame.K_d] or keys[pygame.K_w] or keys[pygame.K_s] or keys[pygame.K_a]:
+            self.curernt_sprite_run += 1
+            if self.curernt_sprite_run >= len(self.sprites_run):
+                self.curernt_sprite_run = 0
+            if keys[pygame.K_a]:
+                self.image = pygame.transform.flip(self.sprites_run[int(self.curernt_sprite_run)], True, False)
+            else:
+                self.image = self.sprites_run[int(self.curernt_sprite_run)]
+        
 
-        self.image = self.sprites_idle[self.curernt_sprite_idle]
+
 
     def change_bullet_type(self, keys):
         if keys[pygame.K_1]:
