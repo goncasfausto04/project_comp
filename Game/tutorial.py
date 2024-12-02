@@ -20,7 +20,6 @@ def tutorial():
     playertutorial = Player()
     player_group = pygame.sprite.Group()
     player_group.add(playertutorial)
-    playertutorial.coins = 1000
 
     # setting up the background and the screen
     base_path = os.path.dirname(__file__)
