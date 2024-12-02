@@ -27,7 +27,7 @@ class Player(pygame.sprite.Sprite):
         for i in range(0, 9):
             path = os.path.join(sprites_path, f"Run__00{i}.png")
             image = pygame.image.load(path)
-            self.sprites_run.append(pygame.transform.scale(image, (player_size[0] * 1.7, player_size[1])))
+            self.sprites_run.append(pygame.transform.scale(image, (player_size[0] * 1.8, player_size[1])))
         
         self.curernt_sprite_idle = 0
         self.curernt_sprite_run = 0
@@ -47,11 +47,10 @@ class Player(pygame.sprite.Sprite):
             "shotgun": 90,
             "machinegun": 20,
         }  # Cooldown in frames
-        self.coins = 400
-
+        self.coins = 20000
         self.powerup_active = False
         self.powerup_timer = 0
-        self.coins = 500
+ 
 
     def activate_powerup(self):
         """
