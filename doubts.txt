@@ -1,2 +1,4 @@
 Volume !! ok
 Resolução? Nop
+
+nivel a dar reset quando saio do campo

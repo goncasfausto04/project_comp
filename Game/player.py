@@ -18,6 +18,7 @@ class Player(pygame.sprite.Sprite):
         sprites_path = os.path.join(base_path, "extras", "sprite")
 
         self.sprites_idle = []
+        self.frame_count = 0
         for i in range(0, 9):
             path = os.path.join(sprites_path, f"Idle__00{i}.png")
             image = pygame.image.load(path)
@@ -63,6 +64,8 @@ class Player(pygame.sprite.Sprite):
     def update(self):
 
         # getting the keys input:
+        self.frame_count += 1
+        
 
         keys = pygame.key.get_pressed()
 
@@ -81,21 +84,23 @@ class Player(pygame.sprite.Sprite):
                 #self.image.fill(cute_purple)  # Revert to original color
 
         
-
-        if not any(keys):
-            self.curernt_sprite_idle += 1
+        if self.frame_count % 8 == 0:
+            if not any(keys):
+                self.curernt_sprite_idle += 1
             if self.curernt_sprite_idle >= len(self.sprites_idle):
                 self.curernt_sprite_idle = 0
             self.image = self.sprites_idle[int(self.curernt_sprite_idle)]
         
-        if keys[pygame.K_d] or keys[pygame.K_w] or keys[pygame.K_s] or keys[pygame.K_a]:
-            self.curernt_sprite_run += 1
-            if self.curernt_sprite_run >= len(self.sprites_run):
-                self.curernt_sprite_run = 0
-            if keys[pygame.K_a]:
-                self.image = pygame.transform.flip(self.sprites_run[int(self.curernt_sprite_run)], True, False)
-            else:
-                self.image = self.sprites_run[int(self.curernt_sprite_run)]
+        if self.frame_count % 2 == 0:
+            if keys[pygame.K_d] or keys[pygame.K_w] or keys[pygame.K_s] or keys[pygame.K_a]:
+                self.curernt_sprite_run += 1
+                if self.curernt_sprite_run >= len(self.sprites_run):
+                    self.curernt_sprite_run = 0
+                if keys[pygame.K_a]:
+                    self.image = pygame.transform.flip(self.sprites_run[int(self.curernt_sprite_run)], True, False)
+                else:
+                    self.image = self.sprites_run[int(self.curernt_sprite_run)]
+        
         
 
 
