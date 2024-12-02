@@ -96,10 +96,10 @@ def shed(player, pet, spawn_location):
         pet_group.draw(screen)
 
         # draw the special area
-        pygame.draw.rect(screen, (0, 255, 0), special_area, 2)
+        #pygame.draw.rect(screen, (0, 255, 0), special_area, 2)
 
         # draw casino area
-        pygame.draw.rect(screen, (0, 255, 0), casino_area, 2)
+        #pygame.draw.rect(screen, (0, 255, 0), casino_area, 2)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

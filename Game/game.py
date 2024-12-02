@@ -122,10 +122,12 @@ def execute_game(player, pet):
             player_cooldown -= 1  # Reduce player's cooldown by 1 each frame
 
         # Update player color to indicate damage state
+        """
         if player_cooldown > 0:  # Player is in cooldown (damaged recently)
             player.image.fill((255, 0, 0))  # Red
         else:
             player.image.fill((0, 255, 0))  # Green
+        """
 
         if enemy_cooldown <= 0:
             # Define enemy types and their weights

@@ -15,9 +15,16 @@ class Player(pygame.sprite.Sprite):
 
         # VISUAL VARIABLES
         # we call surface to represent the player image
-        self.image = pygame.Surface(player_size)
-        # drawing the image of the player
-        self.image.fill(cute_purple)
+        sprites_path = os.path.join(base_path, "extras", "sprite")
+
+        self.sprites_idle = []
+        for i in range(0, 9):
+            path = os.path.join(sprites_path, f"Idle__00{i}.png")
+            image = pygame.image.load(path)
+            self.sprites_idle.append(pygame.transform.scale(image, (player_size)))
+        
+        self.curernt_sprite_idle = 0
+        self.image = self.sprites_idle[self.curernt_sprite_idle]
         self.rect = self.image.get_rect()
         self.rect.center = (width // 2, height // 2)
 
@@ -44,7 +51,7 @@ class Player(pygame.sprite.Sprite):
         """
         self.powerup_active = True
         self.powerup_timer = 15 * fps  # 15 seconds worth of frames
-        self.image.fill(dark_red)
+        #self.image.fill(dark_red)
 
     def update(self):
 
@@ -65,6 +72,14 @@ class Player(pygame.sprite.Sprite):
             if self.powerup_timer <= 0:
                 self.powerup_active = False  # Deactivate power-up
                 self.image.fill(cute_purple)  # Revert to original color
+
+        self.curernt_sprite_idle += 1
+        
+
+        if self.curernt_sprite_idle >= len(self.sprites_idle):
+            self.curernt_sprite_idle = 0
+
+        self.image = self.sprites_idle[self.curernt_sprite_idle]
 
     def change_bullet_type(self, keys):
         if keys[pygame.K_1]:

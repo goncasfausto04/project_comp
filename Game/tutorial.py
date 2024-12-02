@@ -76,7 +76,39 @@ def tutorial():
                 screen,
                 config.width,
                 config.height * 1.5,
-                "Press ESC to exit the tutorial.",
+                "Great!! You are not that dumb after all!.",
+            )
+            promptcount += 1
+        elif promptcount == 4:
+            prompt(
+                screen,
+                config.width,
+                config.height * 1.5,
+                "Now, this place is called your Safe House.",
+            )
+            promptcount += 1
+        elif promptcount == 5:
+            prompt(
+                screen,
+                config.width,
+                config.height * 1.5,
+                "You can come here to upgrade your arsenal.",
+            )
+            promptcount += 1
+        elif promptcount == 6:
+            prompt(
+                screen,
+                config.width,
+                config.height * 1.5,
+                "or do more nefarious business.",
+            )
+            promptcount += 1
+        elif promptcount == 7:
+            prompt(
+                screen,
+                config.width,
+                config.height * 1.5,
+                "But you will find more about that.",
             )
             promptcount += 1
 
