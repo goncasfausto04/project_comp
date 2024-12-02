@@ -6,6 +6,7 @@ from enemy import *
 from powerup import *
 from shed import shed
 from utils import *
+from shop import shop
 
 
 def tutorial():
@@ -16,9 +17,10 @@ def tutorial():
     pygame.mixer.music.play(-1)  # Loop the soundtrack indefinitely
 
     # creating the player group and adding the player to it
-    player = Player()
+    playertutorial = Player()
     player_group = pygame.sprite.Group()
-    player_group.add(player)
+    player_group.add(playertutorial)
+    playertutorial.coins = 1000
 
     # setting up the background and the screen
     base_path = os.path.dirname(__file__)
@@ -31,16 +33,23 @@ def tutorial():
     blockyfont = pygame.font.Font(os.path.join(base_path, "extras", "Pixeboy.ttf"), 32)
 
     # set up spawn location
-    player.rect.left = config.width * 0.5
+    playertutorial.rect.left = config.width * 0.5
+
+    special_area_path = os.path.join(base_path, "extras", "gunshop1.png")
+    special_area_img = pygame.image.load(special_area_path)
+    special_area_img = pygame.transform.scale(
+        special_area_img, (int(width * 0.2), int(height * 0.3)))
+    
 
     special_area = pygame.Rect(
-        config.width
-        - (config.width * 0.109)
-        - (config.width * 0.02),  # x-coordinate (right margin of 2% from the edge)
-        config.height * 0.042,  # y-coordinate (4.2% of screen height)
-        config.width * 0.109,  # width (10.9% of screen width)
-        config.height * 0.194,  # height (19.4% of screen height)
+        width
+        - (width * 0.109)
+        - (width * 0.02),  # x-coordinate (right margin of 2% from the edge)
+        height * 0.19,  # y-coordinate (4.2% of screen height)
+        width * 0.035,  # width (10.9% of screen width)
+        height * 0.09,  # height (19.4% of screen height)
     )
+
 
     promptcount = 0
     wasd_keys_pressed = set()
@@ -50,14 +59,17 @@ def tutorial():
         clock.tick(config.fps)
         screen.blit(background, (0, 0))
 
+        screen.blit(
+            special_area_img,
+            (width - (width * 0.2) - (width * 0.02), height - height * (0.95)),
+        )
+
         # Update player position based on key presses
-        player.update()
+        playertutorial.update()
 
         # Draw the player
         player_group.draw(screen)
 
-        # draw the special area
-        pygame.draw.rect(screen, (0, 255, 0), special_area, 2)
 
         print("promptcount:", promptcount)
 
@@ -76,7 +88,7 @@ def tutorial():
                 screen,
                 config.width,
                 config.height * 1.5,
-                "Great!! You are not that dumb after all!.",
+                "Great!! You are not that dumb after all!",
             )
             promptcount += 1
         elif promptcount == 4:
@@ -111,6 +123,50 @@ def tutorial():
                 "But you will find more about that.",
             )
             promptcount += 1
+        elif promptcount == 8:
+            prompt(
+                screen,
+                config.width,
+                config.height * 1.5,
+                "Now, on the top right there is the shop",
+            )
+            promptcount += 1
+        elif promptcount == 9:
+            prompt(
+                screen,
+                config.width,
+                config.height * 1.5,
+                "You can buy weapons and other stuff there.",
+            )
+            promptcount += 1
+        elif promptcount == 10:
+            prompt(
+                screen,
+                config.width,
+                config.height * 1.5,
+                "Come on. go there, what are you waiting for?",
+            )
+            promptcount += 1
+        elif promptcount == 80:
+            prompt(
+                screen,
+                config.width,
+                config.height * 1.5,
+                "HAHA, got you! Not Yet Partner!",
+            )
+            promptcount += 1
+        elif promptcount == 240:
+            prompt(
+                screen,
+                config.width,
+                config.height * 1.5,
+                "On your left, you can go to the Battlefield.",
+            )
+            promptcount += 1
+
+                
+
+        
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -129,5 +185,20 @@ def tutorial():
                     and promptcount == 2
                 ):
                     promptcount += 1  # Advance to next part when all keys pressed
+
+         # Check if the player collides with the special area
+        if special_area.colliderect(playertutorial.rect) and promptcount < 80:
+            # Go to the shop area (example of what happens here)
+            draw_text_with_outline(screen, "This is the tutorial", special_area.x - config.width*0.15, special_area.y - 50, white,black,blockyfont)
+            draw_text_with_outline(screen, "tf you think would happen?", special_area.x - config.width*0.15, special_area.y - 20, white,black,blockyfont)
+            promptcount += 1
+        if special_area.colliderect(playertutorial.rect) and promptcount >= 80:
+            draw_text_with_outline(screen, "Still here?", special_area.x - config.width*0.15, special_area.y - 50, white,black,blockyfont)
+
+        if promptcount >= 81 and promptcount < 240:
+            promptcount += 1
+        
+            
+        
 
         pygame.display.flip()
