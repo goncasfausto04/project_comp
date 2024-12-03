@@ -41,7 +41,7 @@ def game_loop():
 
 def execute_game(player, pet):
     base_path = os.path.dirname(__file__)
-    background_path = os.path.join(base_path, "extras", "ImageBackground.jpg")
+    background_path = os.path.join(base_path, "extras", "Battleground.png")
     background = pygame.image.load(background_path)
     background = pygame.transform.scale(background, resolution)
     clock = pygame.time.Clock()
