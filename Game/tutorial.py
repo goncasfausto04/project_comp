@@ -33,11 +33,6 @@ def tutorial():
 
     # set up spawn location
     playertutorial.rect.left = config.width * 0.5
-
-    special_area_path = os.path.join(base_path, "extras", "gunshop1.png")
-    special_area_img = pygame.image.load(special_area_path)
-    special_area_img = pygame.transform.scale(
-        special_area_img, (int(width * 0.2), int(height * 0.3)))
     
 
     special_area = pygame.Rect(
@@ -58,10 +53,6 @@ def tutorial():
         clock.tick(config.fps)
         screen.blit(background, (0, 0))
 
-        screen.blit(
-            special_area_img,
-            (width - (width * 0.2) - (width * 0.02), height - height * (0.95)),
-        )
 
         # Update player position based on key presses
         playertutorial.update()
@@ -163,7 +154,9 @@ def tutorial():
             )
             promptcount += 1
 
-                
+        # draw the special area
+        pygame.draw.rect(screen, (0, 255, 0), special_area, 2)
+
 
         
 

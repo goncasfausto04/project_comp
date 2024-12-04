@@ -11,17 +11,8 @@ def shed(player, pet, spawn_location):
     background_path = os.path.join(base_path, "extras", "shedbg.png")
     # scalling the background image into our selected resolution
     background = pygame.image.load(background_path)
-    casino_path = os.path.join(base_path, "extras", "casino1.png")
-    casino_image = pygame.image.load(casino_path)
-    casino_image = pygame.transform.scale(
-        casino_image, (int(width * 0.2), int(height * 0.3))
-    )
-    special_area_path = os.path.join(base_path, "extras", "gunshop1.png")
-    special_area_img = pygame.image.load(special_area_path)
-    special_area_img = pygame.transform.scale(
-        special_area_img, (int(width * 0.2), int(height * 0.3))
-    )
-
+    
+  
     # setting up the screen
     background = pygame.transform.scale(background, resolution)
     screen = pygame.display.set_mode(resolution)
@@ -65,15 +56,7 @@ def shed(player, pet, spawn_location):
     while running:
         clock.tick(fps)
         screen.blit(background, (0, 0))
-        screen.blit(
-            casino_image,
-            (width - (width * 0.2) - (width * 0.02), height - height * (0.35)),
-        )
-        screen.blit(
-            special_area_img,
-            (width - (width * 0.2) - (width * 0.02), height - height * (0.95)),
-        )
-
+        
         # Update the player and pet groups
         player_group.update()
         pet_group.update()
@@ -96,10 +79,10 @@ def shed(player, pet, spawn_location):
         pet_group.draw(screen)
 
         # draw the special area
-        #pygame.draw.rect(screen, (0, 255, 0), special_area, 2)
+        pygame.draw.rect(screen, (0, 255, 0), special_area, 2)
 
         # draw casino area
-        #pygame.draw.rect(screen, (0, 255, 0), casino_area, 2)
+        pygame.draw.rect(screen, (0, 255, 0), casino_area, 2)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
