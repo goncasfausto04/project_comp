@@ -306,6 +306,3 @@ def execute_game(player, pet):
         pygame.display.flip()
 
 
-# Se o enemy for contra ti, ele n pode levar 1 de dano (como se fosse uma bala), ele morre instantaneamente
-# Em vez de power ups, podiamos por a vida do pet a regenerar um x valor de y em y tempo
-# o Character passa de roxo a verde quando o player sai da shed e entra no game
