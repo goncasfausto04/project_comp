@@ -36,23 +36,23 @@ def game_loop():
         if current_state == "main":
             current_state = execute_game(player, pet)
         elif current_state == "initial":
-            current_state = shed(player, pet, (width * 0.5, height * 0.5))
+            current_state = shed(player, pet, (config.width * 0.5, config.height * 0.5))
         elif current_state == "shed":
-            current_state = shed(player, pet, ((width * 0.01), (height * 0.5)))
+            current_state = shed(player, pet, ((config.width * 0.01), (config.height * 0.5)))
         elif current_state == "shop":
             current_state = shop(player)
         elif current_state == "shedshop":
-            current_state = shed(player, pet, ((width * (1 - 0.170)), (height * 0.25)))
+            current_state = shed(player, pet, ((config.width * (1 - 0.170)), (config.height * 0.25)))
         elif current_state == "shedcasino":
-            current_state = shed(player, pet, ((width * (1 - 0.170)), (height * 0.75)))
+            current_state = shed(player, pet, ((config.width * (1 - 0.170)), (config.height * 0.75)))
 
 def execute_game(player, pet):
     base_path = os.path.dirname(__file__)
     background_path = os.path.join(base_path, "extras", "Battleground.png")
     background = pygame.image.load(background_path)
-    background = pygame.transform.scale(background, resolution)
+    background = pygame.transform.scale(background, config.resolution)
     clock = pygame.time.Clock()
-    screen = pygame.display.set_mode(resolution)
+    screen = pygame.display.set_mode(config.resolution)
     pygame.display.set_caption("Hit or Stand")
 
     player_group = pygame.sprite.Group()
@@ -78,7 +78,7 @@ def execute_game(player, pet):
 
     bar_width = 300
     bar_height = 10
-    bar_x = (width - bar_width) // 2
+    bar_x = (config.width - bar_width) // 2
     bar_y = height - bar_height - 50
 
 
@@ -100,7 +100,7 @@ def execute_game(player, pet):
 
         # Draw the text showing the current level and experience
         level_text = font.render(f'Level: {level}  EXP: {exp}/{int(exp_required)}', True, white)
-        screen.blit(level_text, (width // 2 - level_text.get_width() // 2, bar_y + bar_height + 10))
+        screen.blit(level_text, (config.width // 2 - level_text.get_width() // 2, bar_y + bar_height + 10))
 
     while running:
         clock.tick(fps)
@@ -120,7 +120,7 @@ def execute_game(player, pet):
                 pygame.quit()
                 exit()
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                pause_game(screen, width, height)
+                pause_game(screen, config.width, config.height)
 
         # Handle changing bullet type (check for 1, 2, or 3 key press)
         keys = pygame.key.get_pressed()
@@ -192,8 +192,8 @@ def execute_game(player, pet):
         powerup_spawn_timer += 1
         if powerup_spawn_timer >= spawn_rate:  # Power-up spawn timer
             if random.randint(1, spawn_chance) <= 10:  # 10% chance for power-up
-                x = random.randint(50, width - 50)
-                y = random.randint(50, height - 50)
+                x = random.randint(50, config.width - 50)
+                y = random.randint(50, config.height - 50)
                 powerup = PowerUp(x, y)
                 powerups_group.add(powerup)
             powerup_spawn_timer = 0  # Reset power-up timer
@@ -202,8 +202,8 @@ def execute_game(player, pet):
         health_drop_spawn_timer += 1
         if health_drop_spawn_timer >= spawn_rate:  # Health drop spawn timer
             if random.randint(1, spawn_chance // 2) <= 20:  # 20% chance for health drop
-                x = random.randint(50, width - 50)
-                y = random.randint(50, height - 50)
+                x = random.randint(50, config.width - 50)
+                y = random.randint(50, config.height - 50)
                 health_drop = HealthDrop(x, y)
                 powerups_group.add(health_drop)
             health_drop_spawn_timer = 0  # Reset health drop timer
@@ -228,7 +228,7 @@ def execute_game(player, pet):
         bullets.update()
         enemies.update(player)
 
-        if player.rect.right >= width:
+        if player.rect.right >= config.width:
             return "shed"  # Transition to the shed
         if player.powerup_active:  # If the player is invincible
             collided_enemies = pygame.sprite.spritecollide(

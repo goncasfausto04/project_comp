@@ -2,6 +2,7 @@ import pygame
 import os
 import cv2
 from config import *
+import config
 
 
 # Function to draw a stick figure with a construction hat
@@ -64,7 +65,7 @@ def draw_normal_stick_figure(screen, x, y):
 def under_construction():
 
     # creating the screen at 720x720 pixels
-    screen = pygame.display.set_mode(resolution)
+    screen = pygame.display.set_mode(config.resolution)
 
     # setting up the fonts
     corbelfont = pygame.font.SysFont("Corbel", 50)
@@ -234,20 +235,20 @@ def render_text_wrapped_from_surface(screen, text, font, color, x, y, max_width)
 
 
 def button_clicked(x_frac, y_frac, w_frac, h_frac, mouse):
-    x = width * x_frac
-    y = height * y_frac
-    w = width * w_frac
-    h = height * h_frac
+    x = config.width * x_frac
+    y = config.height * y_frac
+    w = config.width * w_frac
+    h = config.height * h_frac
     return x <= mouse[0] <= x + w and y <= mouse[1] <= y + h
 
 
 def draw_buttonutils(
     color, hover_color, x_frac, y_frac, w_frac, h_frac, text, font, mouse, screen
 ):
-    x = width * x_frac
-    y = height * y_frac
-    w = width * w_frac
-    h = height * h_frac
+    x = config.width * x_frac
+    y = config.height * y_frac
+    w = config.width * w_frac
+    h = config.height * h_frac
     current_color = (
         hover_color if button_clicked(x_frac, y_frac, w_frac, h_frac, mouse) else color
     )

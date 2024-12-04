@@ -36,12 +36,12 @@ def tutorial():
     
 
     special_area = pygame.Rect(
-        width
-        - (width * 0.109)
-        - (width * 0.02),  # x-coordinate (right margin of 2% from the edge)
-        height * 0.19,  # y-coordinate (4.2% of screen height)
-        width * 0.035,  # width (10.9% of screen width)
-        height * 0.09,  # height (19.4% of screen height)
+        config.width
+        - (config.width * 0.109)
+        - (config.width * 0.02),  # x-coordinate (right margin of 2% from the edge)
+        config.height * 0.19,  # y-coordinate (4.2% of screen height)
+        config.width * 0.035,  # width (10.9% of screen width)
+        config.height * 0.09,  # height (19.4% of screen height)
     )
 
 

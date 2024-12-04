@@ -2,6 +2,7 @@ from config import *
 import pygame
 import random
 import math
+import config
 
 
 class Enemy(pygame.sprite.Sprite):
@@ -19,8 +20,8 @@ class Enemy(pygame.sprite.Sprite):
 
         # starting the enemy at a random valid location on the screen
         # enemy_size[0] because the enemy size is a tupple -> (0,0)
-        self.rect.x = random.randint(0, width - enemy_size[0])
-        self.rect.y = random.randint(0, height - enemy_size[-1])
+        self.rect.x = random.randint(0, config.width - enemy_size[0])
+        self.rect.y = random.randint(0, config.height - enemy_size[-1])
 
     def draw(self, screen):
         # Draw the enemy using its color attribute

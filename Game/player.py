@@ -4,6 +4,7 @@ import pygame
 import math
 from bullet import Bullet
 from bullet import pistol, shotgun, machinegun
+import config
 
 
 # making Player a child of the Sprite class
@@ -35,7 +36,7 @@ class Player(pygame.sprite.Sprite):
 
         self.image = self.sprites_idle[self.curernt_sprite_idle]
         self.rect = self.image.get_rect()
-        self.rect.center = (width // 2, height // 2)
+        self.rect.center = (config.width // 2, config.height // 2)
 
         # GAMEPLAY VARIABLES
         self.speed = 5
@@ -71,11 +72,11 @@ class Player(pygame.sprite.Sprite):
 
         if keys[pygame.K_w] and self.rect.top > 0:
             self.rect.y -= self.speed
-        if keys[pygame.K_s] and self.rect.bottom < height:
+        if keys[pygame.K_s] and self.rect.bottom < config.height:
             self.rect.y += self.speed
         if keys[pygame.K_a] and self.rect.left > 0:
             self.rect.x -= self.speed
-        if keys[pygame.K_d] and self.rect.right < width:
+        if keys[pygame.K_d] and self.rect.right < config.width:
             self.rect.x += self.speed
         if self.powerup_active:
             self.powerup_timer -= 1

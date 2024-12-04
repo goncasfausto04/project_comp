@@ -14,8 +14,8 @@ def shed(player, pet, spawn_location):
     
   
     # setting up the screen
-    background = pygame.transform.scale(background, resolution)
-    screen = pygame.display.set_mode(resolution)
+    background = pygame.transform.scale(background, config.resolution)
+    screen = pygame.display.set_mode(config.resolution)
     clock = pygame.time.Clock()
 
     # set up spawn location
@@ -32,21 +32,21 @@ def shed(player, pet, spawn_location):
 
     # Define the special area dynamically based on resolution
     special_area = pygame.Rect(
-        width
-        - (width * 0.109)
-        - (width * 0.02),  # x-coordinate (right margin of 2% from the edge)
-        height * 0.19,  # y-coordinate (4.2% of screen height)
-        width * 0.035,  # width (10.9% of screen width)
-        height * 0.09,  # height (19.4% of screen height)
+        config.width
+        - (config.width * 0.109)
+        - (config.width * 0.02),  # x-coordinate (right margin of 2% from the edge)
+        config.height * 0.19,  # y-coordinate (4.2% of screen height)
+        config.width * 0.035,  # width (10.9% of screen width)
+        config.height * 0.09,  # height (19.4% of screen height)
     )
 
     casino_area = pygame.Rect(
-        width
-        - (width * 0.120)
-        - (width * 0.02),  # x-coordinate (right margin of 2% from the edge)
-        height * (0.85),  # y-coordinate (4.2% of screen height)
-        width * 0.05,  # width (10.9% of screen width)
-        height * 0.07,
+        config.width
+        - (config.width * 0.120)
+        - (config.width * 0.02),  # x-coordinate (right margin of 2% from the edge)
+        config.height * (0.85),  # y-coordinate (4.2% of screen height)
+        config.width * 0.05,  # width (10.9% of screen width)
+        config.height * 0.07,
     )
 
     running = True
@@ -70,7 +70,7 @@ def shed(player, pet, spawn_location):
             return casino(player)
 
         if player.rect.left <= 0:
-            player.rect.left = width - player.rect.width
+            player.rect.left = config.width - player.rect.width
             pet.rect.left = player.rect.left + 50  # Pet follows the player
             return "main"
 
@@ -89,6 +89,6 @@ def shed(player, pet, spawn_location):
                 pygame.quit()
                 exit()
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                pause_game(screen, width, height)
+                pause_game(screen, config.width, config.height)
 
         pygame.display.flip()

@@ -1,6 +1,7 @@
 # sprit -> everything that is appearing in 2D
 
 from config import *
+import config
 import pygame
 import math
 
@@ -29,9 +30,9 @@ class Bullet(pygame.sprite.Sprite):
         # killing the bullet if it goes off screen
         if (
             self.rect.x < 0
-            or self.rect.x > width
+            or self.rect.x > config.width
             or self.rect.y < 0
-            or self.rect.y > height
+            or self.rect.y > config.height
         ):
             self.kill()
 

@@ -26,7 +26,7 @@ deep_black = (19, 20, 20)
 
 
 # SCREEN RESOLUTION
-resolution = (1280, 720)
+resolution = (854, 480)
 width, height = resolution[0], resolution[1]
 fps = 60
 

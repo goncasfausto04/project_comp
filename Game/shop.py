@@ -13,14 +13,12 @@ def shop(player):
     pygame.init()
 
     # Create the screen at the set resolution
-    screen = pygame.display.set_mode(resolution)
+    screen = pygame.display.set_mode(config.resolution)
 
     # Set fonts
-    corbelfont = pygame.font.SysFont("Corbel", int(height * 0.07))
-    comicsansfont = pygame.font.SysFont("Comic Sans MS", int(height * 0.07))
     blockyfontpath = os.path.join(base_path, "extras", "Pixeboy.ttf")
-    blockyfont = pygame.font.Font(blockyfontpath, int(height * 0.07))
-    blockyfontsmall = pygame.font.Font(blockyfontpath, int(height * 0.035))
+    blockyfont = pygame.font.Font(blockyfontpath, int(config.height * 0.07))
+    blockyfontsmall = pygame.font.Font(blockyfontpath, int(config.height * 0.035))
 
     # Render the text
     skins_text = blockyfontsmall.render("Skins Shop", True, white)
@@ -33,7 +31,7 @@ def shop(player):
     # Render background
     background_path = os.path.join(base_path, "extras", "loja.jpeg")
     background = pygame.image.load(background_path)
-    background = pygame.transform.scale(background, resolution)
+    background = pygame.transform.scale(background, config.resolution)
 
     # Main loop
     while True:
@@ -81,13 +79,13 @@ def shop(player):
 
 def weapons_shop(player):
     pygame.init()
-    screen = pygame.display.set_mode(resolution)
+    screen = pygame.display.set_mode(config.resolution)
     blockyfontpath = os.path.join(base_path, "extras", "Pixeboy.ttf")
-    blockyfont = pygame.font.Font(blockyfontpath, int(height * 0.035))  # Smaller font size
+    blockyfont = pygame.font.Font(blockyfontpath, int(config.height * 0.035))  # Smaller font size
     font = blockyfont
     background_path = os.path.join(base_path, "extras", "weaponshop.png")
     background = pygame.image.load(background_path)
-    background = pygame.transform.scale(background, resolution)
+    background = pygame.transform.scale(background, config.resolution)
 
     # Weapon prices
     weapon_prices = {
@@ -188,7 +186,7 @@ def weapons_shop(player):
         # Drawing
         screen.blit(background, (0, 0))
         money_text = font.render(f"Money: ${player.coins}", True, white)
-        screen.blit(money_text, (width * 0.05, height * 0.05))
+        screen.blit(money_text, (config.width * 0.05, config.height * 0.05))
 
         pistol_text = font.render("Pistol - $100", True, white)
         shotgun_text = font.render("Shotgun - $300", True, white)
@@ -225,7 +223,7 @@ def no_money_messaege(screen):
     font_path = os.path.join(base_path, "extras", "Pixeboy.ttf")
     font = pygame.font.Font(font_path, 100)
     text = font.render("Not enough money", True, (255, 255, 255))
-    text_rect = text.get_rect(center=(width // 2, height // 2))
+    text_rect = text.get_rect(center=(config.width // 2, config.height // 2))
 
     # Display the message for 120 frames
     for _ in range(75):
