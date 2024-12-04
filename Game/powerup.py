@@ -1,5 +1,6 @@
 import pygame
 from config import *
+from abc import ABC, abstractmethod
 
 
 class PowerUp(pygame.sprite.Sprite):

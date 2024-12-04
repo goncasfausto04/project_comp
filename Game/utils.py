@@ -1,6 +1,5 @@
 import pygame
 import os
-import sys
 import cv2
 from config import *
 
