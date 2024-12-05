@@ -14,8 +14,6 @@ from chest import TreasureChest
 
 
 
-
-
 #endless loop that will keep the game running
 def game_loop():
     # Initialize player and other game components
@@ -143,7 +141,7 @@ def execute_game(player, pet):
         if player.exp >= player.exp_required:
             x = random.randint(50, config.width - 50)
             y = random.randint(50, config.height - 50)
-            chest = TreasureChest(["1","2","3","4","5"],x, y)
+            chest = TreasureChest(x, y)
             chests.add(chest)
             player.level += 1
             player.exp -= player.exp_required
@@ -154,8 +152,7 @@ def execute_game(player, pet):
             enemy.move_towards_player(player)  # Move towards the player
 
         collided_enemies = pygame.sprite.spritecollide(player, enemies, False)
-
-        collided_chests = pygame.sprite.spritecollide(player, chests, False)
+        
 
         if collided_enemies and player_cooldown <= 0:
             # Apply damage once for all collisions in the frame
@@ -165,6 +162,7 @@ def execute_game(player, pet):
 
         if player_cooldown > 0:
             player_cooldown -= 1  # Reduce player's cooldown by 1 each frame
+            
 
 
         # Enemies spawn rate
@@ -233,6 +231,8 @@ def execute_game(player, pet):
         ):  # True removes power-up
             player.activate_powerup()  # Activate invincibility for the player
 
+       
+
         # updating positions and visuals
         player_group.update()
         bullets.update()
@@ -279,6 +279,11 @@ def execute_game(player, pet):
         kills_text = font.render(f"Kills: {kills}", True, white)
         screen.blit(timer_text, (10, 10))  # Timer at top-left corner
         screen.blit(kills_text, (10, 40))  # Kill counter below timer
+
+        if pygame.sprite.spritecollide(
+            player, chests, True
+        ): chest.open_chest(screen)  # Open the chest
+
 
         pygame.display.flip()
 
