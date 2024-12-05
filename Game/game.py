@@ -10,6 +10,7 @@ from pet import Pet
 from shed import shed
 from shop import shop
 from powerup import *
+from chest import TreasureChest
 
 
 
@@ -61,11 +62,15 @@ def execute_game(player, pet):
     pet_group.add(pet)  # Add the pet to the group
     bullets = pygame.sprite.Group()
     enemies = pygame.sprite.Group()
+    chests = pygame.sprite.Group()
+    chest_spawn_timer = 0
+
     enemy_cooldown = 0
     running = True
     powerups_group = pygame.sprite.Group()  # Group to hold power-up sprites
-
     powerup_spawn_timer = 0  # Timer for power-ups
+
+
     health_drop_spawn_timer = 0  # Timer for health drops
     spawn_rate = (
         200  # Frames between spawn attempts (e.g., every ~3.3 seconds at 60 FPS)
@@ -89,6 +94,7 @@ def execute_game(player, pet):
 
     damage_cooldown = 35  # Cooldown in frames (1 second at 60 FPS (if it was 60))
     player_cooldown = 0  # Tracks the remaining cooldown time for the player
+
 
     def draw_level_up_bar(screen):
         # Draw the background bar (empty)
@@ -135,6 +141,7 @@ def execute_game(player, pet):
 
         for enemy in enemies:
             enemy.draw(screen)  # Call the draw method for each enemy
+        
 
         if exp >= exp_required:
             level += 1
@@ -146,6 +153,8 @@ def execute_game(player, pet):
             enemy.move_towards_player(player)  # Move towards the player
 
         collided_enemies = pygame.sprite.spritecollide(player, enemies, False)
+
+        collided_chests = pygame.sprite.spritecollide(player, chests, False)
 
         if collided_enemies and player_cooldown <= 0:
             # Apply damage once for all collisions in the frame
@@ -198,6 +207,15 @@ def execute_game(player, pet):
                 powerups_group.add(powerup)
             powerup_spawn_timer = 0  # Reset power-up timer
 
+        chest_spawn_timer += 1
+        if chest_spawn_timer >= spawn_rate:
+            if random.randint(1, spawn_chance) <= 10:
+                x = random.randint(50, config.width - 50)
+                y = random.randint(50, config.height - 50)
+                chest = TreasureChest(["1","2","3","4","5"],x, y)
+                chests.add(chest)
+            chest_spawn_timer = 0
+
         # === Health Drop Spawn Logic ===
         health_drop_spawn_timer += 1
         if health_drop_spawn_timer >= spawn_rate:  # Health drop spawn timer
@@ -244,6 +262,7 @@ def execute_game(player, pet):
         player_group.draw(screen)
         enemies.draw(screen)
         powerups_group.draw(screen)
+        chests.draw(screen)
 
         # Handle collisions
         for bullet in bullets:
