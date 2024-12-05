@@ -7,6 +7,7 @@ from casino import *
 
 
 def shed(player, pet, spawn_location):
+    
     # setting up the background and the screen
     background_path = os.path.join(base_path, "extras", "shedbg.png")
     # scalling the background image into our selected resolution
@@ -16,6 +17,8 @@ def shed(player, pet, spawn_location):
     # setting up the screen
     background = pygame.transform.scale(background, config.resolution)
     screen = pygame.display.set_mode(config.resolution)
+
+
     clock = pygame.time.Clock()
 
     # set up spawn location

@@ -197,13 +197,14 @@ def interface():
 
 
 def wilderness_explorer():
+    config.width, config.height = config.resolution[0], config.resolution[1]
     game_loop()
 
 
 def options():
 
     # Initialize the screen for options
-    screen = pygame.display.set_mode(resolution)
+    screen = pygame.display.set_mode(config.resolution)
 
     # Set fonts
     blockyfontpath = os.path.join(base_path, "extras", "Pixeboy.ttf")

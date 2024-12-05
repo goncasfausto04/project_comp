@@ -29,6 +29,7 @@ def game_loop():
     pygame.mixer.music.set_volume(config.music_volume)  # Set the desired volume
     pygame.mixer.music.play(-1)  # Loop the soundtrack indefinitely
 
+
     spawn_interval = 2 * fps  # Intervalo inicial entre spawns (2 segundos)
     phase_duration = 30  # Duração de cada fase em segundos
     current_phase = 0  # Fase inicial do jogo
@@ -63,7 +64,6 @@ def execute_game(player, pet):
     bullets = pygame.sprite.Group()
     enemies = pygame.sprite.Group()
     chests = pygame.sprite.Group()
-    chest_spawn_timer = 0
 
     enemy_cooldown = 0
     running = True
@@ -76,9 +76,6 @@ def execute_game(player, pet):
         200  # Frames between spawn attempts (e.g., every ~3.3 seconds at 60 FPS)
     )
     spawn_chance = 100  # Percentage rarity of power-up (lower is rarer, e.g., 10% here)
-    level = 1
-    exp = 0
-    exp_required = 10  # Experience needed for level 1
     exp_multiplier = 1.2
 
     bar_width = 300
@@ -101,11 +98,11 @@ def execute_game(player, pet):
         pygame.draw.rect(screen, deep_black, (bar_x, bar_y, bar_width, bar_height))
 
         # Calculate the width of the filled part of the bar
-        fill_width = (exp / exp_required) * bar_width
+        fill_width = (player.exp / player.exp_required) * bar_width
         pygame.draw.rect(screen, green, (bar_x, bar_y, fill_width, bar_height))
 
         # Draw the text showing the current level and experience
-        level_text = font.render(f'Level: {level}  EXP: {exp}/{int(exp_required)}', True, white)
+        level_text = font.render(f'Level: {player.level}  EXP: {player.exp}/{int(player.exp_required)}', True, white)
         screen.blit(level_text, (config.width // 2 - level_text.get_width() // 2, bar_y + bar_height + 10))
 
     while running:
@@ -143,10 +140,14 @@ def execute_game(player, pet):
             enemy.draw(screen)  # Call the draw method for each enemy
         
 
-        if exp >= exp_required:
-            level += 1
-            exp -= exp_required
-            exp_required = int(exp_required * exp_multiplier)  # Increase the XP required for the next level
+        if player.exp >= player.exp_required:
+            x = random.randint(50, config.width - 50)
+            y = random.randint(50, config.height - 50)
+            chest = TreasureChest(["1","2","3","4","5"],x, y)
+            chests.add(chest)
+            player.level += 1
+            player.exp -= player.exp_required
+            player.exp_required = int(player.exp_required * exp_multiplier)  # Increase the XP required for the next level
 
         # Detect collision and apply damage
         for enemy in enemies:
@@ -207,15 +208,6 @@ def execute_game(player, pet):
                 powerups_group.add(powerup)
             powerup_spawn_timer = 0  # Reset power-up timer
 
-        chest_spawn_timer += 1
-        if chest_spawn_timer >= spawn_rate:
-            if random.randint(1, spawn_chance) <= 10:
-                x = random.randint(50, config.width - 50)
-                y = random.randint(50, config.height - 50)
-                chest = TreasureChest(["1","2","3","4","5"],x, y)
-                chests.add(chest)
-            chest_spawn_timer = 0
-
         # === Health Drop Spawn Logic ===
         health_drop_spawn_timer += 1
         if health_drop_spawn_timer >= spawn_rate:  # Health drop spawn timer
@@ -256,7 +248,7 @@ def execute_game(player, pet):
             for enemy in collided_enemies:
                 enemy.kill()  # Remove enemy on collision
                 kills += 1
-                exp += 1
+                player.exp += 1
 
         # drawing the player and enemies sprites on the screen
         player_group.draw(screen)
@@ -273,7 +265,7 @@ def execute_game(player, pet):
                 if enemy.health <= 0:
                     enemy.kill()
                     kills += 1
-                    exp += 1
+                    player.exp += 1
 
         # Draw game objects
         draw_level_up_bar(screen)

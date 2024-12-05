@@ -1,10 +1,10 @@
+
 from utils import *
 from config import *
 import pygame
 import math
 from bullet import Bullet
 from bullet import pistol, shotgun, machinegun
-import config
 
 
 # making Player a child of the Sprite class
@@ -20,6 +20,7 @@ class Player(pygame.sprite.Sprite):
 
         self.sprites_idle = []
         self.frame_count = 0
+        self.exp_required = 10
         for i in range(0, 9):
             path = os.path.join(sprites_path, f"Idle__00{i}.png")
             image = pygame.image.load(path)
@@ -36,7 +37,7 @@ class Player(pygame.sprite.Sprite):
 
         self.image = self.sprites_idle[self.curernt_sprite_idle]
         self.rect = self.image.get_rect()
-        self.rect.center = (config.width // 2, config.height // 2)
+        self.rect.center = (width // 2, height // 2)
 
         # GAMEPLAY VARIABLES
         self.speed = 5
@@ -52,6 +53,11 @@ class Player(pygame.sprite.Sprite):
         self.coins = 20000
         self.powerup_active = False
         self.powerup_timer = 0
+        self.level = 1
+        self.exp = 0
+        self.spawn_rate_multiplier = 1.0  # Default spawn rate multiplier
+        self.de_spawner_active = False
+        self.de_spawner_timer = 0
  
 
     def activate_powerup(self):
@@ -72,11 +78,11 @@ class Player(pygame.sprite.Sprite):
 
         if keys[pygame.K_w] and self.rect.top > 0:
             self.rect.y -= self.speed
-        if keys[pygame.K_s] and self.rect.bottom < config.height:
+        if keys[pygame.K_s] and self.rect.bottom < height:
             self.rect.y += self.speed
         if keys[pygame.K_a] and self.rect.left > 0:
             self.rect.x -= self.speed
-        if keys[pygame.K_d] and self.rect.right < config.width:
+        if keys[pygame.K_d] and self.rect.right < width:
             self.rect.x += self.speed
         if self.powerup_active:
             self.powerup_timer -= 1
@@ -101,6 +107,11 @@ class Player(pygame.sprite.Sprite):
                     self.image = pygame.transform.flip(self.sprites_run[int(self.curernt_sprite_run)], True, False)
                 else:
                     self.image = self.sprites_run[int(self.curernt_sprite_run)]
+        if self.de_spawner_active:
+            self.de_spawner_timer -= 1
+            if self.de_spawner_timer <= 0:
+                self.spawn_rate_multiplier = 1.0  # Reset spawn rate multiplier
+                self.de_spawner_active = False
         
         
 
