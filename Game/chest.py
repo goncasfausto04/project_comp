@@ -2,9 +2,10 @@ import random
 import pygame
 import config
 from config import *
+from player import Player
 
 class TreasureChest(pygame.sprite.Sprite):
-    def __init__(self, x, y):
+    def __init__(self, x, y,player):
         super().__init__()
         self.rewards = ["100coins", "200coins", "300coins", "Dash", "Health Potion"]
         self.cards = random.sample(self.rewards, 3)  # Select 3 random rewards
@@ -14,6 +15,7 @@ class TreasureChest(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
         self.card_size = (100, 150)
+        self.player = player
         self.card_positions = [
             ((config.width *(1/3))-50, config.height*(1/2)-75),
             ((config.width*(1/2)-50), config.height*(1/2)-75),
@@ -44,7 +46,7 @@ class TreasureChest(pygame.sprite.Sprite):
         last_loop = True
         
         while running or last_loop:
-            screen.fill((0, 0, 0))  # Clear screen
+            # Clear screen
             self.draw_cards(screen)
             pygame.display.flip()
 

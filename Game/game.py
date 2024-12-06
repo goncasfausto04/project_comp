@@ -141,7 +141,7 @@ def execute_game(player, pet):
         if player.exp >= player.exp_required:
             x = random.randint(50, config.width - 50)
             y = random.randint(50, config.height - 50)
-            chest = TreasureChest(x, y)
+            chest = TreasureChest(x, y,player)
             chests.add(chest)
             player.level += 1
             player.exp -= player.exp_required
@@ -231,8 +231,7 @@ def execute_game(player, pet):
         ):  # True removes power-up
             player.activate_powerup()  # Activate invincibility for the player
 
-       
-
+        
         # updating positions and visuals
         player_group.update()
         bullets.update()
@@ -280,9 +279,11 @@ def execute_game(player, pet):
         screen.blit(timer_text, (10, 10))  # Timer at top-left corner
         screen.blit(kills_text, (10, 40))  # Kill counter below timer
 
-        if pygame.sprite.spritecollide(
-            player, chests, True
-        ): chest.open_chest(screen)  # Open the chest
+        collected_chests = pygame.sprite.spritecollide(player, chests, True)
+        for chest in collected_chests:
+            chest.open_chest(screen)
+
+       
 
 
         pygame.display.flip()
