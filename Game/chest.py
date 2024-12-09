@@ -7,7 +7,7 @@ from player import Player
 class TreasureChest(pygame.sprite.Sprite):
     def __init__(self, x, y,player):
         super().__init__()
-        self.rewards = ["100coins", "200coins", "300coins", "Dash", "Health Potion"]
+        self.rewards = ["100", "200", "300", "Dash", "Health Potion"]
         self.cards = random.sample(self.rewards, 3)  # Select 3 random rewards
         self.flipped_cards = [False, False, False]
         self.image = pygame.Surface(chest_size)  # Power-up size
@@ -26,6 +26,8 @@ class TreasureChest(pygame.sprite.Sprite):
         if 0 <= card_index < len(self.cards) and not self.flipped_cards[card_index]:
             self.flipped_cards[card_index] = True
             print(f"Card {card_index + 1}: {self.cards[card_index]}")
+            if self.cards[card_index] == "100" or self.cards[card_index] == "200" or self.cards[card_index] == "300":
+                self.player.coins += int(self.cards[card_index])
             return self.cards[card_index]
         else:
             print("Invalid card or already flipped!")
