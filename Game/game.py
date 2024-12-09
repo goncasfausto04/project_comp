@@ -53,7 +53,13 @@ def execute_game(player, pet):
     background = pygame.transform.scale(background, config.resolution)
     clock = pygame.time.Clock()
     screen = pygame.display.set_mode(config.resolution)
+    blockyfontpath = os.path.join(base_path, "extras", "Pixeboy.ttf")
+    blockyfont = pygame.font.Font(blockyfontpath, int(config.height * 0.05))
+    mouse = pygame.mouse.get_pos()  # Get mouse position
     pygame.display.set_caption("Hit or Stand")
+
+    leave_text = blockyfont.render("Leave", True, white)
+    not_leave_text = blockyfont.render("Not Leave", True, white)
 
     player_group = pygame.sprite.Group()
     player_group.add(player)
@@ -237,8 +243,7 @@ def execute_game(player, pet):
         bullets.update()
         enemies.update(player)
 
-        if player.rect.right >= config.width:
-            return "shed"  # Transition to the shed
+        
         if player.powerup_active:  # If the player is invincible
             collided_enemies = pygame.sprite.spritecollide(
                 player, enemies, True
@@ -282,6 +287,12 @@ def execute_game(player, pet):
         collected_chests = pygame.sprite.spritecollide(player, chests, True)
         for chest in collected_chests:
             chest.open_chest(screen)
+
+        if player.rect.right >= config.width:
+                draw_buttonutils(dark_red,glowing_light_red,0.4 - (0.125 / 2),0.667,0.125,0.083,leave_text,blockyfont,mouse,screen)
+                draw_buttonutils(dark_red,glowing_light_red,0.6 - (0.125 / 2),0.667,0.125,0.083,not_leave_text,blockyfont,mouse,screen)
+                prompt(screen,config.width,config.height,"Are you sure you want to leave?")
+                return "shed"  # Transition to the shed
 
        
 
