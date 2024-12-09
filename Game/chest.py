@@ -1,17 +1,21 @@
 import random
 import pygame
 import config
+import os
 from config import *
 from player import Player
 
 class TreasureChest(pygame.sprite.Sprite):
     def __init__(self, x, y,player):
         super().__init__()
+        
         self.rewards = ["100", "200", "300", "Dash", "Health Potion"]
         self.cards = random.sample(self.rewards, 3)  # Select 3 random rewards
         self.flipped_cards = [False, False, False]
         self.image = pygame.Surface(chest_size)  # Power-up size
-        self.image.fill(pink)  # Power-up color
+        image_path = os.path.join(base_path, "extras", "chest.png")
+        self.image = pygame.image.load(image_path).convert_alpha()
+        self.image = pygame.transform.scale(self.image, powerup_size)
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
         self.card_size = (100, 150)

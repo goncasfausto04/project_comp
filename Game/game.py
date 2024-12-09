@@ -59,7 +59,7 @@ def execute_game(player, pet):
     pygame.display.set_caption("Hit or Stand")
 
     leave_text = blockyfont.render("Leave", True, white)
-    not_leave_text = blockyfont.render("Not Leave", True, white)
+    not_leave_text = blockyfont.render("Stay", True, white)
 
     player_group = pygame.sprite.Group()
     player_group.add(player)
@@ -289,10 +289,26 @@ def execute_game(player, pet):
             chest.open_chest(screen)
 
         if player.rect.right >= config.width:
-                draw_buttonutils(dark_red,glowing_light_red,0.4 - (0.125 / 2),0.667,0.125,0.083,leave_text,blockyfont,mouse,screen)
-                draw_buttonutils(dark_red,glowing_light_red,0.6 - (0.125 / 2),0.667,0.125,0.083,not_leave_text,blockyfont,mouse,screen)
-                prompt(screen,config.width,config.height,"Are you sure you want to leave?")
-                return "shed"  # Transition to the shed
+                out = True
+                while out:
+                    mouse = pygame.mouse.get_pos()
+                    draw_buttonutils(dark_green,(0,255,0),0.4 - (0.125 / 2),0.667,0.125,0.083,not_leave_text,blockyfont,mouse,screen)
+                    draw_buttonutils(dark_red,glowing_light_red,0.6 - (0.125 / 2),0.667,0.125,0.083,leave_text,blockyfont,mouse,screen)
+                    pygame.display.flip()
+                    for event in pygame.event.get():
+                        if event.type == pygame.QUIT:
+                            pygame.quit()
+                            exit()
+                        elif event.type == pygame.MOUSEBUTTONDOWN:
+                            if button_clicked(0.4 - (0.125 / 2),0.667,0.125,0.083,mouse):
+                                player.rect.right = config.width - 20
+                                out = False
+                            elif button_clicked(0.6 - (0.125 / 2),0.667,0.125,0.083,mouse):
+                                return "shed"
+                            
+                            
+                        
+             
 
        
 
