@@ -53,6 +53,8 @@ class Player(pygame.sprite.Sprite):
         self.powerup_active = False
         self.powerup_timer = 0
         self.invincible = False
+        self.spawn_rate_multiplier = 1
+        self.oneshotkill = False
  
 
     def activate_powerup(self):

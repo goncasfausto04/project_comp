@@ -37,7 +37,7 @@ class PowerUp(pygame.sprite.Sprite, ABC):
 class Invincibility(PowerUp):
     def __init__(self, x, y):
         super().__init__(x, y)
-        self.image.fill((0, 20, 0))  # Fill the power-up with red to represent invincibility.
+        self.image.fill((0, 20, 0))  # Fill the power-up with blue to represent invincibility.
         self.duration = 200
     def affect_player(self, player):
         """Make the player invincible."""
@@ -84,3 +84,16 @@ class DeSpawner(PowerUp):
 
     def deactivate(self, player):
         pass
+
+
+class Instakill(PowerUp):
+    def __init__(self, x, y):
+        super().__init__(x, y)
+        self.image.fill((0, 0, 200))
+    def affect_player(self, player):
+        player.oneshotkill = True
+
+    def affect_game(self, enemies):
+        pass
+    def deactivate(self, player):
+        player.oneshotkill = False
