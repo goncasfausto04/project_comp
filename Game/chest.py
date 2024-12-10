@@ -5,7 +5,6 @@ import os
 from config import *
 from player import Player
 
-
 class TreasureChest(pygame.sprite.Sprite):
     def __init__(self, x, y, player):
         super().__init__()
@@ -13,29 +12,32 @@ class TreasureChest(pygame.sprite.Sprite):
         self.rewards = ["100", "200", "300", "Dash", "Health Potion"]
         self.cards = random.sample(self.rewards, 3)  # Select 3 random rewards
         self.flipped_cards = [False, False, False]
-        self.image = pygame.Surface(chest_size)  # Power-up size
+
+        # Load the chest image
         image_path = os.path.join(base_path, "extras", "chest.png")
         self.image = pygame.image.load(image_path).convert_alpha()
-        self.image = pygame.transform.scale(self.image, powerup_size)
+        self.image = pygame.transform.scale(self.image, chest_size)  # Scale to desired size
+
+        # Load the card image
+        card_path = os.path.join(base_path, "extras", "card.png")
+        self.card_image = pygame.image.load(card_path).convert_alpha()
+        self.card_image = pygame.transform.scale(self.card_image, (100, 150))  # Scale to desired size
+
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
         self.card_size = (100, 150)
         self.player = player
         self.card_positions = [
-            ((config.width * (1 / 3)) - 50, config.height * (1 / 2) - 75),
-            ((config.width * (1 / 2) - 50), config.height * (1 / 2) - 75),
-            ((config.width * (2 / 3) - 50), config.height * (1 / 2) - 75),
+            ((config.width * (1/3)) - 50, config.height * (1/2) - 75),
+            ((config.width * (1/2)) - 50, config.height * (1/2) - 75),
+            ((config.width * (2/3)) - 50, config.height * (1/2) - 75)
         ]  # Adjust these positions based on your screen size
 
     def flip_card(self, card_index):
         if 0 <= card_index < len(self.cards) and not self.flipped_cards[card_index]:
             self.flipped_cards[card_index] = True
             print(f"Card {card_index + 1}: {self.cards[card_index]}")
-            if (
-                self.cards[card_index] == "100"
-                or self.cards[card_index] == "200"
-                or self.cards[card_index] == "300"
-            ):
+            if self.cards[card_index] in ["100", "200", "300"]:
                 self.player.coins += int(self.cards[card_index])
             return self.cards[card_index]
         else:
@@ -44,13 +46,10 @@ class TreasureChest(pygame.sprite.Sprite):
 
     def draw_cards(self, screen):
         for i in range(3):
-            card_color = (0, 255, 0) if self.flipped_cards[i] else (0, 0, 255)
-            pygame.draw.rect(
-                screen, card_color, (*self.card_positions[i], *self.card_size)
-            )
             if self.flipped_cards[i]:
+                pygame.draw.rect(screen, (255, 255, 255), (*self.card_positions[i], *self.card_size))
                 font = pygame.font.Font(None, 36)
-                text_surface = font.render(self.cards[i], True, (255, 255, 255))
+                text_surface = font.render(self.cards[i], True, (0, 0, 0))
                 text_rect = text_surface.get_rect(
                     center=(
                         self.card_positions[i][0] + 50,
@@ -58,6 +57,8 @@ class TreasureChest(pygame.sprite.Sprite):
                     )
                 )
                 screen.blit(text_surface, text_rect)
+            else:
+                screen.blit(self.card_image, self.card_positions[i])
 
     def open_chest(self, screen):
         running = True
