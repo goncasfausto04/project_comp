@@ -271,15 +271,7 @@ def execute_game(player, pet):
             player.inverted = False
             reverse_time = 120
 
-
-
-        enemy_types = [
-            initialEnemy,
-            fastEnemy,
-            TankMonster,
-            RangedMonster,
-            DuplicateMonster,
-        ]
+        enemy_types = [initialEnemy, fastEnemy, TankMonster, RangedMonster, DuplicateMonster]
         spawn_configs = [
             (60, [70, 20, 10, 0, 0], 1, 2),
             (120, [50, 30, 15, 5, 0], 1, 1.8),
@@ -290,7 +282,7 @@ def execute_game(player, pet):
             (420, [20, 20, 30, 30, 20], 4, 1),
             (480, [15, 15, 35, 35, 20], 4, 1),
             (540, [10, 10, 40, 40, 25], 4, 1),
-            (float("inf"), [5, 5, 45, 45, 35], 5, 0.8),
+            (float('inf'), [5, 5, 45, 45, 35], 5, 0.8)
         ]
 
         if enemy_cooldown <= 0:
@@ -334,6 +326,10 @@ def execute_game(player, pet):
         ):  # True removes power-up
             player.activate_powerup()  # Activate invincibility for the player
 
+        for enemy in enemies:
+            if isinstance(enemy, RangedMonster):  # Check if the enemy is a RangedMonster
+                enemy.enemy_shoot(bullets)  # Call the shoot method
+
         # updating positions and visuals
         player_group.update()
         bullets.update()
@@ -344,10 +340,10 @@ def execute_game(player, pet):
                 player, enemies, True
             )  # True removes enemy
 
-            for enemy in collided_enemies:
-                enemy.kill()  # Remove enemy on collision
-                kills += 1
-                player.exp += 1
+            #for enemy in collided_enemies:
+                #enemy.kill()  # Remove enemy on collision
+                #kills += 1
+                #player.exp += 1
 
         # drawing the player and enemies sprites on the screen
         powerups_group.draw(screen)
@@ -355,18 +351,24 @@ def execute_game(player, pet):
 
         # Handle collisions
         for bullet in bullets:
-            collided_enemies = pygame.sprite.spritecollide(bullet, enemies, False)
-            for enemy in collided_enemies:
-                if player.oneshotkill == True:
-                    enemy.health -= 100000
-                    bullet.kill()
-                else:
-                    enemy.health -= 5
-                    bullet.kill()
-                if enemy.health <= 0:
-                    enemy.kill()
-                    kills += 1
-                    player.exp += 1
+            # Verificar se a bala é de um inimigo
+            if getattr(bullet, 'is_enemy_bullet', False):  # Verifica se é uma bala inimiga
+                # Detectar colisão com o jogador
+                if player.rect.colliderect(bullet.rect):
+                    player.health -= bullet.damage
+                    bullet.kill()  # Remove a bala após a colisão
+            else:
+                # Verificar colisão com todos os inimigos
+                for enemy in enemies:
+                    if enemy.rect.colliderect(bullet.rect):
+                        enemy.health -= 10  # Aplica dano no inimigo
+                        bullet.kill()  # Remove a bala após a colisão
+                        if enemy.health <= 0:
+                            enemy.kill()
+                            kills += 1
+                            player.exp += 1
+                        # Se a vida do inimigo chegar a 0, ele morre
+                        break  # Sai do loop interno após processar o inimigo atual
 
 
         if beforeinstakill < kills:
