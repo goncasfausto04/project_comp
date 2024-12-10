@@ -136,7 +136,7 @@ def execute_game(player, pet):
         # draw the timer on the slot with less opacity
         if timer > 0:
             # Modify the green color to include less opacity (e.g., 100 out of 255)
-            semi_transparent_green = (0, 255, 0, 100)  # 100 is the alpha (opacity)
+            semi_transparent_green = (0, 255, 0)  # 100 is the alpha (opacity)
             
             pygame.draw.rect(
                 screen,
@@ -186,7 +186,7 @@ def execute_game(player, pet):
         if player.exp >= player.exp_required:
             x = random.randint(50, config.width - 50)
             y = random.randint(50, config.height - 50)
-            chest = TreasureChest(x, y, player, screen)
+            chest = TreasureChest(x, y, player)
             chests.add(chest)
             player.level += 1
             player.exp -= player.exp_required
@@ -311,7 +311,8 @@ def execute_game(player, pet):
 
         # Draw game objects
         draw_level_up_bar(screen)
-        draw_slot(screen)
+        if player.has_dash:
+            draw_slot(screen)
         player_group.draw(screen)
         pet_group.draw(screen)
         for bullet in bullets:
