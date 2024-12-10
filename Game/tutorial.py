@@ -33,7 +33,6 @@ def tutorial():
 
     # set up spawn location
     playertutorial.rect.left = config.width * 0.5
-    
 
     special_area = pygame.Rect(
         config.width
@@ -44,7 +43,6 @@ def tutorial():
         config.height * 0.09,  # height (19.4% of screen height)
     )
 
-
     promptcount = 0
     wasd_keys_pressed = set()
     running = True
@@ -53,13 +51,11 @@ def tutorial():
         clock.tick(config.fps)
         screen.blit(background, (0, 0))
 
-
         # Update player position based on key presses
         playertutorial.update()
 
         # Draw the player
         player_group.draw(screen)
-
 
         print("promptcount:", promptcount)
 
@@ -157,9 +153,6 @@ def tutorial():
         # draw the special area
         pygame.draw.rect(screen, (0, 255, 0), special_area, 2)
 
-
-        
-
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -178,19 +171,40 @@ def tutorial():
                 ):
                     promptcount += 1  # Advance to next part when all keys pressed
 
-         # Check if the player collides with the special area
+        # Check if the player collides with the special area
         if special_area.colliderect(playertutorial.rect) and promptcount < 80:
             # Go to the shop area (example of what happens here)
-            draw_text_with_outline(screen, "This is the tutorial", special_area.x - config.width*0.15, special_area.y - 50, white,black,blockyfont)
-            draw_text_with_outline(screen, "tf you think would happen?", special_area.x - config.width*0.15, special_area.y - 20, white,black,blockyfont)
+            draw_text_with_outline(
+                screen,
+                "This is the tutorial",
+                special_area.x - config.width * 0.15,
+                special_area.y - 50,
+                white,
+                black,
+                blockyfont,
+            )
+            draw_text_with_outline(
+                screen,
+                "tf you think would happen?",
+                special_area.x - config.width * 0.15,
+                special_area.y - 20,
+                white,
+                black,
+                blockyfont,
+            )
             promptcount += 1
         if special_area.colliderect(playertutorial.rect) and promptcount >= 80:
-            draw_text_with_outline(screen, "Still here?", special_area.x - config.width*0.15, special_area.y - 50, white,black,blockyfont)
+            draw_text_with_outline(
+                screen,
+                "Still here?",
+                special_area.x - config.width * 0.15,
+                special_area.y - 50,
+                white,
+                black,
+                blockyfont,
+            )
 
         if promptcount >= 81 and promptcount < 240:
             promptcount += 1
-        
-            
-        
 
         pygame.display.flip()

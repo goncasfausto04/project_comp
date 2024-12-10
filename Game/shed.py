@@ -7,17 +7,15 @@ from casino import *
 
 
 def shed(player, pet, spawn_location):
-    
+
     # setting up the background and the screen
     background_path = os.path.join(base_path, "extras", "shedbg.png")
     # scalling the background image into our selected resolution
     background = pygame.image.load(background_path)
-    
-  
+
     # setting up the screen
     background = pygame.transform.scale(background, config.resolution)
     screen = pygame.display.set_mode(config.resolution)
-
 
     clock = pygame.time.Clock()
 
@@ -59,7 +57,7 @@ def shed(player, pet, spawn_location):
     while running:
         clock.tick(fps)
         screen.blit(background, (0, 0))
-        
+
         # Update the player and pet groups
         player_group.update()
         pet_group.update()

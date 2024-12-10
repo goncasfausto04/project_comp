@@ -235,7 +235,9 @@ def options():
 
             # Volume adjustment
             if event.type == pygame.MOUSEBUTTONDOWN:
-                volume_bar = pygame.Rect(config.width * 0.3, config.height * 0.7, config.width * 0.4, 20)
+                volume_bar = pygame.Rect(
+                    config.width * 0.3, config.height * 0.7, config.width * 0.4, 20
+                )
                 if volume_bar.collidepoint(mouse):
                     # Map the mouse x-position to the volume level within the range [0, max_volume]
                     relative_position = (mouse[0] - volume_bar.x) / volume_bar.width
@@ -247,7 +249,10 @@ def options():
 
                 # Back button click
                 back_button = pygame.Rect(
-                    config.width * 0.3, config.height * 0.8, config.width * 0.4, config.height * 0.1
+                    config.width * 0.3,
+                    config.height * 0.8,
+                    config.width * 0.4,
+                    config.height * 0.1,
                 )
                 if back_button.collidepoint(mouse):
                     chime_sound.play()
@@ -258,7 +263,9 @@ def options():
         screen.fill(deep_black)
 
         # Draw volume bar
-        volume_bar = pygame.Rect(config.width * 0.3, config.height * 0.7, config.width * 0.4, 20)
+        volume_bar = pygame.Rect(
+            config.width * 0.3, config.height * 0.7, config.width * 0.4, 20
+        )
         pygame.draw.rect(screen, grey, volume_bar)
         filled_bar = pygame.Rect(
             volume_bar.x,

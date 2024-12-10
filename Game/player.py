@@ -1,4 +1,3 @@
-
 from utils import *
 from config import *
 import pygame
@@ -21,17 +20,20 @@ class Player(pygame.sprite.Sprite):
         self.sprites_idle = []
         self.frame_count = 0
         self.exp_required = 1
+        self.dash_cooldown = 0
         for i in range(0, 9):
             path = os.path.join(sprites_path, f"Idle__00{i}.png")
             image = pygame.image.load(path)
             self.sprites_idle.append(pygame.transform.scale(image, (player_size)))
 
-        self.sprites_run = [] 
+        self.sprites_run = []
         for i in range(0, 9):
             path = os.path.join(sprites_path, f"Run__00{i}.png")
             image = pygame.image.load(path)
-            self.sprites_run.append(pygame.transform.scale(image, (player_size[0] * 1.8, player_size[1])))
-        
+            self.sprites_run.append(
+                pygame.transform.scale(image, (player_size[0] * 1.8, player_size[1]))
+            )
+
         self.curernt_sprite_idle = 0
         self.curernt_sprite_run = 0
 
@@ -58,7 +60,6 @@ class Player(pygame.sprite.Sprite):
         self.spawn_rate_multiplier = 1.0  # Default spawn rate multiplier
         self.de_spawner_active = False
         self.de_spawner_timer = 0
- 
 
     def activate_powerup(self):
         """
@@ -66,13 +67,12 @@ class Player(pygame.sprite.Sprite):
         """
         self.powerup_active = True
         self.powerup_timer = 15 * fps  # 15 seconds worth of frames
-        #self.image.fill(dark_red)
+        # self.image.fill(dark_red)
 
     def update(self):
 
         # getting the keys input:
         self.frame_count += 1
-        
 
         keys = pygame.key.get_pressed()
 
@@ -88,23 +88,29 @@ class Player(pygame.sprite.Sprite):
             self.powerup_timer -= 1
             if self.powerup_timer <= 0:
                 self.powerup_active = False  # Deactivate power-up
-                #self.image.fill(cute_purple)  # Revert to original color
+                # self.image.fill(cute_purple)  # Revert to original color
 
-        
         if self.frame_count % 8 == 0:
             if not any(keys):
                 self.curernt_sprite_idle += 1
             if self.curernt_sprite_idle >= len(self.sprites_idle):
                 self.curernt_sprite_idle = 0
             self.image = self.sprites_idle[int(self.curernt_sprite_idle)]
-        
+
         if self.frame_count % 2 == 0:
-            if keys[pygame.K_d] or keys[pygame.K_w] or keys[pygame.K_s] or keys[pygame.K_a]:
+            if (
+                keys[pygame.K_d]
+                or keys[pygame.K_w]
+                or keys[pygame.K_s]
+                or keys[pygame.K_a]
+            ):
                 self.curernt_sprite_run += 1
                 if self.curernt_sprite_run >= len(self.sprites_run):
                     self.curernt_sprite_run = 0
                 if keys[pygame.K_a]:
-                    self.image = pygame.transform.flip(self.sprites_run[int(self.curernt_sprite_run)], True, False)
+                    self.image = pygame.transform.flip(
+                        self.sprites_run[int(self.curernt_sprite_run)], True, False
+                    )
                 else:
                     self.image = self.sprites_run[int(self.curernt_sprite_run)]
         if self.de_spawner_active:
@@ -112,10 +118,14 @@ class Player(pygame.sprite.Sprite):
             if self.de_spawner_timer <= 0:
                 self.spawn_rate_multiplier = 1.0  # Reset spawn rate multiplier
                 self.de_spawner_active = False
-        
-        
 
+        if self.dash_cooldown > 0:
+            self.dash_cooldown -= 1
 
+        # Check for dash input
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_SPACE]:
+            self.dash()
 
     def change_bullet_type(self, keys):
         if keys[pygame.K_1]:
@@ -172,3 +182,33 @@ class Player(pygame.sprite.Sprite):
         pygame.draw.rect(
             screen, green, (bar_x, bar_y, int(bar_width * health_ratio), bar_height)
         )
+
+    def dash(self):
+        """
+        Makes the player dash in the direction they are currently moving.
+        """
+        if self.dash_cooldown <= 0:  # Check if dash is off cooldown
+            dash_distance = 100  # Distance to dash
+            dash_speed = 15  # Speed of the dash
+            direction = pygame.Vector2(0, 0)
+
+            # Determine the direction based on the keys pressed
+            keys = pygame.key.get_pressed()
+            if keys[pygame.K_w]:
+                direction.y = -1
+            if keys[pygame.K_s]:
+                direction.y = 1
+            if keys[pygame.K_a]:
+                direction.x = -1
+            if keys[pygame.K_d]:
+                direction.x = 1
+
+            # Normalize the direction to avoid faster diagonal dashes
+            if direction.length() > 0:
+                direction = direction.normalize()
+
+            # Dash to direction
+            self.rect.x += direction.x * dash_distance
+            self.rect.y += direction.y * dash_distance
+
+            self.dash_cooldown = fps * 2  # 2 seconds cooldown (adjust as needed)

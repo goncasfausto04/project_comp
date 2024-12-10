@@ -11,7 +11,6 @@ def slots(player):
     # Initialize Pygame
     pygame.init()
 
-
     # Screen settings (16:9 aspect ratio)
     WIDTH = config.resolution[0]
     HEIGHT = config.resolution[1]

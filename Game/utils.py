@@ -178,11 +178,14 @@ def play_video(video_path, resolution, sound_path):
             if event.type == pygame.QUIT:
                 pygame.quit()
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE or event.key == pygame.K_RETURN or event.key == pygame.K_SPACE:
+                if (
+                    event.key == pygame.K_ESCAPE
+                    or event.key == pygame.K_RETURN
+                    or event.key == pygame.K_SPACE
+                ):
                     running = False
             if event.type == pygame.MOUSEBUTTONDOWN:
                 running = False
-                
 
         ret, frame = cap.read()
         if not ret:
@@ -311,18 +314,20 @@ def prompt(screen, width, height, content):
                 pygame.quit()
                 exit()
 
-def draw_text(screen, text, x, y, font, color=white, center=False):
-        """Draws text on the screen, with optional centering."""
-        label = font.render(text, True, color)
-        if center:
-            x -= label.get_width() // 2  # Adjust x to center the text
-        screen.blit(label, (x, y))
 
-def draw_text_with_outline(surface, text, x,y, color, outline_color, font):
-        """Draws text with an outline."""
-        text_surface = font.render(text, True, color)
-        outline_surface = font.render(text, True, outline_color)
-        for dx in [-1, 1]:
-            for dy in [-1, 1]:
-                surface.blit(outline_surface, (x + dx, y + dy))
-        surface.blit(text_surface, (x, y))
+def draw_text(screen, text, x, y, font, color=white, center=False):
+    """Draws text on the screen, with optional centering."""
+    label = font.render(text, True, color)
+    if center:
+        x -= label.get_width() // 2  # Adjust x to center the text
+    screen.blit(label, (x, y))
+
+
+def draw_text_with_outline(surface, text, x, y, color, outline_color, font):
+    """Draws text with an outline."""
+    text_surface = font.render(text, True, color)
+    outline_surface = font.render(text, True, outline_color)
+    for dx in [-1, 1]:
+        for dy in [-1, 1]:
+            surface.blit(outline_surface, (x + dx, y + dy))
+    surface.blit(text_surface, (x, y))

@@ -6,15 +6,14 @@ from utils import *
 
 from player import Player
 from enemy import *
-from pet import Pet 
+from pet import Pet
 from shed import shed
 from shop import shop
 from powerup import *
 from chest import TreasureChest
 
 
-
-#endless loop that will keep the game running
+# endless loop that will keep the game running
 def game_loop():
     # Initialize player and other game components
     player = Player()
@@ -27,7 +26,6 @@ def game_loop():
     pygame.mixer.music.set_volume(config.music_volume)  # Set the desired volume
     pygame.mixer.music.play(-1)  # Loop the soundtrack indefinitely
 
-
     spawn_interval = 2 * fps  # Intervalo inicial entre spawns (2 segundos)
     phase_duration = 30  # Duração de cada fase em segundos
     current_phase = 0  # Fase inicial do jogo
@@ -38,13 +36,20 @@ def game_loop():
         elif current_state == "initial":
             current_state = shed(player, pet, (config.width * 0.5, config.height * 0.5))
         elif current_state == "shed":
-            current_state = shed(player, pet, ((config.width * 0.01), (config.height * 0.5)))
+            current_state = shed(
+                player, pet, ((config.width * 0.01), (config.height * 0.5))
+            )
         elif current_state == "shop":
             current_state = shop(player)
         elif current_state == "shedshop":
-            current_state = shed(player, pet, ((config.width * (1 - 0.170)), (config.height * 0.25)))
+            current_state = shed(
+                player, pet, ((config.width * (1 - 0.170)), (config.height * 0.25))
+            )
         elif current_state == "shedcasino":
-            current_state = shed(player, pet, ((config.width * (1 - 0.170)), (config.height * 0.75)))
+            current_state = shed(
+                player, pet, ((config.width * (1 - 0.170)), (config.height * 0.75))
+            )
+
 
 def execute_game(player, pet):
     base_path = os.path.dirname(__file__)
@@ -74,7 +79,6 @@ def execute_game(player, pet):
     powerups_group = pygame.sprite.Group()  # Group to hold power-up sprites
     powerup_spawn_timer = 0  # Timer for power-ups
 
-
     health_drop_spawn_timer = 0  # Timer for health drops
     spawn_rate = (
         200  # Frames between spawn attempts (e.g., every ~3.3 seconds at 60 FPS)
@@ -87,7 +91,6 @@ def execute_game(player, pet):
     bar_x = (config.width - bar_width) // 2
     bar_y = height - bar_height - 50
 
-
     game_time = 0
     game_time_frames = 0  # Tracks elapsed time in seconds
     kills = 0  # Tracks the number of kills
@@ -95,7 +98,6 @@ def execute_game(player, pet):
 
     damage_cooldown = 35  # Cooldown in frames (1 second at 60 FPS (if it was 60))
     player_cooldown = 0  # Tracks the remaining cooldown time for the player
-
 
     def draw_level_up_bar(screen):
         # Draw the background bar (empty)
@@ -106,8 +108,42 @@ def execute_game(player, pet):
         pygame.draw.rect(screen, green, (bar_x, bar_y, fill_width, bar_height))
 
         # Draw the text showing the current level and experience
-        level_text = font.render(f'Level: {player.level}  EXP: {player.exp}/{int(player.exp_required)}', True, white)
-        screen.blit(level_text, (config.width // 2 - level_text.get_width() // 2, bar_y + bar_height + 10))
+        level_text = font.render(
+            f"Level: {player.level}  EXP: {player.exp}/{int(player.exp_required)}",
+            True,
+            white,
+        )
+        screen.blit(
+            level_text,
+            (config.width // 2 - level_text.get_width() // 2, bar_y + bar_height + 10),
+        )
+
+    def draw_slot(screen):
+        # Draw the background bar (empty)
+        pygame.draw.rect(
+            screen,
+            deep_black,
+            (
+                0.012 * config.width,
+                0.85 * config.height,
+                0.07 * config.width,
+                0.07 * config.width,
+            ),
+        )
+        timer = player.dash_cooldown
+        # draw the timer on the slot
+        if timer > 0:
+            pygame.draw.rect(
+                screen,
+                green,
+                (
+                    0.012 * config.width,
+                    0.85 * config.height,
+                    0.07 * config.width * (timer / (fps * 2)),
+                    0.07 * config.width,
+                ),
+            )
+        # Draw the text showing the current level and experience
 
     while running:
         clock.tick(fps)
@@ -119,7 +155,6 @@ def execute_game(player, pet):
         timer_text = font.render(
             f"Time: {minutes:02}:{seconds:02}", True, white
         )  # Format MM:SS
-
 
         # Handle events
         for event in pygame.event.get():
@@ -142,23 +177,23 @@ def execute_game(player, pet):
 
         for enemy in enemies:
             enemy.draw(screen)  # Call the draw method for each enemy
-        
 
         if player.exp >= player.exp_required:
             x = random.randint(50, config.width - 50)
             y = random.randint(50, config.height - 50)
-            chest = TreasureChest(x, y,player)
+            chest = TreasureChest(x, y, player)
             chests.add(chest)
             player.level += 1
             player.exp -= player.exp_required
-            player.exp_required = int(player.exp_required * exp_multiplier)  # Increase the XP required for the next level
+            player.exp_required = int(
+                player.exp_required * exp_multiplier
+            )  # Increase the XP required for the next level
 
         # Detect collision and apply damage
         for enemy in enemies:
             enemy.move_towards_player(player)  # Move towards the player
 
         collided_enemies = pygame.sprite.spritecollide(player, enemies, False)
-        
 
         if collided_enemies and player_cooldown <= 0:
             # Apply damage once for all collisions in the frame
@@ -168,14 +203,18 @@ def execute_game(player, pet):
 
         if player_cooldown > 0:
             player_cooldown -= 1  # Reduce player's cooldown by 1 each frame
-            
-
 
         # Enemies spawn rate
 
-                # Enemies spawn rate
-        
-        enemy_types = [initialEnemy, fastEnemy, TankMonster, RangedMonster, DuplicateMonster]
+        # Enemies spawn rate
+
+        enemy_types = [
+            initialEnemy,
+            fastEnemy,
+            TankMonster,
+            RangedMonster,
+            DuplicateMonster,
+        ]
         spawn_configs = [
             (60, [70, 20, 10, 0, 0], 1, 2),
             (120, [50, 30, 15, 5, 0], 1, 1.8),
@@ -186,9 +225,9 @@ def execute_game(player, pet):
             (420, [20, 20, 30, 30, 20], 4, 1),
             (480, [15, 15, 35, 35, 20], 4, 1),
             (540, [10, 10, 40, 40, 25], 4, 1),
-            (float('inf'), [5, 5, 45, 45, 35], 5, 0.8)
+            (float("inf"), [5, 5, 45, 45, 35], 5, 0.8),
         ]
-        
+
         if enemy_cooldown <= 0:
             for max_time, weights, num_spawn, cooldown_factor in spawn_configs:
                 if total_seconds < max_time:
@@ -196,12 +235,12 @@ def execute_game(player, pet):
                     num_enemies_to_spawn = num_spawn
                     enemy_cooldown = int(cooldown_factor * fps)
                     break
-        
+
             for _ in range(num_enemies_to_spawn):
                 enemy_type = random.choices(enemy_types, weights=spawn_weights, k=1)[0]
                 new_enemy = enemy_type()
                 enemies.add(new_enemy)
-        
+
         enemy_cooldown -= 1
         powerup_spawn_timer += 1
         if powerup_spawn_timer >= spawn_rate:  # Power-up spawn timer
@@ -237,13 +276,11 @@ def execute_game(player, pet):
         ):  # True removes power-up
             player.activate_powerup()  # Activate invincibility for the player
 
-        
         # updating positions and visuals
         player_group.update()
         bullets.update()
         enemies.update(player)
 
-        
         if player.powerup_active:  # If the player is invincible
             collided_enemies = pygame.sprite.spritecollide(
                 player, enemies, True
@@ -273,6 +310,7 @@ def execute_game(player, pet):
 
         # Draw game objects
         draw_level_up_bar(screen)
+        draw_slot(screen)
         player_group.draw(screen)
         enemies.draw(screen)
         pet_group.draw(screen)
@@ -289,30 +327,47 @@ def execute_game(player, pet):
             chest.open_chest(screen)
 
         if player.rect.right >= config.width:
-                out = True
-                while out:
-                    mouse = pygame.mouse.get_pos()
-                    draw_buttonutils(dark_green,(0,255,0),0.4 - (0.125 / 2),0.667,0.125,0.083,not_leave_text,blockyfont,mouse,screen)
-                    draw_buttonutils(dark_red,glowing_light_red,0.6 - (0.125 / 2),0.667,0.125,0.083,leave_text,blockyfont,mouse,screen)
-                    pygame.display.flip()
-                    for event in pygame.event.get():
-                        if event.type == pygame.QUIT:
-                            pygame.quit()
-                            exit()
-                        elif event.type == pygame.MOUSEBUTTONDOWN:
-                            if button_clicked(0.4 - (0.125 / 2),0.667,0.125,0.083,mouse):
-                                player.rect.right = config.width - 20
-                                out = False
-                            elif button_clicked(0.6 - (0.125 / 2),0.667,0.125,0.083,mouse):
-                                return "shed"
-                            
-                            
-                        
-             
-
-       
-
+            out = True
+            while out:
+                mouse = pygame.mouse.get_pos()
+                draw_buttonutils(
+                    dark_green,
+                    (0, 255, 0),
+                    0.4 - (0.125 / 2),
+                    0.667,
+                    0.125,
+                    0.083,
+                    not_leave_text,
+                    blockyfont,
+                    mouse,
+                    screen,
+                )
+                draw_buttonutils(
+                    dark_red,
+                    glowing_light_red,
+                    0.6 - (0.125 / 2),
+                    0.667,
+                    0.125,
+                    0.083,
+                    leave_text,
+                    blockyfont,
+                    mouse,
+                    screen,
+                )
+                pygame.display.flip()
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        pygame.quit()
+                        exit()
+                    elif event.type == pygame.MOUSEBUTTONDOWN:
+                        if button_clicked(
+                            0.4 - (0.125 / 2), 0.667, 0.125, 0.083, mouse
+                        ):
+                            player.rect.right = config.width - 20
+                            out = False
+                        elif button_clicked(
+                            0.6 - (0.125 / 2), 0.667, 0.125, 0.083, mouse
+                        ):
+                            return "shed"
 
         pygame.display.flip()
-
-
