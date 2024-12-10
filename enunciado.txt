@@ -1,0 +1,15 @@
+ Implement the two mandatory "Power-ups" (described below).
+• Implement at least two "Power-up" of your choice.
+• Implement treasure chests in the game which contain three different weapons/skill
+options from which the user must choose.
+• Implement at least two new weapons of your choice
+• Improve the UI.
+• Add an instructions panel to the game where the rules of the game and the "Powerups", Weapons and Treasures are explained to the user.
+• Add the functional limitations necessary to make the game operational and aligned
+with the goals of the game. For example, The character should not be able to go
+outside of the map.
+• Give the player the option to shop for new weapons. Thus, a monetary system
+must be implemented alongside the option to purchase weapons/abilities.
+• Add the saving feature that stores all the progress the player has made.
+• Add one extra functionality to the game beyond the game improvements and previously described additions. This functionality needs to be novel and is totally up
+to you! This is another great chance to improve the game and impress us!

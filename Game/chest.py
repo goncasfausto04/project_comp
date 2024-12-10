@@ -10,13 +10,14 @@ class TreasureChest(pygame.sprite.Sprite):
         super().__init__()
 
         self.rewards = ["100", "200", "300", "Dash", "Health Potion"]
-        self.cards = random.sample(self.rewards, 3)  # Select 3 random rewards
+        self.weights = [0.1, 0.1, 0.1, 0.6, 0.1]  # Define weights for each reward
+        self.cards = random.choices(self.rewards, weights=self.weights, k=3)  # Select 3 random rewards based on weights
         self.flipped_cards = [False, False, False]
-
         # Load the chest image
         image_path = os.path.join(base_path, "extras", "chest.png")
         self.image = pygame.image.load(image_path).convert_alpha()
         self.image = pygame.transform.scale(self.image, chest_size)  # Scale to desired size
+        self.player = player
 
         # Load the card image
         card_path = os.path.join(base_path, "extras", "card.png")
@@ -39,6 +40,11 @@ class TreasureChest(pygame.sprite.Sprite):
             print(f"Card {card_index + 1}: {self.cards[card_index]}")
             if self.cards[card_index] in ["100", "200", "300"]:
                 self.player.coins += int(self.cards[card_index])
+            elif self.cards[card_index] == "Dash":
+                self.player.has_dash = True
+                #remove the dash card from the deck
+
+                
             return self.cards[card_index]
         else:
             print("Invalid card or already flipped!")

@@ -21,6 +21,7 @@ class Player(pygame.sprite.Sprite):
         self.frame_count = 0
         self.exp_required = 1
         self.dash_cooldown = 0
+        self.has_dash = False
         for i in range(0, 9):
             path = os.path.join(sprites_path, f"Idle__00{i}.png")
             image = pygame.image.load(path)
@@ -124,7 +125,7 @@ class Player(pygame.sprite.Sprite):
 
         # Check for dash input
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_SPACE]:
+        if keys[pygame.K_SPACE] and self.has_dash:
             self.dash()
 
     def change_bullet_type(self, keys):

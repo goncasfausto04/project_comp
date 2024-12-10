@@ -117,33 +117,38 @@ def execute_game(player, pet):
             level_text,
             (config.width // 2 - level_text.get_width() // 2, bar_y + bar_height + 10),
         )
-
     def draw_slot(screen):
-        # Draw the background bar (empty)
-        pygame.draw.rect(
-            screen,
-            deep_black,
+        # Load and scale the image to make it smaller
+        dash_image_path = os.path.join(base_path, "extras", "dash.png")
+        dash_image = pygame.image.load(dash_image_path)
+        dash_image = pygame.transform.scale(dash_image, (int(0.06 * config.width), int(0.06 * config.width)))  # Smaller size
+
+        # Draw the image as the background for the slot
+        screen.blit(
+            dash_image,
             (
                 0.012 * config.width,
-                0.85 * config.height,
-                0.07 * config.width,
-                0.07 * config.width,
+                0.87 * config.height,
             ),
         )
+        
         timer = player.dash_cooldown
-        # draw the timer on the slot
+        # draw the timer on the slot with less opacity
         if timer > 0:
+            # Modify the green color to include less opacity (e.g., 100 out of 255)
+            semi_transparent_green = (0, 255, 0, 100)  # 100 is the alpha (opacity)
+            
             pygame.draw.rect(
                 screen,
-                green,
+                semi_transparent_green,
                 (
                     0.012 * config.width,
-                    0.85 * config.height,
-                    0.07 * config.width * (timer / (fps * 2)),
-                    0.07 * config.width,
+                    0.87 * config.height,
+                    0.06 * config.width * (timer / (fps * 2)),  # Adjusted to match the new size
+                    0.06 * config.width,  # Adjusted to match the new size
                 ),
             )
-        # Draw the text showing the current level and experience
+
 
     while running:
         clock.tick(fps)
@@ -181,7 +186,7 @@ def execute_game(player, pet):
         if player.exp >= player.exp_required:
             x = random.randint(50, config.width - 50)
             y = random.randint(50, config.height - 50)
-            chest = TreasureChest(x, y, player)
+            chest = TreasureChest(x, y, player, screen)
             chests.add(chest)
             player.level += 1
             player.exp -= player.exp_required
@@ -204,9 +209,7 @@ def execute_game(player, pet):
         if player_cooldown > 0:
             player_cooldown -= 1  # Reduce player's cooldown by 1 each frame
 
-        # Enemies spawn rate
-
-        # Enemies spawn rate
+        # Enemies spawn rate and types
 
         enemy_types = [
             initialEnemy,
@@ -292,8 +295,6 @@ def execute_game(player, pet):
                 player.exp += 1
 
         # drawing the player and enemies sprites on the screen
-        player_group.draw(screen)
-        enemies.draw(screen)
         powerups_group.draw(screen)
         chests.draw(screen)
 
@@ -312,7 +313,6 @@ def execute_game(player, pet):
         draw_level_up_bar(screen)
         draw_slot(screen)
         player_group.draw(screen)
-        enemies.draw(screen)
         pet_group.draw(screen)
         for bullet in bullets:
             bullet.draw(screen)
