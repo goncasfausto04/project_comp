@@ -3,6 +3,7 @@ import pygame
 import random
 import math
 import config
+from bullet import enemy_bullet
 
 
 class Enemy(pygame.sprite.Sprite):
@@ -99,8 +100,25 @@ class RangedMonster(Enemy):
         super().__init__()
         self.health = 20
         self.speed = 0
-        self.damage = 15
+        self.damage = 10
         self.color = (255, 255, 0)
+        self.bullet_cooldown = 0
+        self.bullet_type = enemy_bullet
+        self.fire_rate = 70
+
+    def enemy_shoot(self, bullets):
+        if self.bullet_cooldown <= 0:
+            for _ in range(2):  # Fire 2 bullets in random directions
+                angle = random.uniform(0, 2 * math.pi)  # Generate a random angle
+                bullet = self.bullet_type(self.rect.centerx, self.rect.centery, angle, self)
+                bullets.add(bullet)
+                print(f"Bullet spawned at ({self.rect.centerx}, {self.rect.centery}) with angle {angle:.2f}")
+
+            # Reset cooldown
+            self.bullet_cooldown = self.fire_rate
+
+        self.bullet_cooldown -= 1
+
 
 
 class DuplicateMonster(Enemy):
