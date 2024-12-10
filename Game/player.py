@@ -19,7 +19,7 @@ class Player(pygame.sprite.Sprite):
 
         self.sprites_idle = []
         self.frame_count = 0
-        self.exp_required = 1
+        self.exp_required = 10
         self.dash_cooldown = 0
         self.has_dash = False
         for i in range(0, 9):
@@ -216,7 +216,6 @@ class Player(pygame.sprite.Sprite):
         """
         if self.dash_cooldown <= 0:  # Check if dash is off cooldown
             dash_distance = 100  # Distance to dash
-            dash_speed = 15  # Speed of the dash
             direction = pygame.Vector2(0, 0)
 
             # Determine the direction based on the keys pressed

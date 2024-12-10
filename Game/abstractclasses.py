@@ -39,7 +39,7 @@ class Invincibility(PowerUp):
     def __init__(self, x, y):
         super().__init__(x, y)
         self.image.fill((0, 20, 0))  # Fill the power-up with blue to represent invincibility.
-        self.duration = 200
+        self.duration = fps * 5
     def affect_player(self, player):
         """Make the player invincible."""
         player.invincible = True
@@ -61,7 +61,7 @@ class DeSpawner(PowerUp):
         self.image = pygame.Surface((40, 40))  # Set the size of the power-up 
         self.image.fill((255, 0, 0))  # Red color to indicate the De-spawner 
         self.rect = self.image.get_rect(center=(x, y))
-        self.duration = 300  # Duration in frames (e.g., 5 seconds at 60 FPS) 
+        self.duration = fps * 5  # Duration in frames (e.g., 5 seconds at 60 FPS) 
 
     def affect_game(self, enemies):
         """Remove a random percentage of enemies and reduce spawn rates."""

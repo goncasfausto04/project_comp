@@ -87,9 +87,9 @@ def execute_game(player, pet):
     health_drop_spawn_timer = 0  # Timer for health drops
     reverse_time = 120
     spawn_rate = (
-        200  # Frames between spawn attempts (e.g., every ~3.3 seconds at 60 FPS)
-    )
-    spawn_chance = 100  # Percentage rarity of power-up (lower is rarer, e.g., 10% here)
+        fps * 6 
+    )  # Spawn a health drop every 6 seconds (60 frames per second)
+    spawn_chance = 100  # Percentage rarity of power-up (lower is rarer)
     exp_multiplier = 1.2
 
     bar_width = 300
@@ -216,7 +216,7 @@ def execute_game(player, pet):
             player_cooldown -= 1  # Reduce player's cooldown by 1 each frame
 
         invencibility_spawn_time += 1  # change
-        if invencibility_spawn_time >= 300:  # Spawn a power-up every 5 seconds
+        if invencibility_spawn_time >= random.randint(fps * 40, fps * 80):  # Spawn a power-up every 5 seconds
             x, y = random.randint(50, 1230), random.randint(50, 650)
             powerup_type = Invincibility
             powerup1 = powerup_type(x, y)
@@ -225,7 +225,7 @@ def execute_game(player, pet):
         abspowerups_group.update()
 
         despawner_spawn_time += 1
-        if despawner_spawn_time >= 300:  # Spawn a power-up every 5 seconds
+        if despawner_spawn_time >= random.randint(fps * 40, fps * 80):  # Spawn a power-up every 5 seconds
             x, y = random.randint(50, 1230), random.randint(50, 650)
             powerup_type = DeSpawner
             powerup2 = DeSpawner(x, y)
@@ -234,7 +234,7 @@ def execute_game(player, pet):
         abspowerups_group.update()
 
         oneshot_spawn_time += 1  # change
-        if oneshot_spawn_time >= 300:  # Spawn a power-up every 5 seconds
+        if oneshot_spawn_time >= random.randint(fps * 40, fps * 80):  # Spawn a power-up every 5 seconds
             x, y = random.randint(50, 1230), random.randint(50, 650)
             powerup_type = Instakill
             powerup3 = powerup_type(x, y)
@@ -243,7 +243,7 @@ def execute_game(player, pet):
         abspowerups_group.update()
 
         reverse_spawn_time += 1  # change
-        if reverse_spawn_time >= 300:  # Spawn a power-up every 5 seconds
+        if reverse_spawn_time >= random.randint(fps * 40, fps * 80):  # Spawn a power-up every 5 seconds
             x, y = random.randint(50, 1230), random.randint(50, 650)
             powerup_type = InvertedControls
             powerup4 = powerup_type(x, y)
