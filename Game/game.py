@@ -3,14 +3,13 @@ import os
 import random
 import config
 from utils import *
-
 from player import Player
 from enemy import *
 from pet import Pet
 from shed import shed
 from shop import shop
-from powerup import *
 from chest import TreasureChest
+from abstractclasses import *
 
 
 # endless loop that will keep the game running
@@ -77,9 +76,16 @@ def execute_game(player, pet):
     enemy_cooldown = 0
     running = True
     powerups_group = pygame.sprite.Group()  # Group to hold power-up sprites
+    abspowerups_group =  pygame.sprite.Group()
     powerup_spawn_timer = 0  # Timer for power-ups
-
+    despawner_spawn_time = 0
+    beforeinstakill = 0
+    invencibility_spawn_time = 0
+    oneshot_spawn_time = 0
+    invencibility_time = 300
+    reverse_spawn_time = 0
     health_drop_spawn_timer = 0  # Timer for health drops
+    reverse_time = 120
     spawn_rate = (
         200  # Frames between spawn attempts (e.g., every ~3.3 seconds at 60 FPS)
     )
@@ -200,8 +206,8 @@ def execute_game(player, pet):
 
         collided_enemies = pygame.sprite.spritecollide(player, enemies, False)
 
-        if collided_enemies and player_cooldown <= 0:
-            # Apply damage once for all collisions in the frame
+        if collided_enemies and player_cooldown <= 0 and player.invincible == False:
+            # Apply damage once for all collisions in the frame if player is not invincible
             total_damage = sum(enemy.damage for enemy in collided_enemies)
             player.health -= total_damage
             player_cooldown = damage_cooldown  # Reset the player's cooldown
@@ -209,7 +215,63 @@ def execute_game(player, pet):
         if player_cooldown > 0:
             player_cooldown -= 1  # Reduce player's cooldown by 1 each frame
 
-        # Enemies spawn rate and types
+        invencibility_spawn_time += 1  # change
+        if invencibility_spawn_time >= 300:  # Spawn a power-up every 5 seconds
+            x, y = random.randint(50, 1230), random.randint(50, 650)
+            powerup_type = Invincibility
+            powerup1 = powerup_type(x, y)
+            abspowerups_group.add(powerup1)
+            invencibility_spawn_time = 0
+        abspowerups_group.update()
+
+        despawner_spawn_time += 1
+        if despawner_spawn_time >= 300:  # Spawn a power-up every 5 seconds
+            x, y = random.randint(50, 1230), random.randint(50, 650)
+            powerup_type = DeSpawner
+            powerup2 = DeSpawner(x, y)
+            abspowerups_group.add(powerup2)
+            despawner_spawn_time = 0
+        abspowerups_group.update()
+
+        oneshot_spawn_time += 1  # change
+        if oneshot_spawn_time >= 300:  # Spawn a power-up every 5 seconds
+            x, y = random.randint(50, 1230), random.randint(50, 650)
+            powerup_type = Instakill
+            powerup3 = powerup_type(x, y)
+            abspowerups_group.add(powerup3)
+            oneshot_spawn_time = 0
+        abspowerups_group.update()
+
+        reverse_spawn_time += 1  # change
+        if reverse_spawn_time >= 300:  # Spawn a power-up every 5 seconds
+            x, y = random.randint(50, 1230), random.randint(50, 650)
+            powerup_type = InvertedControls
+            powerup4 = powerup_type(x, y)
+            abspowerups_group.add(powerup4)
+            reverse_spawn_time = 0
+        abspowerups_group.update()
+
+        abspowerups_group.update()
+        # Check for collisions between player and power-ups
+        collected_powerups = pygame.sprite.spritecollide(player, abspowerups_group, True)
+        for powerup in collected_powerups:
+            powerup.affect_player(player)
+            powerup.affect_game(enemies)
+
+        if invencibility_time > 0 and player.invincible == True:
+            invencibility_time -= 1
+        if invencibility_time <= 0:
+            player.invincible = False
+            invencibility_time = 300
+        if player.oneshotkill == True:
+            beforeinstakill = kills
+        if reverse_time > 0 and player.inverted == True:
+            reverse_time -= 1
+        if reverse_time <= 0:
+            player.inverted = False
+            reverse_time = 120
+
+
 
         enemy_types = [
             initialEnemy,
@@ -245,14 +307,7 @@ def execute_game(player, pet):
                 enemies.add(new_enemy)
 
         enemy_cooldown -= 1
-        powerup_spawn_timer += 1
-        if powerup_spawn_timer >= spawn_rate:  # Power-up spawn timer
-            if random.randint(1, spawn_chance) <= 10:  # 10% chance for power-up
-                x = random.randint(50, config.width - 50)
-                y = random.randint(50, config.height - 50)
-                powerup = PowerUp(x, y)
-                powerups_group.add(powerup)
-            powerup_spawn_timer = 0  # Reset power-up timer
+
 
         # === Health Drop Spawn Logic ===
         health_drop_spawn_timer += 1
@@ -302,19 +357,27 @@ def execute_game(player, pet):
         for bullet in bullets:
             collided_enemies = pygame.sprite.spritecollide(bullet, enemies, False)
             for enemy in collided_enemies:
-                enemy.health -= 5
-                bullet.kill()
+                if player.oneshotkill == True:
+                    enemy.health -= 100000
+                    bullet.kill()
+                else:
+                    enemy.health -= 5
+                    bullet.kill()
                 if enemy.health <= 0:
                     enemy.kill()
                     kills += 1
                     player.exp += 1
 
+
+        if beforeinstakill < kills:
+            player.oneshotkill = False
         # Draw game objects
         draw_level_up_bar(screen)
         if player.has_dash:
             draw_slot(screen)
         player_group.draw(screen)
         pet_group.draw(screen)
+        abspowerups_group.draw(screen)
         for bullet in bullets:
             bullet.draw(screen)
         player.draw_health_bar(screen)

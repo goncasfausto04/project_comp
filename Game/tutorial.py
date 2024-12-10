@@ -3,7 +3,6 @@ import os
 import config
 from player import Player
 from enemy import *
-from powerup import *
 from shed import shed
 from utils import *
 from shop import shop
