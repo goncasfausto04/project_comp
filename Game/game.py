@@ -71,7 +71,9 @@ def execute_game(player, pet):
     invencibility_spawn_time = 0
     oneshot_spawn_time = 0
     invencibility_time = 300
+    reverse_spawn_time = 0
     health_drop_spawn_timer = 0  # Timer for health drops
+    reverse_time = 120
     spawn_rate = (
         200  # Frames between spawn attempts (e.g., every ~3.3 seconds at 60 FPS)
     )
@@ -163,7 +165,7 @@ def execute_game(player, pet):
 
         invencibility_spawn_time += 1  # change
         if invencibility_spawn_time >= 300:  # Spawn a power-up every 5 seconds
-            x, y = random.randint(50, 750), random.randint(50, 550)
+            x, y = random.randint(50, 1230), random.randint(50, 650)
             powerup_type = Invincibility
             powerup1 = powerup_type(x, y)
             abspowerups_group.add(powerup1)
@@ -172,7 +174,7 @@ def execute_game(player, pet):
 
         despawner_spawn_time += 1
         if despawner_spawn_time >= 300:  # Spawn a power-up every 5 seconds
-            x, y = random.randint(50, 750), random.randint(50, 550)
+            x, y = random.randint(50, 1230), random.randint(50, 650)
             powerup_type = DeSpawner
             powerup2 = DeSpawner(x, y)
             abspowerups_group.add(powerup2)
@@ -181,11 +183,21 @@ def execute_game(player, pet):
 
         oneshot_spawn_time += 1  # change
         if oneshot_spawn_time >= 300:  # Spawn a power-up every 5 seconds
-            x, y = random.randint(50, 750), random.randint(50, 550)
+            x, y = random.randint(50, 1230), random.randint(50, 650)
             powerup_type = Instakill
             powerup3 = powerup_type(x, y)
             abspowerups_group.add(powerup3)
             oneshot_spawn_time = 0
+        abspowerups_group.update()
+
+        reverse_spawn_time += 1  # change
+        if reverse_spawn_time >= 300:  # Spawn a power-up every 5 seconds
+            x, y = random.randint(50, 1230), random.randint(50, 650)
+            powerup_type = InvertedControls
+            powerup4 = powerup_type(x, y)
+            abspowerups_group.add(powerup4)
+            reverse_spawn_time = 0
+        abspowerups_group.update()
 
         abspowerups_group.update()
         # Check for collisions between player and power-ups
@@ -201,6 +213,12 @@ def execute_game(player, pet):
             invencibility_time = 300
         if player.oneshotkill == True:
             beforeinstakill = kills
+        if reverse_time > 0 and player.inverted == True:
+            reverse_time -= 1
+        if reverse_time <= 0:
+            player.inverted = False
+            reverse_time = 120
+
 
 
         # Enemies spawn rate

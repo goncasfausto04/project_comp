@@ -97,3 +97,16 @@ class Instakill(PowerUp):
         pass
     def deactivate(self, player):
         player.oneshotkill = False
+
+class InvertedControls(PowerUp):
+    def __init__(self, x, y):
+        super().__init__(x, y)
+        self.image.fill((0, 100, 100))
+    def affect_player(self, player):
+        player.inverted = True
+
+    def affect_game(self, enemies):
+        pass
+    def deactivate(self, player):
+        player.inverted = False
+

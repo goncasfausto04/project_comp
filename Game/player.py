@@ -55,6 +55,7 @@ class Player(pygame.sprite.Sprite):
         self.invincible = False
         self.spawn_rate_multiplier = 1
         self.oneshotkill = False
+        self.inverted = False
  
 
     def activate_powerup(self):
@@ -69,23 +70,43 @@ class Player(pygame.sprite.Sprite):
 
         # getting the keys input:
         self.frame_count += 1
-        
 
         keys = pygame.key.get_pressed()
 
-        if keys[pygame.K_w] and self.rect.top > 0:
-            self.rect.y -= self.speed
-        if keys[pygame.K_s] and self.rect.bottom < config.height:
-            self.rect.y += self.speed
-        if keys[pygame.K_a] and self.rect.left > 0:
-            self.rect.x -= self.speed
-        if keys[pygame.K_d] and self.rect.right < config.width:
-            self.rect.x += self.speed
+        if self.inverted == False:  # Normal controls
+            if keys[pygame.K_w] and self.rect.top > 0:
+                self.rect.y -= self.speed
+            if keys[pygame.K_s] and self.rect.bottom < config.height:
+                self.rect.y += self.speed
+            if keys[pygame.K_a] and self.rect.left > 0:
+                self.rect.x -= self.speed
+            if keys[pygame.K_d] and self.rect.right < config.width:
+                self.rect.x += self.speed
+        else:  # Inverted controls
+            if keys[pygame.K_w] and self.rect.bottom < config.height:
+                self.rect.y += self.speed
+            if keys[pygame.K_s] and self.rect.top > 0:
+                self.rect.y -= self.speed
+            if keys[pygame.K_a] and self.rect.right < config.width:
+                self.rect.x += self.speed
+            if keys[pygame.K_d] and self.rect.left > 0:
+                self.rect.x -= self.speed
+
+        # Power-up timer logic
         if self.powerup_active:
             self.powerup_timer -= 1
             if self.powerup_timer <= 0:
                 self.powerup_active = False  # Deactivate power-up
-                #self.image.fill(cute_purple)  # Revert to original color
+                # self.image.fill(cute_purple)  # Revert to original color
+
+                self.rect.x -= self.speed
+            if self.powerup_active:
+                self.powerup_timer -= 1
+                if self.powerup_timer <= 0:
+                    self.powerup_active = False  # Deactivate power-up
+                # self.image.fill(cute_purple)  # Revert to original color
+
+
 
         
         if self.frame_count % 8 == 0:
