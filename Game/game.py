@@ -273,7 +273,7 @@ def execute_game(player, pet):
 
         enemy_types = [initialEnemy, fastEnemy, TankMonster, RangedMonster, DuplicateMonster]
         spawn_configs = [
-            (60, [70, 20, 10, 0, 0], 1, 2),
+            (60, [0, 20, 10, 70, 0], 1, 2),
             (120, [50, 30, 15, 5, 0], 1, 1.8),
             (180, [40, 30, 20, 10, 5], 2, 1.5),
             (240, [30, 30, 25, 15, 5], 2, 1.3),
