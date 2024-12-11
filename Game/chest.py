@@ -6,11 +6,11 @@ from config import *
 from player import Player
 
 class TreasureChest(pygame.sprite.Sprite):
-    def __init__(self, x, y, player):
+    def __init__(self, x, y, player, rewards):
         super().__init__()
 
-        self.rewards = ["100", "200", "300", "Dash", "Health Potion"]
-        self.weights = [0.1, 0.1, 0.1, 0.6, 0.1]  # Define weights for each reward
+        self.rewards = rewards #list with 5 inputs
+        self.weights = [0.3, 0.3, 0.2, 0.1, 0.1]  # Define weights for each reward
         self.cards = random.choices(self.rewards, weights=self.weights, k=3)  # Select 3 random rewards based on weights
         self.flipped_cards = [False, False, False]
         # Load the chest image
@@ -42,7 +42,6 @@ class TreasureChest(pygame.sprite.Sprite):
                 self.player.coins += int(self.cards[card_index])
             elif self.cards[card_index] == "Dash":
                 self.player.has_dash = True
-                #remove the dash card from the deck
 
                 
             return self.cards[card_index]
@@ -69,6 +68,7 @@ class TreasureChest(pygame.sprite.Sprite):
     def open_chest(self, screen):
         running = True
         last_loop = True
+        print(self.rewards)
 
         while running or last_loop:
             # Clear screen

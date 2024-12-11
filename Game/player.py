@@ -19,7 +19,7 @@ class Player(pygame.sprite.Sprite):
 
         self.sprites_idle = []
         self.frame_count = 0
-        self.exp_required = 10
+        self.exp_required = 1
         self.dash_cooldown = 0
         self.has_dash = False
         for i in range(0, 9):

@@ -192,13 +192,17 @@ def execute_game(player, pet):
         if player.exp >= player.exp_required:
             x = random.randint(50, config.width - 50)
             y = random.randint(50, config.height - 50)
-            chest = TreasureChest(x, y, player)
+            if player.has_dash == True:
+                chest = TreasureChest(x, y, player, ["100","200","300","400","500"])
+            else:
+                chest = TreasureChest(x, y, player, ["100","200","300","400","Dash"])
             chests.add(chest)
             player.level += 1
             player.exp -= player.exp_required
             player.exp_required = int(
                 player.exp_required * exp_multiplier
             )  # Increase the XP required for the next level
+            
 
         # Detect collision and apply damage
         for enemy in enemies:
@@ -273,7 +277,7 @@ def execute_game(player, pet):
 
         enemy_types = [initialEnemy, fastEnemy, TankMonster, RangedMonster, DuplicateMonster]
         spawn_configs = [
-            (60, [0, 20, 10, 70, 0], 1, 2),
+            (60, [70, 20, 10, 0, 0], 1, 2),
             (120, [50, 30, 15, 5, 0], 1, 1.8),
             (180, [40, 30, 20, 10, 5], 2, 1.5),
             (240, [30, 30, 25, 15, 5], 2, 1.3),
