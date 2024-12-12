@@ -5,4 +5,5 @@ waves de mobs
 acabar shops( mostrar items comprados)
 melhorar hud(mostrar armas)
 melhorar chest
-
+por sprites em tudo
+fazer as balas realemente diferentes
