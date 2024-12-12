@@ -1,2 +1,8 @@
-• Implement at least two "Power-up" of your choice.
 • Add the saving feature that stores all the progress the player has made.
+
+acabar tutorial
+waves de mobs
+acabar shops( mostrar items comprados)
+melhorar hud(mostrar armas)
+melhorar chest
+
