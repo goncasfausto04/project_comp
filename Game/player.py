@@ -2,8 +2,7 @@ from utils import *
 from config import *
 import pygame
 import math
-from bullet import Bullet
-from bullet import pistol, shotgun, machinegun
+from bullet import *
 
 
 # making Player a child of the Sprite class
@@ -22,6 +21,7 @@ class Player(pygame.sprite.Sprite):
         self.exp_required = 1
         self.dash_cooldown = 0
         self.has_dash = False
+
         for i in range(0, 9):
             path = os.path.join(sprites_path, f"Idle__00{i}.png")
             image = pygame.image.load(path)
@@ -47,12 +47,15 @@ class Player(pygame.sprite.Sprite):
         self.health = 100
         self.max_health = 100
         self.bullet_cooldown = 0
-        self.bullet_type = "pistol"
+        self.bullet_type = "Pistol"
         self.fire_rate = {
-            "pistol": 50,
-            "shotgun": 90,
-            "machinegun": 20,
+            "Pistol": 50,
+            "Shotgun": 90,
+            "Machinegun": 35,
+            "Bouncing":75,
+            "Poison": 80,
         }  # Cooldown in frames
+
         self.coins = 20000
         self.powerup_active = False
         self.powerup_timer = 0
@@ -65,6 +68,7 @@ class Player(pygame.sprite.Sprite):
         self.spawn_rate_multiplier = 1
         self.oneshotkill = False
         self.inverted = False
+        self.weapons_purchased = ["Pistol"]
  
 
     def activate_powerup(self):
@@ -156,11 +160,15 @@ class Player(pygame.sprite.Sprite):
 
     def change_bullet_type(self, keys):
         if keys[pygame.K_1]:
-            self.bullet_type = "pistol"
-        elif keys[pygame.K_2]:
-            self.bullet_type = "shotgun"
-        elif keys[pygame.K_3]:
-            self.bullet_type = "machinegun"
+            self.bullet_type = "Pistol"
+        elif keys[pygame.K_2] and "Shotgun" in self.weapons_purchased:
+            self.bullet_type = "Shotgun"
+        elif keys[pygame.K_3] and "Machine Gun" in self.weapons_purchased:
+            self.bullet_type = "Machinegun"
+        elif keys[pygame.K_4] and "Bouncing" in self.weapons_purchased:
+            self.bullet_type = "Bouncing"
+        elif keys[pygame.K_5] and "Poison" in self.weapons_purchased:
+            self.bullet_type = "Poison"
 
     def shoot(self, bullets):
         """
@@ -169,9 +177,11 @@ class Player(pygame.sprite.Sprite):
         # cooldown ==> how many frames i need to wait until i can shoot again
         if self.bullet_cooldown <= 0:
             bullet_class = {
-                "pistol": pistol,
-                "shotgun": shotgun,
-                "machinegun": machinegun,
+                "Pistol": pistol,
+                "Shotgun": shotgun,
+                "Machinegun": machinegun,
+                "Bouncing": bouncing,
+                "Poison": poison,
             }[self.bullet_type]
 
             # === defining the directions in wich the bullets will fly ===

@@ -71,7 +71,7 @@ class Enemy(pygame.sprite.Sprite):
 class initialEnemy(Enemy):
     def __init__(self):
         super().__init__()
-        self.health = 5
+        self.health = 10
         self.speed = 2
         self.damage = 10
         self.color = (0, 255, 0)  # Green
@@ -80,7 +80,7 @@ class initialEnemy(Enemy):
 class fastEnemy(Enemy):
     def __init__(self):
         super().__init__()
-        self.health = 10
+        self.health = 7
         self.speed = random.randint(3, 4)
         self.damage = 15
         self.color = (255, 0, 0)  # Red

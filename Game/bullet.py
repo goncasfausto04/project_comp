@@ -47,6 +47,7 @@ class pistol(Bullet):
         super().__init__(x, y, direction)
         self.color = red
         self.speed = 7
+        self.damage = 5
 
 
 class shotgun(Bullet):
@@ -54,6 +55,7 @@ class shotgun(Bullet):
         super().__init__(x, y, direction)
         self.color = blue
         self.speed = 7
+        self.damage = 20
 
 
 class machinegun(Bullet):
@@ -61,6 +63,21 @@ class machinegun(Bullet):
         super().__init__(x, y, direction)
         self.color = green
         self.speed = 7
+        self.damage = 9
+
+class bouncing(Bullet):
+    def __init__(self, x, y, direction):
+        super().__init__(x, y, direction)
+        self.color = pink
+        self.speed = 7
+        self.damage = 15
+
+class poison(Bullet):
+    def __init__(self, x, y, direction):
+        super().__init__(x, y, direction)
+        self.color = glowing_yellow
+        self.speed = 7
+        self.damage = 9
 
 
 class pet_bullet(Bullet):
@@ -69,6 +86,8 @@ class pet_bullet(Bullet):
         self.color = yellow
         self.speed = 8
         self.radius = 6.5
+        self.damage = 10
+
 class enemy_bullet(Bullet):
     def __init__(self, x, y, direction, shooter=None):
         super().__init__(x, y, direction)

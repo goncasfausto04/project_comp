@@ -365,7 +365,7 @@ def execute_game(player, pet):
                 # Verificar colisão com todos os inimigos
                 for enemy in enemies:
                     if enemy.rect.colliderect(bullet.rect):
-                        enemy.health -= 10  # Aplica dano no inimigo
+                        enemy.health -= bullet.damage  # Aplica dano no inimigo
                         bullet.kill()  # Remove a bala após a colisão
                         if enemy.health <= 0:
                             enemy.kill()

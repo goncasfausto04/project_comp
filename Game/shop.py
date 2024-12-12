@@ -137,13 +137,8 @@ def weapons_shop(player):
         "Pistol": 100,
         "Shotgun": 300,
         "Machine Gun": 500,
-        "Exploding Bullets Weapon": 800,
-        "Stalker Gun": 800,
-        "Bouncing Bullets Weapon": 800,
-        "Freezing Bullets Weapon": 900,
-        "Cluster Bullet Weapon": 1000,
-        "Poison Weapon": 1000,
-        "Gravity Weapon": 1200,
+        "Bouncing": 800,
+        "Poison": 1000,
     }
 
     while True:
@@ -154,211 +149,70 @@ def weapons_shop(player):
                 pygame.quit()
 
             if event.type == pygame.MOUSEBUTTONDOWN:
-                # Purchase logic
-                if (
-                    button_clicked(0.1, 0.2, 0.4, 0.06, mouse)
-                    and player.coins >= weapon_prices["Pistol"]
-                ):
-                    print("Pistol Purchased")
-                    player.coins -= weapon_prices["Pistol"]
-                    player.weapons_purchased.append("Pistol")
-                elif button_clicked(0.1, 0.2, 0.4, 0.06, mouse):
-                    print("Not enough money for Pistol")
+                # Define a reusable function for purchasing logic
+                def handle_purchase(weapon_name, button_coords, mouse):
+                    if button_clicked(*button_coords, mouse):
+                        if player.coins >= weapon_prices[weapon_name] and weapon_name not in player.weapons_purchased:
+                            print(f"{weapon_name} Purchased")
+                            player.coins -= weapon_prices[weapon_name]
+                            player.weapons_purchased.append(weapon_name)
+                        elif weapon_name in player.weapons_purchased:
+                            print("Already purchased")
+                        elif player.coins < weapon_prices[weapon_name]:
+                            no_money_messaege(screen)
 
-                if (
-                    button_clicked(0.55, 0.2, 0.4, 0.06, mouse)
-                    and player.coins >= weapon_prices["Shotgun"]
-                ):
-                    print("Shotgun Purchased")
-                    player.coins -= weapon_prices["Shotgun"]
-                    player.weapons_purchased.append("Shotgun")
-                elif button_clicked(0.55, 0.2, 0.4, 0.06, mouse):
-                    print("Not enough money for Shotgun")
+                # Define button positions and weapon names
+                weapons = [
+                    ("Shotgun", (0.1, 0.2, 0.4, 0.06)),
+                    ("Machine Gun", (0.1, 0.36, 0.4, 0.06)),
+                    ("Bouncing", (0.1, 0.52, 0.4, 0.06)),
+                    ("Poison", (0.1, 0.68, 0.4, 0.06)),
+                ]
 
-                if (
-                    button_clicked(0.1, 0.3, 0.4, 0.06, mouse)
-                    and player.coins >= weapon_prices["Machine Gun"]
-                ):
-                    print("Machine Gun Purchased")
-                    player.coins -= weapon_prices["Machine Gun"]
-                    player.weapons_purchased.append("Machine Gun")
-                elif button_clicked(0.1, 0.3, 0.4, 0.06, mouse):
-                    no_money_messaege(screen)
+                # Process each weapon
+                for weapon_name, button_coords in weapons:
+                    handle_purchase(weapon_name, button_coords, mouse)
 
-                if (
-                    button_clicked(0.55, 0.3, 0.4, 0.06, mouse)
-                    and player.coins >= weapon_prices["Exploding Bullets Weapon"]
-                ):
-                    print("Exploding Bullets Weapon Purchased")
-                    player.coins -= weapon_prices["Exploding Bullets Weapon"]
-                    player.weapons_purchased.append("Exploding Bullets Weapon")
-                elif button_clicked(0.55, 0.3, 0.4, 0.06, mouse):
-                    no_money_messaege(screen)
-
-                if (
-                    button_clicked(0.1, 0.4, 0.4, 0.06, mouse)
-                    and player.coins >= weapon_prices["Stalker Gun"]
-                ):
-                    print("Stalker Gun Purchased")
-                    player.coins -= weapon_prices["Stalker Gun"]
-                    player.weapons_purchased.append("Stalker Gun")
-                elif button_clicked(0.1, 0.4, 0.4, 0.06, mouse):
-                    no_money_messaege(screen)
-
-                if (
-                    button_clicked(0.55, 0.4, 0.4, 0.06, mouse)
-                    and player.coins >= weapon_prices["Freezing Bullets Weapon"]
-                ):
-                    print("Freezing Bullets Weapon Purchased")
-                    player.coins -= weapon_prices["Freezing Bullets Weapon"]
-                    player.weapons_purchased.append("Freezing Bullets Weapon")
-                elif button_clicked(0.55, 0.4, 0.4, 0.06, mouse):
-                    no_money_messaege(screen)
-
-                if (
-                    button_clicked(0.1, 0.5, 0.4, 0.06, mouse)
-                    and player.coins >= weapon_prices["Bouncing Bullets Weapon"]
-                ):
-                    print("Bouncing Bullets Weapon Purchased")
-                    player.coins -= weapon_prices["Bouncing Bullets Weapon"]
-                    player.weapons_purchased.append("Bouncing Bullets Weapon")
-                elif button_clicked(0.1, 0.5, 0.4, 0.06, mouse):
-                    no_money_messaege(screen)
-
-                if (
-                    button_clicked(0.55, 0.5, 0.4, 0.06, mouse)
-                    and player.coins >= weapon_prices["Cluster Bullet Weapon"]
-                ):
-                    print("Cluster Bullet Weapon Purchased")
-                    player.coins -= weapon_prices["Cluster Bullet Weapon"]
-                    player.weapons_purchased.append("Cluster Bullet Weapon")
-                elif button_clicked(0.55, 0.5, 0.4, 0.06, mouse):
-                    no_money_messaege(screen)
-
-                if (
-                    button_clicked(0.1, 0.6, 0.4, 0.06, mouse)
-                    and player.coins >= weapon_prices["Poison Weapon"]
-                ):
-                    print("Poison Weapon Purchased")
-                    player.coins -= weapon_prices["Poison Weapon"]
-                    player.weapons_purchased.append("Poison Weapon")
-                elif button_clicked(0.1, 0.6, 0.4, 0.06, mouse):
-                    no_money_messaege(screen)
-
-                if (
-                    button_clicked(0.55, 0.6, 0.4, 0.06, mouse)
-                    and player.coins >= weapon_prices["Gravity Weapon"]
-                ):
-                    print("Gravity Weapon Purchased")
-                    player.coins -= weapon_prices["Gravity Weapon"]
-                    player.weapons_purchased.append("Gravity Weapon")
-                elif button_clicked(0.55, 0.6, 0.4, 0.06, mouse):
-                    no_money_messaege(screen)
-
-                if button_clicked(0.55, 0.7, 0.4, 0.06, mouse):
+                # Handle "Go back to main shop" button
+                if button_clicked(0.1, 0.84, 0.4, 0.06, mouse):
                     return  # Go back to main shop
+
 
         # Drawing
         screen.blit(background, (0, 0))
         money_text = font.render(f"Money: ${player.coins}", True, white)
         screen.blit(money_text, (config.width * 0.05, config.height * 0.05))
-
-        pistol_text = font.render("Pistol - $100", True, white)
         shotgun_text = font.render("Shotgun - $300", True, white)
         machinegun_text = font.render("Machine Gun - $500", True, white)
-        explodingbullets_text = font.render(
-            "Exploding Bullets Weapon - $800", True, white
-        )
-        homing_text = font.render("Stalker Gun - $800", True, white)
-        freezingbullets_text = font.render(
-            "Freezing Bullets Weapon - $900", True, white
-        )
         bouncingbullets_text = font.render(
             "Bouncing Bullets Weapon - $800", True, white
         )
-        clusterbullets_text = font.render("Cluster Bullet Weapon - $1000", True, white)
+        
         poison_text = font.render("Poison Weapon - $1000", True, white)
-        gravity_text = font.render("Gravity Gun - $1200", True, white)
+        
         goback_text = font.render("Go Back", True, white)
 
-        draw_buttonutils(
-            dark_red, red, 0.1, 0.2, 0.4, 0.06, pistol_text, blockyfont, mouse, screen
-        )
-        draw_buttonutils(
-            dark_red, red, 0.55, 0.2, 0.4, 0.06, shotgun_text, blockyfont, mouse, screen
-        )
-        draw_buttonutils(
-            dark_red,
-            red,
-            0.1,
-            0.3,
-            0.4,
-            0.06,
+    
+        x_position = 0.1
+        button_width = 0.4
+        button_height = 0.06
+        vertical_spacing = 0.1  # Space between buttons
+        start_y = 0.2  # Starting vertical position
+
+        # Define button texts
+        buttons = [
+            shotgun_text,
             machinegun_text,
-            blockyfont,
-            mouse,
-            screen,
-        )
-        draw_buttonutils(
-            dark_red,
-            red,
-            0.55,
-            0.3,
-            0.4,
-            0.06,
-            explodingbullets_text,
-            blockyfont,
-            mouse,
-            screen,
-        )
-        draw_buttonutils(
-            dark_red, red, 0.1, 0.4, 0.4, 0.06, homing_text, blockyfont, mouse, screen
-        )
-        draw_buttonutils(
-            dark_red,
-            red,
-            0.55,
-            0.4,
-            0.4,
-            0.06,
-            freezingbullets_text,
-            blockyfont,
-            mouse,
-            screen,
-        )
-        draw_buttonutils(
-            dark_red,
-            red,
-            0.1,
-            0.5,
-            0.4,
-            0.06,
             bouncingbullets_text,
-            blockyfont,
-            mouse,
-            screen,
-        )
-        draw_buttonutils(
-            dark_red,
-            red,
-            0.55,
-            0.5,
-            0.4,
-            0.06,
-            clusterbullets_text,
-            blockyfont,
-            mouse,
-            screen,
-        )
-        draw_buttonutils(
-            dark_red, red, 0.1, 0.6, 0.4, 0.06, poison_text, blockyfont, mouse, screen
-        )
-        draw_buttonutils(
-            dark_red, red, 0.55, 0.6, 0.4, 0.06, gravity_text, blockyfont, mouse, screen
-        )
-        draw_buttonutils(
-            dark_red, red, 0.55, 0.7, 0.4, 0.06, goback_text, blockyfont, mouse, screen
-        )
+            poison_text,
+            goback_text,
+        ]
+
+        # Draw buttons in a loop
+        for i, text in enumerate(buttons):
+            y_position = start_y + i * (button_height + vertical_spacing)
+            draw_buttonutils(dark_red, red, x_position, y_position, button_width, button_height, text, blockyfont, mouse, screen)
+
 
         pygame.display.update()
 
