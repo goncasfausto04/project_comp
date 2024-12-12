@@ -5,6 +5,7 @@ from config import *  # importing colors and the like
 import os
 from game import *
 from player import Player
+from pet import Pet
 
 
 def shop(player):
@@ -31,6 +32,8 @@ def shop(player):
     background = pygame.image.load(background_path)
     background = pygame.transform.scale(background, config.resolution)
 
+    
+
     # Main loop
     while True:
         mouse = pygame.mouse.get_pos()  # Get mouse position
@@ -51,7 +54,7 @@ def shop(player):
 
                 # Pets button
                 if button_clicked(0.125, 0.5, 0.125, 0.083, mouse):
-                    under_construction()
+                    pet_shop(player)
 
                 # Go back button
                 if button_clicked(0.625, 0.833, 0.125, 0.083, mouse):
@@ -231,3 +234,93 @@ def no_money_messaege(screen):
         screen.blit(text, text_rect)
         pygame.display.flip()
         pygame.time.delay(int(1000 / 60))  # Delay to maintain 60 FPS
+
+def pet_shop(player):
+    pygame.init()
+    screen = pygame.display.set_mode(config.resolution)
+    blockyfontpath = os.path.join(base_path, "extras", "Pixeboy.ttf")
+    blockyfont = pygame.font.Font(
+        blockyfontpath, int(config.height * 0.035)
+    )  # Smaller font size
+    font = blockyfont
+    background_path = os.path.join(base_path, "extras", "petshop.png")
+    background = pygame.image.load(background_path)
+    background = pygame.transform.scale(background, config.resolution)
+
+    # Pet prices
+    pet_prices = {
+        "Dog": 100,
+        "Cat": 300,
+        "Crab": 500,
+    }
+
+    while True:
+        mouse = pygame.mouse.get_pos()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                # Define a reusable function for purchasing logic
+                def handle_purchase(pet_name, button_coords, mouse):
+                    if button_clicked(*button_coords, mouse):
+                        if pet_name in player.pets_purchased:
+                            config.pet_image_change = True
+                            config.pet_image = f"{pet_name}_pet_comp.png"
+                        if player.coins >= pet_prices[pet_name] and pet_name not in player.pets_purchased:
+                            print(f"{pet_name} Purchased")
+                            player.coins -= pet_prices[pet_name]
+                            player.pets_purchased.append(pet_name)
+                            config.pet_image_change = True
+                            config.pet_image = f"{pet_name}_pet_comp.png"
+                        elif pet_name in player.pets_purchased:
+                            print("Already purchased")
+                        elif player.coins < pet_prices[pet_name]:
+                            no_money_messaege(screen)
+
+                # Define button positions and pet names
+                pets = [
+                    ("Dog", (0.1, 0.2, 0.4, 0.06)),
+                    ("Cat", (0.1, 0.36, 0.4, 0.06)),
+                    ("Crab", (0.1, 0.52, 0.4, 0.06)),
+                ]
+
+                # Process each pet
+                for pet_name, button_coords in pets:
+                    handle_purchase(pet_name, button_coords, mouse)
+
+                # Handle "Go back to main shop" button
+                if button_clicked(0.1, 0.68, 0.4, 0.06, mouse):
+                    return  # Go back to main shop
+
+        # Drawing
+        screen.blit(background, (0, 0))
+        money_text = font.render(f"Money: ${player.coins}", True, white)
+        screen.blit(money_text, (config.width * 0.05, config.height * 0.05))
+
+        dog_text = font.render("Dog - $100", True, white)
+        cat_text = font.render("Cat - $300", True, white)
+        crab_text = font.render("Crab - $500", True, white)
+        goback_text = font.render("Go Back", True, white)
+
+        x_position = 0.1
+        button_width = 0.4
+        button_height = 0.06
+        vertical_spacing = 0.1  # Space between buttons
+        start_y = 0.2  # Starting vertical position
+
+        # Define button texts
+        buttons = [
+            dog_text,
+            cat_text,
+            crab_text,
+            goback_text,
+        ]
+
+        # Draw buttons in a loop
+        for i, text in enumerate(buttons):
+            y_position = start_y + i * (button_height + vertical_spacing)
+            draw_buttonutils(dark_red, red, x_position, y_position, button_width, button_height, text, blockyfont, mouse, screen)
+
+        pygame.display.update()

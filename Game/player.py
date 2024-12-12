@@ -69,6 +69,7 @@ class Player(pygame.sprite.Sprite):
         self.oneshotkill = False
         self.inverted = False
         self.weapons_purchased = ["Pistol"]
+        self.pets_purchased = ["Dog"]
  
 
     def activate_powerup(self):

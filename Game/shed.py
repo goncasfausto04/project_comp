@@ -23,6 +23,7 @@ def shed(player, pet, spawn_location):
     player.rect.left = spawn_location[0]
     pet.rect.left = spawn_location[0] + 50  # Pet starts to the right of the player
 
+
     # creating the player group and adding the player to it
     player_group = pygame.sprite.Group()
     player_group.add(player)
