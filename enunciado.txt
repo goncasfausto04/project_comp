@@ -1,9 +1,14 @@
 • Add the saving feature that stores all the progress the player has made.
 
 acabar tutorial
-waves de mobs
+
+waves de mobs **
+
 acabar shops (mostrar items comprados no botão)
+
 melhorar hud (mostrar armas adquiridas)
 melhorar visual do chest
+
 por sprites em tudo (imagens)
-fazer as balas realemente diferentes ( a bouncing tem de dar bounce e a poison tem de dar poison)
+
+fazer as balas realemente diferentes ( a bouncing tem de dar bounce e a poison tem de dar poison) **

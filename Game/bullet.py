@@ -71,6 +71,18 @@ class bouncing(Bullet):
         self.color = pink
         self.speed = 7
         self.damage = 15
+        self.bounce_count = 3
+
+    def update(self):
+        if self.rect.x <= 5 or self.rect.x >= width-5:
+            self.direction = math.pi - self.direction
+            self.bounce_count -= 1
+        if self.rect.y <= 5 or self.rect.y >= height-5:
+            self.direction = -self.direction
+            self.bounce_count -= 1
+        if self.bounce_count <= 0:
+            self.kill()
+        super().update()
 
 class poison(Bullet):
     def __init__(self, x, y, direction):
