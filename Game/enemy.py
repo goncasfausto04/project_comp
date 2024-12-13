@@ -124,7 +124,15 @@ class RangedMonster(Enemy):
 class DuplicateMonster(Enemy):
     def __init__(self):
         super().__init__()
-        self.health = 30
+        self.health = 45
         self.speed = 2
         self.damage = 10
         self.color = (58, 58, 58)  # Blue
+
+    def spawn_on_death(self, enemies_group):
+        """Spawn two new enemies upon death."""
+        for _ in range(2):
+            new_enemy = initialEnemy()  # Create a new regular enemy
+            new_enemy.rect.x = self.rect.x + random.randint(-20, 20)  # Spawn near the parent enemy
+            new_enemy.rect.y = self.rect.y + random.randint(-20, 20)
+            enemies_group.add(new_enemy)

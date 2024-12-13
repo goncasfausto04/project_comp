@@ -273,7 +273,7 @@ def execute_game(player, pet):
 
         enemy_types = [initialEnemy, fastEnemy, TankMonster, RangedMonster, DuplicateMonster]
         spawn_configs = [
-            (60, [70, 20, 10, 0, 0], 1, 2),
+            (60, [0, 20, 10, 0, 70], 1, 2),
             (120, [50, 30, 15, 5, 0], 1, 1.8),
             (180, [40, 30, 20, 10, 5], 2, 1.5),
             (240, [30, 30, 25, 15, 5], 2, 1.3),
@@ -330,6 +330,7 @@ def execute_game(player, pet):
             if isinstance(enemy, RangedMonster):  # Check if the enemy is a RangedMonster
                 enemy.enemy_shoot(bullets)  # Call the shoot method
 
+
         # updating positions and visuals
         player_group.update()
         bullets.update()
@@ -361,15 +362,17 @@ def execute_game(player, pet):
                 # Verificar colisão com todos os inimigos
                 for enemy in enemies:
                     if enemy.rect.colliderect(bullet.rect):
-                        enemy.health -= 10  # Aplica dano no inimigo
-                        bullet.kill()  # Remove a bala após a colisão
-                        if enemy.health <= 0:
-                            enemy.kill()
-                            kills += 1
-                            player.exp += 1
-                        # Se a vida do inimigo chegar a 0, ele morre
-                        break  # Sai do loop interno após processar o inimigo atual
+                        enemy.health -= 10  # Apply damage to the enemy
+                        bullet.kill()  # Remove the bullet after collision
 
+                        if enemy.health <= 0:  # Check if the enemy's health is zero or less
+                            if isinstance(enemy, DuplicateMonster):
+                                enemy.spawn_on_death(enemies)  # Spawn new enemies
+                            enemy.kill()  # Remove the enemy from the group
+                            kills += 1
+                            player.exp += 1  # Increase player experience
+
+                        break
 
         if beforeinstakill < kills:
             player.oneshotkill = False
