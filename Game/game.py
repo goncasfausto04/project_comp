@@ -68,9 +68,6 @@ def execute_game(player, pet):
 
     leave_text = blockyfont.render("Leave", True, white)
     not_leave_text = blockyfont.render("Stay", True, white)
-
-    dead_text = blockyfont.render("Respawn!", True, white)
-
     player_group = pygame.sprite.Group()
     player_group.add(player)
     pet_group = pygame.sprite.Group()  # Create a group for the pet
@@ -428,21 +425,24 @@ def execute_game(player, pet):
 
         if player.dead:
             dead = True
+            dead_text = blockyfont.render("Respawn?", True, white)
+
             while dead:
                 mouse = pygame.mouse.get_pos()
 
                 draw_buttonutils(
                     dark_red,
-                    glowing_light_red,
+                    green_ish,
                     0.5 - (0.125 / 2),
-                    0.667,
+                    0.5 - (0.125 / 2),
                     0.125,
-                    0.083,
+                    0.125,
                     dead_text,
                     blockyfont,
                     mouse,
                     screen,
                 )
+
                 pygame.display.flip()
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
@@ -450,10 +450,14 @@ def execute_game(player, pet):
                         exit()
                     elif event.type == pygame.MOUSEBUTTONDOWN:
                         if button_clicked(
-                            0.5 - (0.125 / 2), 0.667, 0.125, 0.083, mouse
+                            0.5 - (0.125 / 2), 0.5 - (0.125 / 2), 0.125, 0.125, mouse
                         ):
                             player.dead = False
                             return "initial"
+                        
+        player_group.draw(screen)
+        pet_group.draw(screen)
+
 
         if player.rect.right >= config.width:
             out = True
@@ -463,7 +467,7 @@ def execute_game(player, pet):
                     dark_green,
                     (0, 255, 0),
                     0.4 - (0.125 / 2),
-                    0.667,
+                    0.5- (0.083 /2),
                     0.125,
                     0.083,
                     not_leave_text,
@@ -475,7 +479,7 @@ def execute_game(player, pet):
                     dark_red,
                     glowing_light_red,
                     0.6 - (0.125 / 2),
-                    0.667,
+                    0.5- (0.083 /2),
                     0.125,
                     0.083,
                     leave_text,
@@ -490,15 +494,14 @@ def execute_game(player, pet):
                         exit()
                     elif event.type == pygame.MOUSEBUTTONDOWN:
                         if button_clicked(
-                            0.4 - (0.125 / 2), 0.667, 0.125, 0.083, mouse
+                            0.4 - (0.125 / 2), 0.5- (0.083 /2), 0.125, 0.083, mouse
                         ):
                             player.rect.right = config.width - 20
                             out = False
                         elif button_clicked(
-                            0.6 - (0.125 / 2), 0.667, 0.125, 0.083, mouse
+                            0.6 - (0.125 / 2), 0.5- (0.083 /2), 0.125, 0.083, mouse
                         ):
+                            player.health = 100
                             return "shed"
 
-        player_group.draw(screen)
-        pet_group.draw(screen)
         pygame.display.flip()
