@@ -84,12 +84,12 @@ class bouncing(Bullet):
             self.kill()
         super().update()
 
-class poison(Bullet):
+class sniper(Bullet):
     def __init__(self, x, y, direction):
         super().__init__(x, y, direction)
         self.color = glowing_yellow
-        self.speed = 7
-        self.damage = 9
+        self.speed = 15
+        self.damage = 25
 
 
 class pet_bullet(Bullet):

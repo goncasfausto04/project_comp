@@ -141,7 +141,7 @@ def weapons_shop(player):
         "Shotgun": 300,
         "Machine Gun": 500,
         "Bouncing": 800,
-        "Poison": 1000,
+        "Sniper": 1000,
     }
 
     while True:
@@ -169,7 +169,7 @@ def weapons_shop(player):
                     ("Shotgun", (0.1, 0.2, 0.4, 0.06)),
                     ("Machine Gun", (0.1, 0.36, 0.4, 0.06)),
                     ("Bouncing", (0.1, 0.52, 0.4, 0.06)),
-                    ("Poison", (0.1, 0.68, 0.4, 0.06)),
+                    ("Sniper", (0.1, 0.68, 0.4, 0.06)),
                 ]
 
                 # Process each weapon
@@ -191,7 +191,7 @@ def weapons_shop(player):
             "Bouncing Bullets Weapon - $800", True, white
         )
         
-        poison_text = font.render("Poison Weapon - $1000", True, white)
+        sniper_text = font.render("Sniper - $1000", True, white)
         
         goback_text = font.render("Go Back", True, white)
 
@@ -207,7 +207,7 @@ def weapons_shop(player):
             shotgun_text,
             machinegun_text,
             bouncingbullets_text,
-            poison_text,
+            sniper_text,
             goback_text,
         ]
 

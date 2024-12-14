@@ -18,7 +18,7 @@ class Player(pygame.sprite.Sprite):
 
         self.sprites_idle = []
         self.frame_count = 0
-        self.exp_required = 1
+        self.exp_required = 10
         self.dash_cooldown = 0
         self.has_dash = False
 
@@ -53,7 +53,7 @@ class Player(pygame.sprite.Sprite):
             "Shotgun": 90,
             "Machinegun": 35,
             "Bouncing":75,
-            "Poison": 80,
+            "Sniper": 100,
         }  # Cooldown in frames
 
         self.coins = 20000
@@ -168,8 +168,8 @@ class Player(pygame.sprite.Sprite):
             self.bullet_type = "Machinegun"
         elif keys[pygame.K_4] and "Bouncing" in self.weapons_purchased:
             self.bullet_type = "Bouncing"
-        elif keys[pygame.K_5] and "Poison" in self.weapons_purchased:
-            self.bullet_type = "Poison"
+        elif keys[pygame.K_5] and "Sniper" in self.weapons_purchased:
+            self.bullet_type = "Sniper"
 
     def shoot(self, bullets):
         """
@@ -182,7 +182,7 @@ class Player(pygame.sprite.Sprite):
                 "Shotgun": shotgun,
                 "Machinegun": machinegun,
                 "Bouncing": bouncing,
-                "Poison": poison,
+                "Sniper": sniper,
             }[self.bullet_type]
 
             # === defining the directions in wich the bullets will fly ===
