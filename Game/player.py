@@ -14,7 +14,8 @@ class Player(pygame.sprite.Sprite):
 
         # VISUAL VARIABLES
         # we call surface to represent the player image
-        sprites_path = os.path.join(base_path, "extras", "sprite")
+        sprites_path_idle = os.path.join(base_path, "extras", "sprite", "idle")
+        sprites_path_run = os.path.join(base_path, "extras", "sprite", "run")
 
         self.sprites_idle = []
         self.frame_count = 0
@@ -23,16 +24,16 @@ class Player(pygame.sprite.Sprite):
         self.has_dash = False
 
         for i in range(0, 9):
-            path = os.path.join(sprites_path, f"Idle__00{i}.png")
+            path = os.path.join(sprites_path_idle, f"Idle__00{i}.png")
             image = pygame.image.load(path)
             self.sprites_idle.append(pygame.transform.scale(image, (player_size)))
 
         self.sprites_run = []
-        for i in range(0, 9):
-            path = os.path.join(sprites_path, f"Run__00{i}.png")
+        for i in range(0, 7):
+            path = os.path.join(sprites_path_run, f"Run__00{i}.png")
             image = pygame.image.load(path)
             self.sprites_run.append(
-                pygame.transform.scale(image, (player_size[0] * 1.8, player_size[1]))
+                pygame.transform.scale(image, (player_size[0], player_size[1]))
             )
 
         self.curernt_sprite_idle = 0
@@ -122,14 +123,14 @@ class Player(pygame.sprite.Sprite):
 
 
 
-        if self.frame_count % 8 == 0:
+        if self.frame_count % 12 == 0:
             if not any(keys):
                 self.curernt_sprite_idle += 1
             if self.curernt_sprite_idle >= len(self.sprites_idle):
                 self.curernt_sprite_idle = 0
             self.image = self.sprites_idle[int(self.curernt_sprite_idle)]
 
-        if self.frame_count % 2 == 0:
+        if self.frame_count % 3 == 0:
             if (
                 keys[pygame.K_d]
                 or keys[pygame.K_w]
