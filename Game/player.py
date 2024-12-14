@@ -16,13 +16,14 @@ class Player(pygame.sprite.Sprite):
         # we call surface to represent the player image
         sprites_path_idle = os.path.join(base_path, "extras", "sprite", "idle")
         sprites_path_run = os.path.join(base_path, "extras", "sprite", "run")
+        sprites_path_dead = os.path.join(base_path, "extras", "sprite", "die")
 
-        self.sprites_idle = []
         self.frame_count = 0
         self.exp_required = 10
         self.dash_cooldown = 0
         self.has_dash = False
 
+        self.sprites_idle = []
         for i in range(0, 9):
             path = os.path.join(sprites_path_idle, f"Idle__00{i}.png")
             image = pygame.image.load(path)
@@ -36,8 +37,17 @@ class Player(pygame.sprite.Sprite):
                 pygame.transform.scale(image, (player_size[0], player_size[1]))
             )
 
+        self.sprites_dead = []
+        for i in range(0, 8):
+            path = os.path.join(sprites_path_dead, f"die__00{i}.png")
+            image = pygame.image.load(path)
+            self.sprites_dead.append(
+                pygame.transform.scale(image, (player_size[0], player_size[1]))
+            )
+
         self.curernt_sprite_idle = 0
         self.curernt_sprite_run = 0
+        self.curernt_sprite_dead = 0
 
         self.image = self.sprites_idle[self.curernt_sprite_idle]
         self.rect = self.image.get_rect()
@@ -45,7 +55,7 @@ class Player(pygame.sprite.Sprite):
 
         # GAMEPLAY VARIABLES
         self.speed = 5
-        self.health = 100
+        self.health = 10
         self.max_health = 100
         self.bullet_cooldown = 0
         self.bullet_type = "Pistol"
@@ -71,6 +81,8 @@ class Player(pygame.sprite.Sprite):
         self.inverted = False
         self.weapons_purchased = ["Pistol"]
         self.pets_purchased = ["Dog"]
+        self.dying = False
+        self.dead = False
  
 
     def activate_powerup(self):
@@ -88,24 +100,36 @@ class Player(pygame.sprite.Sprite):
 
         keys = pygame.key.get_pressed()
 
-        if self.inverted == False:  # Normal controls
-            if keys[pygame.K_w] and self.rect.top > 0:
-                self.rect.y -= self.speed
-            if keys[pygame.K_s] and self.rect.bottom < config.height:
-                self.rect.y += self.speed
-            if keys[pygame.K_a] and self.rect.left > 0:
-                self.rect.x -= self.speed
-            if keys[pygame.K_d] and self.rect.right < config.width:
-                self.rect.x += self.speed
-        else:  # Inverted controls
-            if keys[pygame.K_w] and self.rect.bottom < config.height:
-                self.rect.y += self.speed
-            if keys[pygame.K_s] and self.rect.top > 0:
-                self.rect.y -= self.speed
-            if keys[pygame.K_a] and self.rect.right < config.width:
-                self.rect.x += self.speed
-            if keys[pygame.K_d] and self.rect.left > 0:
-                self.rect.x -= self.speed
+        if self.dying != True:
+            if self.inverted == False:  # Normal controls
+                if keys[pygame.K_w] and self.rect.top > 0:
+                    self.rect.y -= self.speed
+                if keys[pygame.K_s] and self.rect.bottom < config.height:
+                    self.rect.y += self.speed
+                if keys[pygame.K_a] and self.rect.left > 0:
+                    self.rect.x -= self.speed
+                if keys[pygame.K_d] and self.rect.right < config.width:
+                    self.rect.x += self.speed
+            else:  # Inverted controls
+                if keys[pygame.K_w] and self.rect.bottom < config.height:
+                    self.rect.y += self.speed
+                if keys[pygame.K_s] and self.rect.top > 0:
+                    self.rect.y -= self.speed
+                if keys[pygame.K_a] and self.rect.right < config.width:
+                    self.rect.x += self.speed
+                if keys[pygame.K_d] and self.rect.left > 0:
+                    self.rect.x -= self.speed
+
+        if self.dying:
+            if self.frame_count % 12 == 0:
+                if self.curernt_sprite_dead >= len(self.sprites_dead):
+                    self.dying = False
+                    self.curernt_sprite_dead = 0
+                    self.health = self.max_health
+                    self.dead = True
+                self.image = self.sprites_dead[int(self.curernt_sprite_dead)]
+                self.curernt_sprite_dead += 1
+                return
 
         # Power-up timer logic
         if self.powerup_active:
@@ -130,35 +154,36 @@ class Player(pygame.sprite.Sprite):
                 self.curernt_sprite_idle = 0
             self.image = self.sprites_idle[int(self.curernt_sprite_idle)]
 
-        if self.frame_count % 3 == 0:
-            if (
-                keys[pygame.K_d]
-                or keys[pygame.K_w]
-                or keys[pygame.K_s]
-                or keys[pygame.K_a]
-            ):
-                self.curernt_sprite_run += 1
-                if self.curernt_sprite_run >= len(self.sprites_run):
-                    self.curernt_sprite_run = 0
-                if keys[pygame.K_a]:
-                    self.image = pygame.transform.flip(
-                        self.sprites_run[int(self.curernt_sprite_run)], True, False
-                    )
-                else:
-                    self.image = self.sprites_run[int(self.curernt_sprite_run)]
-        if self.de_spawner_active:
-            self.de_spawner_timer -= 1
-            if self.de_spawner_timer <= 0:
-                self.spawn_rate_multiplier = 1.0  # Reset spawn rate multiplier
-                self.de_spawner_active = False
+        if self.dying != True:
+            if self.frame_count % 3 == 0:
+                if (
+                    keys[pygame.K_d]
+                    or keys[pygame.K_w]
+                    or keys[pygame.K_s]
+                    or keys[pygame.K_a]
+                ):
+                    self.curernt_sprite_run += 1
+                    if self.curernt_sprite_run >= len(self.sprites_run):
+                        self.curernt_sprite_run = 0
+                    if keys[pygame.K_a]:
+                        self.image = pygame.transform.flip(
+                            self.sprites_run[int(self.curernt_sprite_run)], True, False
+                        )
+                    else:
+                        self.image = self.sprites_run[int(self.curernt_sprite_run)]
+            if self.de_spawner_active:
+                self.de_spawner_timer -= 1
+                if self.de_spawner_timer <= 0:
+                    self.spawn_rate_multiplier = 1.0  # Reset spawn rate multiplier
+                    self.de_spawner_active = False
 
-        if self.dash_cooldown > 0:
-            self.dash_cooldown -= 1
+            if self.dash_cooldown > 0:
+                self.dash_cooldown -= 1
 
-        # Check for dash input
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_SPACE] and self.has_dash:
-            self.dash()
+            # Check for dash input
+            keys = pygame.key.get_pressed()
+            if keys[pygame.K_SPACE] and self.has_dash:
+                self.dash()
 
     def change_bullet_type(self, keys):
         if keys[pygame.K_1]:
@@ -171,6 +196,16 @@ class Player(pygame.sprite.Sprite):
             self.bullet_type = "Bouncing"
         elif keys[pygame.K_5] and "Sniper" in self.weapons_purchased:
             self.bullet_type = "Sniper"
+
+    def death(self):
+        """
+        Called when the player dies.
+        """
+        self.dying = True
+        
+
+
+        
 
     def shoot(self, bullets):
         """

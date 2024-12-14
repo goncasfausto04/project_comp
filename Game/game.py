@@ -65,6 +65,8 @@ def execute_game(player, pet):
     leave_text = blockyfont.render("Leave", True, white)
     not_leave_text = blockyfont.render("Stay", True, white)
 
+    dead_text = blockyfont.render("Respawn!", True, white)
+
     player_group = pygame.sprite.Group()
     player_group.add(player)
     pet_group = pygame.sprite.Group()  # Create a group for the pet
@@ -215,6 +217,8 @@ def execute_game(player, pet):
             total_damage = sum(enemy.damage for enemy in collided_enemies)
             player.health -= total_damage
             player_cooldown = damage_cooldown  # Reset the player's cooldown
+            
+    
 
         if player_cooldown > 0:
             player_cooldown -= 1  # Reduce player's cooldown by 1 each frame
@@ -381,8 +385,6 @@ def execute_game(player, pet):
         draw_level_up_bar(screen)
         if player.has_dash:
             draw_slot(screen)
-        player_group.draw(screen)
-        pet_group.draw(screen)
         abspowerups_group.draw(screen)
         for bullet in bullets:
             bullet.draw(screen)
@@ -395,6 +397,40 @@ def execute_game(player, pet):
         collected_chests = pygame.sprite.spritecollide(player, chests, True)
         for chest in collected_chests:
             chest.open_chest(screen)
+
+        #kill player
+
+        if player.health <= 0:
+            player.death()
+
+        if player.dead:
+            dead = True
+            while dead:
+                mouse = pygame.mouse.get_pos()
+               
+                draw_buttonutils(
+                    dark_red,
+                    glowing_light_red,
+                    0.5 - (0.125 / 2),
+                    0.667,
+                    0.125,
+                    0.083,
+                    dead_text,
+                    blockyfont,
+                    mouse,
+                    screen,
+                )
+                pygame.display.flip()
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        pygame.quit()
+                        exit()
+                    elif event.type == pygame.MOUSEBUTTONDOWN:
+                        if button_clicked(
+                            0.5 - (0.125 / 2), 0.667, 0.125, 0.083, mouse
+                        ):
+                            player.dead = False
+                            return "initial"
 
         if player.rect.right >= config.width:
             out = True
@@ -440,4 +476,6 @@ def execute_game(player, pet):
                         ):
                             return "shed"
 
+        player_group.draw(screen)
+        pet_group.draw(screen)
         pygame.display.flip()
