@@ -63,7 +63,7 @@ class Player(pygame.sprite.Sprite):
             "Pistol": 50,
             "Shotgun": 90,
             "Machinegun": 35,
-            "Bouncing":75,
+            "Bouncing": 75,
             "Sniper": 100,
         }  # Cooldown in frames
 
@@ -83,7 +83,6 @@ class Player(pygame.sprite.Sprite):
         self.pets_purchased = ["Dog"]
         self.dying = False
         self.dead = False
- 
 
     def activate_powerup(self):
         """
@@ -145,8 +144,6 @@ class Player(pygame.sprite.Sprite):
                     self.powerup_active = False  # Deactivate power-up
                 # self.image.fill(cute_purple)  # Revert to original color
 
-
-
         if self.frame_count % 12 == 0:
             if not any(keys):
                 self.curernt_sprite_idle += 1
@@ -202,10 +199,6 @@ class Player(pygame.sprite.Sprite):
         Called when the player dies.
         """
         self.dying = True
-        
-
-
-        
 
     def shoot(self, bullets):
         """

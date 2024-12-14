@@ -23,7 +23,6 @@ def shed(player, pet, spawn_location):
     player.rect.left = spawn_location[0]
     pet.rect.left = spawn_location[0] + 50  # Pet starts to the right of the player
 
-
     # creating the player group and adding the player to it
     player_group = pygame.sprite.Group()
     player_group.add(player)
@@ -34,14 +33,16 @@ def shed(player, pet, spawn_location):
 
     # Define the special area dynamically based on resolution
     special_area = pygame.Rect(
-        config.width - (config.width * 0.167),  # x-coordinate (right margin of 2% from the edge)
+        config.width
+        - (config.width * 0.167),  # x-coordinate (right margin of 2% from the edge)
         config.height * 0.075,  # y-coordinate (4.2% of screen height)
         config.width * 0.03,  # width (10.9% of screen width)
         config.height * 0.06,  # height (19.4% of screen height)
     )
 
     casino_area = pygame.Rect(
-        config.width - (config.width * 0.167), # x-coordinate (right margin of 2% from the edge)
+        config.width
+        - (config.width * 0.167),  # x-coordinate (right margin of 2% from the edge)
         config.height * (0.54),  # y-coordinate (4.2% of screen height)
         config.width * 0.03,  # width (10.9% of screen width)
         config.height * 0.063,

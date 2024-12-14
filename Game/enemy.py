@@ -110,15 +110,18 @@ class RangedMonster(Enemy):
         if self.bullet_cooldown <= 0:
             for _ in range(2):  # Fire 2 bullets in random directions
                 angle = random.uniform(0, 2 * math.pi)  # Generate a random angle
-                bullet = self.bullet_type(self.rect.centerx, self.rect.centery, angle, self)
+                bullet = self.bullet_type(
+                    self.rect.centerx, self.rect.centery, angle, self
+                )
                 bullets.add(bullet)
-                print(f"Bullet spawned at ({self.rect.centerx}, {self.rect.centery}) with angle {angle:.2f}")
+                print(
+                    f"Bullet spawned at ({self.rect.centerx}, {self.rect.centery}) with angle {angle:.2f}"
+                )
 
             # Reset cooldown
             self.bullet_cooldown = self.fire_rate
 
         self.bullet_cooldown -= 1
-
 
 
 class DuplicateMonster(Enemy):

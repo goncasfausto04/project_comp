@@ -30,7 +30,7 @@ resolution = (1280, 720)
 width, height = resolution[0], resolution[1]
 fps = 60
 
-#pet type
+# pet type
 pet_image = "dog_pet_comp.png"
 pet_image_change = False
 

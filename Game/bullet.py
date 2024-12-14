@@ -65,6 +65,7 @@ class machinegun(Bullet):
         self.speed = 7
         self.damage = 9
 
+
 class bouncing(Bullet):
     def __init__(self, x, y, direction):
         super().__init__(x, y, direction)
@@ -74,15 +75,16 @@ class bouncing(Bullet):
         self.bounce_count = 3
 
     def update(self):
-        if self.rect.x <= 5 or self.rect.x >= width-5:
+        if self.rect.x <= 5 or self.rect.x >= width - 5:
             self.direction = math.pi - self.direction
             self.bounce_count -= 1
-        if self.rect.y <= 5 or self.rect.y >= height-5:
+        if self.rect.y <= 5 or self.rect.y >= height - 5:
             self.direction = -self.direction
             self.bounce_count -= 1
         if self.bounce_count <= 0:
             self.kill()
         super().update()
+
 
 class sniper(Bullet):
     def __init__(self, x, y, direction):
@@ -99,6 +101,7 @@ class pet_bullet(Bullet):
         self.speed = 8
         self.radius = 6.5
         self.damage = 10
+
 
 class enemy_bullet(Bullet):
     def __init__(self, x, y, direction, shooter=None):

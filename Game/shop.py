@@ -32,8 +32,6 @@ def shop(player):
     background = pygame.image.load(background_path)
     background = pygame.transform.scale(background, config.resolution)
 
-    
-
     # Main loop
     while True:
         mouse = pygame.mouse.get_pos()  # Get mouse position
@@ -155,7 +153,10 @@ def weapons_shop(player):
                 # Define a reusable function for purchasing logic
                 def handle_purchase(weapon_name, button_coords, mouse):
                     if button_clicked(*button_coords, mouse):
-                        if player.coins >= weapon_prices[weapon_name] and weapon_name not in player.weapons_purchased:
+                        if (
+                            player.coins >= weapon_prices[weapon_name]
+                            and weapon_name not in player.weapons_purchased
+                        ):
                             print(f"{weapon_name} Purchased")
                             player.coins -= weapon_prices[weapon_name]
                             player.weapons_purchased.append(weapon_name)
@@ -180,7 +181,6 @@ def weapons_shop(player):
                 if button_clicked(0.1, 0.84, 0.4, 0.06, mouse):
                     return  # Go back to main shop
 
-
         # Drawing
         screen.blit(background, (0, 0))
         money_text = font.render(f"Money: ${player.coins}", True, white)
@@ -190,12 +190,11 @@ def weapons_shop(player):
         bouncingbullets_text = font.render(
             "Bouncing Bullets Weapon - $800", True, white
         )
-        
+
         sniper_text = font.render("Sniper - $1000", True, white)
-        
+
         goback_text = font.render("Go Back", True, white)
 
-    
         x_position = 0.1
         button_width = 0.4
         button_height = 0.06
@@ -214,8 +213,18 @@ def weapons_shop(player):
         # Draw buttons in a loop
         for i, text in enumerate(buttons):
             y_position = start_y + i * (button_height + vertical_spacing)
-            draw_buttonutils(dark_red, red, x_position, y_position, button_width, button_height, text, blockyfont, mouse, screen)
-
+            draw_buttonutils(
+                dark_red,
+                red,
+                x_position,
+                y_position,
+                button_width,
+                button_height,
+                text,
+                blockyfont,
+                mouse,
+                screen,
+            )
 
         pygame.display.update()
 
@@ -234,6 +243,7 @@ def no_money_messaege(screen):
         screen.blit(text, text_rect)
         pygame.display.flip()
         pygame.time.delay(int(1000 / 60))  # Delay to maintain 60 FPS
+
 
 def pet_shop(player):
     pygame.init()
@@ -268,7 +278,10 @@ def pet_shop(player):
                         if pet_name in player.pets_purchased:
                             config.pet_image_change = True
                             config.pet_image = f"{pet_name}_pet_comp.png"
-                        if player.coins >= pet_prices[pet_name] and pet_name not in player.pets_purchased:
+                        if (
+                            player.coins >= pet_prices[pet_name]
+                            and pet_name not in player.pets_purchased
+                        ):
                             print(f"{pet_name} Purchased")
                             player.coins -= pet_prices[pet_name]
                             player.pets_purchased.append(pet_name)
@@ -321,6 +334,17 @@ def pet_shop(player):
         # Draw buttons in a loop
         for i, text in enumerate(buttons):
             y_position = start_y + i * (button_height + vertical_spacing)
-            draw_buttonutils(dark_red, red, x_position, y_position, button_width, button_height, text, blockyfont, mouse, screen)
+            draw_buttonutils(
+                dark_red,
+                red,
+                x_position,
+                y_position,
+                button_width,
+                button_height,
+                text,
+                blockyfont,
+                mouse,
+                screen,
+            )
 
         pygame.display.update()

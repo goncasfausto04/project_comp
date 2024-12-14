@@ -37,19 +37,15 @@ class Pet(pygame.sprite.Sprite):
         self.bullet_type = pet_bullet
         self.bullets = bullets  # Pass the bullets group
 
-
     def update(self):
 
-        if config.pet_image_change == True: #para nao estar sempre a carregar a imagem
+        if config.pet_image_change == True:  # para nao estar sempre a carregar a imagem
             self.image = os.path.join(base_path, "extras", config.pet_image)
             self.image = pygame.image.load(self.image)
-            self.image = pygame.transform.scale(
-                self.image, pet_size
-            )
+            self.image = pygame.transform.scale(self.image, pet_size)
             print("pet image changed")
             config.pet_image_change = False
 
-        
         # Calculate direction to the player
         dx = self.player.rect.x - self.rect.x
         dy = self.player.rect.y - self.rect.y
