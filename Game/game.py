@@ -211,8 +211,7 @@ def execute_game(player, pet):
             )  # Increase the XP required for the next level
 
         # Detect collision and apply damage
-        for enemy in enemies:
-            enemy.move_towards_player(player)  # Move towards the player
+      
 
         collided_enemies = pygame.sprite.spritecollide(player, enemies, False)
 
@@ -299,7 +298,7 @@ def execute_game(player, pet):
             DuplicateMonster,
         ]
         spawn_configs = [
-            (60, [70, 20, 10, 0, 0], 1, 2),
+            (60, [35, 20, 10, 0, 35], 1, 2),
             (120, [50, 30, 15, 5, 0], 1, 1.8),
             (180, [40, 30, 20, 10, 5], 2, 1.5),
             (240, [30, 30, 25, 15, 5], 2, 1.3),
