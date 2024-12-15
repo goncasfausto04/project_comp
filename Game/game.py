@@ -44,13 +44,13 @@ def game_loop():
             current_state = shed(
                 player,
                 pet,
-                ((config.width - (config.width * 0.20)), (config.height * 0.25)),
+                ((config.width - (config.width * 0.22)), (config.height * 0.25)),
             )
         elif current_state == "shedcasino":
             current_state = shed(
                 player,
                 pet,
-                ((config.width - (config.width * 0.20)), (config.height * 0.65)),
+                ((config.width - (config.width * 0.27)), (config.height * 0.65)),
             )
 
 

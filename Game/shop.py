@@ -135,11 +135,10 @@ def weapons_shop(player):
 
     # Weapon prices
     weapon_prices = {
-        "Pistol": 100,
-        "Shotgun": 300,
-        "Machine Gun": 500,
-        "Bouncing": 800,
-        "Sniper": 1000,
+        "Shatterblast": 300,
+        "Arcane Cascade": 500,
+        "Rebound Rune": 800,
+        "Astral Beam": 1000,
     }
 
     while True:
@@ -167,10 +166,10 @@ def weapons_shop(player):
 
                 # Define button positions and weapon names
                 weapons = [
-                    ("Shotgun", (0.1, 0.2, 0.4, 0.06)),
-                    ("Machine Gun", (0.1, 0.36, 0.4, 0.06)),
-                    ("Bouncing", (0.1, 0.52, 0.4, 0.06)),
-                    ("Sniper", (0.1, 0.68, 0.4, 0.06)),
+                    ("Shatterblast", (0.1, 0.2, 0.4, 0.06)),
+                    ("Arcane Cascade", (0.1, 0.36, 0.4, 0.06)),
+                    ("Rebound Rune", (0.1, 0.52, 0.4, 0.06)),
+                    ("Astral Beam", (0.1, 0.68, 0.4, 0.06)),
                 ]
 
                 # Process each weapon
@@ -185,13 +184,13 @@ def weapons_shop(player):
         screen.blit(background, (0, 0))
         money_text = font.render(f"Money: ${player.coins}", True, white)
         screen.blit(money_text, (config.width * 0.05, config.height * 0.05))
-        shotgun_text = font.render("Shotgun - $300", True, white)
-        machinegun_text = font.render("Machine Gun - $500", True, white)
+        shotgun_text = font.render("Shatterblast - $300", True, white)
+        machinegun_text = font.render("Arcane Cascade - $500", True, white)
         bouncingbullets_text = font.render(
-            "Bouncing Bullets Weapon - $800", True, white
+            "Rebound Rune- $800", True, white
         )
 
-        sniper_text = font.render("Sniper - $1000", True, white)
+        sniper_text = font.render("Astral Beam - $1000", True, white)
 
         goback_text = font.render("Go Back", True, white)
 

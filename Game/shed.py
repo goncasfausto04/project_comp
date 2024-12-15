@@ -33,17 +33,15 @@ def shed(player, pet, spawn_location):
 
     # Define the special area dynamically based on resolution
     special_area = pygame.Rect(
-        config.width
-        - (config.width * 0.167),  # x-coordinate (right margin of 2% from the edge)
-        config.height * 0.075,  # y-coordinate (4.2% of screen height)
+        config.width* 0.845,  # x-coordinate (right margin of 2% from the edge)
+        config.height * 0.248,  # y-coordinate (4.2% of screen height)
         config.width * 0.03,  # width (10.9% of screen width)
         config.height * 0.06,  # height (19.4% of screen height)
     )
 
     casino_area = pygame.Rect(
-        config.width
-        - (config.width * 0.167),  # x-coordinate (right margin of 2% from the edge)
-        config.height * (0.54),  # y-coordinate (4.2% of screen height)
+        config.width * 0.785,  # x-coordinate 
+        config.height * (0.73),  # y-coordinate 
         config.width * 0.03,  # width (10.9% of screen width)
         config.height * 0.063,
     )

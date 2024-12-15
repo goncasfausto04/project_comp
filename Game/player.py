@@ -58,13 +58,13 @@ class Player(pygame.sprite.Sprite):
         self.health = 10
         self.max_health = 100
         self.bullet_cooldown = 0
-        self.bullet_type = "Pistol"
+        self.bullet_type = "Basic Spell"
         self.fire_rate = {
-            "Pistol": 50,
-            "Shotgun": 90,
-            "Machinegun": 35,
-            "Bouncing": 75,
-            "Sniper": 100,
+            "Basic Spell": 50,
+            "Shatterblast": 90,
+            "Arcane Cascade": 35,
+            "Rebound Rune": 75,
+            "Astral Beam": 100,
         }  # Cooldown in frames
 
         self.coins = 20000
@@ -79,7 +79,7 @@ class Player(pygame.sprite.Sprite):
         self.spawn_rate_multiplier = 1
         self.oneshotkill = False
         self.inverted = False
-        self.weapons_purchased = ["Pistol"]
+        self.weapons_purchased = ["Basic Spell"]
         self.pets_purchased = ["Dog"]
         self.dying = False
         self.dead = False
@@ -197,15 +197,15 @@ class Player(pygame.sprite.Sprite):
 
     def change_bullet_type(self, keys):
         if keys[pygame.K_1]:
-            self.bullet_type = "Pistol"
-        elif keys[pygame.K_2] and "Shotgun" in self.weapons_purchased:
-            self.bullet_type = "Shotgun"
-        elif keys[pygame.K_3] and "Machine Gun" in self.weapons_purchased:
-            self.bullet_type = "Machinegun"
-        elif keys[pygame.K_4] and "Bouncing" in self.weapons_purchased:
-            self.bullet_type = "Bouncing"
-        elif keys[pygame.K_5] and "Sniper" in self.weapons_purchased:
-            self.bullet_type = "Sniper"
+            self.bullet_type = "Basic Spell"
+        elif keys[pygame.K_2] and "Shatterblast" in self.weapons_purchased:
+            self.bullet_type = "Shatterblast"
+        elif keys[pygame.K_3] and "Arcane Cascade" in self.weapons_purchased:
+            self.bullet_type = "Arcane Cascade"
+        elif keys[pygame.K_4] and "Rebound Rune" in self.weapons_purchased:
+            self.bullet_type = "Rebound Rune"
+        elif keys[pygame.K_5] and "Astral Beam" in self.weapons_purchased:
+            self.bullet_type = "Astral Beam"
 
     def death(self):
         """
@@ -220,11 +220,11 @@ class Player(pygame.sprite.Sprite):
         # cooldown ==> how many frames i need to wait until i can shoot again
         if self.bullet_cooldown <= 0:
             bullet_class = {
-                "Pistol": pistol,
-                "Shotgun": shotgun,
-                "Machinegun": machinegun,
-                "Bouncing": bouncing,
-                "Sniper": sniper,
+                "Basic Spell": pistol,
+                "Shatterblast": shotgun,
+                "Arcane Cascade": machinegun,
+                "Rebound Rune": bouncing,
+                "Astral Beam": sniper,
             }[self.bullet_type]
 
             # === defining the directions in wich the bullets will fly ===
