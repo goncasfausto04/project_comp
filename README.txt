@@ -6,9 +6,7 @@ waves de mobs **
 
 acabar shops (mostrar items comprados no botão)
 
-melhorar hud (mostrar armas adquiridas)
 melhorar visual do chest
 
-por sprites em tudo (imagens)
+por as hitbos no sitio certo
 
-fazer as balas realemente diferentes ( a bouncing tem de dar bounce e a poison tem de dar poison) **
