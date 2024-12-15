@@ -21,7 +21,6 @@ def shop(player):
     blockyfontsmall = pygame.font.Font(blockyfontpath, int(config.height * 0.035))
 
     # Render the text
-    skins_text = blockyfontsmall.render("Skins Shop", True, white)
     bullets_text = blockyfontsmall.render("Weapons Shop", True, white)
     pets_text = blockyfontsmall.render("Pet Shop", True, white)
     goback_text = blockyfontsmall.render("Go Back", True, white)
@@ -42,9 +41,7 @@ def shop(player):
                 pygame.quit()
 
             if event.type == pygame.MOUSEBUTTONDOWN:
-                # Skins button
-                if button_clicked(0.125, 0.167, 0.125, 0.083, mouse):
-                    under_construction()
+               
 
                 # Weapons button
                 if button_clicked(0.125, 0.333, 0.125, 0.083, mouse):
@@ -61,20 +58,7 @@ def shop(player):
         # Fill the screen with background
         screen.blit(background, (0, 0))
 
-        # Skins button
-        draw_buttonutils(
-            dark_red,
-            red,
-            0.125,
-            0.167,
-            0.125,
-            0.083,
-            skins_text,
-            blockyfontsmall,
-            mouse,
-            screen,
-        )
-
+   
         # Weapons button
         draw_buttonutils(
             dark_red,
