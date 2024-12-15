@@ -10,7 +10,7 @@ from shed import shed
 from shop import shop
 from chest import TreasureChest
 from abstractclasses import *
-
+from hud import HUD
 
 # endless loop that will keep the game running
 def game_loop():
@@ -61,6 +61,8 @@ def execute_game(player, pet):
     blockyfont = pygame.font.Font(blockyfontpath, int(config.height * 0.05))
     mouse = pygame.mouse.get_pos()  # Get mouse position
     pygame.display.set_caption("Hit or Stand")
+    # Instantiate HUD
+    hud = HUD(screen, config, player)
 
     leave_text = blockyfont.render("Leave", True, white)
     not_leave_text = blockyfont.render("Stay", True, white)
@@ -105,24 +107,6 @@ def execute_game(player, pet):
     damage_cooldown = 35  # Cooldown in frames (1 second at 60 FPS (if it was 60))
     player_cooldown = 0  # Tracks the remaining cooldown time for the player
 
-    def draw_level_up_bar(screen):
-        # Draw the background bar (empty)
-        pygame.draw.rect(screen, deep_black, (bar_x, bar_y, bar_width, bar_height))
-
-        # Calculate the width of the filled part of the bar
-        fill_width = (player.exp / player.exp_required) * bar_width
-        pygame.draw.rect(screen, green, (bar_x, bar_y, fill_width, bar_height))
-
-        # Draw the text showing the current level and experience
-        level_text = font.render(
-            f"Level: {player.level}  EXP: {player.exp}/{int(player.exp_required)}",
-            True,
-            white,
-        )
-        screen.blit(
-            level_text,
-            (config.width // 2 - level_text.get_width() // 2, bar_y + bar_height + 10),
-        )
     def draw_slot(screen):
         # Load and scale the image to make it smaller
         dash_image_path = os.path.join(base_path, "extras", "dash.png")
@@ -137,13 +121,13 @@ def execute_game(player, pet):
                 0.87 * config.height,
             ),
         )
-        
+
         timer = player.dash_cooldown
         # draw the timer on the slot with less opacity
         if timer > 0:
             # Modify the green color to include less opacity (e.g., 100 out of 255)
             semi_transparent_green = (0, 255, 0)  # 100 is the alpha (opacity)
-            
+
             pygame.draw.rect(
                 screen,
                 semi_transparent_green,
@@ -158,14 +142,10 @@ def execute_game(player, pet):
 
     while running:
         clock.tick(fps)
-
         game_time_frames += 1  # Increment the timer based on frames
         total_seconds = game_time_frames // fps  # Convert frames to seconds
         minutes = total_seconds // 60  # Calculate minutes
         seconds = total_seconds % 60  # Calculate seconds
-        timer_text = font.render(
-            f"Time: {minutes:02}:{seconds:02}", True, white
-        )  # Format MM:SS
 
         # Handle events
         for event in pygame.event.get():
@@ -185,6 +165,7 @@ def execute_game(player, pet):
         pet.update()  # Update the pet's behavior (follows player, fires randomly)
         pet_group.update()  # Update the pet group
         pet.pet_shoot(bullets)  # Pet shoots bullets
+        hud.draw()
 
         for enemy in enemies:
             enemy.draw(screen)  # Call the draw method for each enemy
@@ -273,7 +254,7 @@ def execute_game(player, pet):
 
         enemy_types = [initialEnemy, fastEnemy, TankMonster, RangedMonster, DuplicateMonster]
         spawn_configs = [
-            (60, [0, 20, 10, 0, 70], 1, 2),
+            (60, [70, 20, 10, 0, 0], 1, 2),
             (120, [50, 30, 15, 5, 0], 1, 1.8),
             (180, [40, 30, 20, 10, 5], 2, 1.5),
             (240, [30, 30, 25, 15, 5], 2, 1.3),
@@ -377,7 +358,6 @@ def execute_game(player, pet):
         if beforeinstakill < kills:
             player.oneshotkill = False
         # Draw game objects
-        draw_level_up_bar(screen)
         if player.has_dash:
             draw_slot(screen)
         player_group.draw(screen)
@@ -385,11 +365,6 @@ def execute_game(player, pet):
         abspowerups_group.draw(screen)
         for bullet in bullets:
             bullet.draw(screen)
-        player.draw_health_bar(screen)
-        timer_text = font.render(f"Time: {minutes:02}:{seconds:02}", True, white)
-        kills_text = font.render(f"Kills: {kills}", True, white)
-        screen.blit(timer_text, (10, 10))  # Timer at top-left corner
-        screen.blit(kills_text, (10, 40))  # Kill counter below timer
 
         collected_chests = pygame.sprite.spritecollide(player, chests, True)
         for chest in collected_chests:

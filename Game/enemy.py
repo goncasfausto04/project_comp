@@ -80,7 +80,7 @@ class initialEnemy(Enemy):
 class fastEnemy(Enemy):
     def __init__(self):
         super().__init__()
-        self.health = 10
+        self.health = 20
         self.speed = random.randint(3, 4)
         self.damage = 15
         self.color = (255, 0, 0)  # Red
