@@ -100,24 +100,37 @@ class Player(pygame.sprite.Sprite):
         keys = pygame.key.get_pressed()
 
         if self.dying != True:
+            movement = [0, 0]  # [dx, dy]
+
             if self.inverted == False:  # Normal controls
                 if keys[pygame.K_w] and self.rect.top > 0:
-                    self.rect.y -= self.speed
+                    movement[1] -= self.speed
                 if keys[pygame.K_s] and self.rect.bottom < config.height:
-                    self.rect.y += self.speed
+                    movement[1] += self.speed
                 if keys[pygame.K_a] and self.rect.left > 0:
-                    self.rect.x -= self.speed
+                    movement[0] -= self.speed
                 if keys[pygame.K_d] and self.rect.right < config.width:
-                    self.rect.x += self.speed
+                    movement[0] += self.speed
             else:  # Inverted controls
                 if keys[pygame.K_w] and self.rect.bottom < config.height:
-                    self.rect.y += self.speed
+                    movement[1] += self.speed
                 if keys[pygame.K_s] and self.rect.top > 0:
-                    self.rect.y -= self.speed
+                    movement[1] -= self.speed
                 if keys[pygame.K_a] and self.rect.right < config.width:
-                    self.rect.x += self.speed
+                    movement[0] += self.speed
                 if keys[pygame.K_d] and self.rect.left > 0:
-                    self.rect.x -= self.speed
+                    movement[0] -= self.speed
+
+            # Normalize the  vector so that the player moves at the same speed in all directions
+            magnitude = (movement[0]**2 + movement[1]**2)**0.5
+            if magnitude > 0:  # Avoid division by zero
+                movement[0] = movement[0] / magnitude * self.speed
+                movement[1] = movement[1] / magnitude * self.speed
+
+            # Apply movement to the player
+            self.rect.x += movement[0]
+            self.rect.y += movement[1]
+
 
         if self.dying:
             if self.frame_count % 12 == 0:
