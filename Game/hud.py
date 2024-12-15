@@ -39,57 +39,48 @@ class HUD:
         )
 
     def draw_weapon_slots(self):
-        """
-        Draw 5 weapon slots with fire rates above the Level-Up bar.
-        """
-        slot_size = 70
-        spacing = 15
-        start_x = self.bar_x
-        y_position = self.config.height - 105  # Slightly above the Level-Up bar
+        slot_size = 50  # Diminuir o tamanho dos slots
+        spacing = 10  # Diminuir o espaçamento
+        start_x = self.bar_x + 130
+        y_position = self.config.height - 95  # Ajuste a posição vertical
 
         weapon_names = list(self.player.fire_rate.keys())
-
-        weapon_names = list(self.player.fire_rate.keys())  # Get weapon names (e.g., "pistol", "shotgun")
 
         for i in range(5):
             slot_rect = pygame.Rect(start_x + i * (slot_size + spacing), y_position, slot_size, slot_size)
 
-            # Background rectangle for the slot
+            # Retângulo de fundo do slot
             pygame.draw.rect(self.screen, (80, 80, 80), slot_rect)
 
-            # If a weapon name exists for the slot, display its text
+            # Nome da arma
             if i < len(weapon_names):
-                weapon_text = self.font.render(weapon_names[i], True, (255, 255, 255))
+                weapon_text = self.font.render(weapon_names[i], True, self.white)
                 self.screen.blit(weapon_text, (slot_rect.x + 5, slot_rect.y + 15))
 
     def draw_level_up_bar(self):
-        """
-        Draw the level-up bar with a border.
-        """
-        bar_width = 0.8 * self.config.width
-        bar_height = 20
-        bar_x = 0.1 * self.config.width
-        bar_y = self.config.height - 30
+        bar_width = 0.6 * self.config.width  # Reduzindo a largura
+        bar_height = 15  # Reduzindo a altura
+        bar_x = 0.2 * self.config.width
+        bar_y = self.config.height - 40  # Ajustando a posição vertical
 
-        # Borda da barra (contorno preto)
-        border_rect = pygame.Rect(bar_x - 2, bar_y - 2, bar_width + 4, bar_height + 4)
-        pygame.draw.rect(self.screen, (255, 255, 255), border_rect)  # Borda branca
-
-        # Barra de XP (fundo preto)
-        pygame.draw.rect(self.screen, (0, 0, 0), (bar_x, bar_y, bar_width, bar_height))
-
-        # Barra de XP preenchida (verde)
+        # Desenho da borda
+        pygame.draw.rect(self.screen, (255, 255, 255), (bar_x - 2, bar_y - 2, bar_width + 4, bar_height + 4), 2)
+        # Desenho do preenchimento
         fill_width = (self.player.exp / self.player.exp_required) * bar_width
-        pygame.draw.rect(self.screen, (0, 255, 0), (bar_x, bar_y, fill_width, bar_height))
+        pygame.draw.rect(self.screen, self.green, (bar_x, bar_y, fill_width, bar_height))
 
-        # Texto de progresso da barra
-        level_text = self.font.render(
-            f"EXP: {self.player.exp}/{int(self.player.exp_required)}",
-            True,
-            self.white
+        # Texto da barra de XP
+        # Criando uma fonte menor
+        small_font = pygame.font.Font(None, 24)  # Tamanho 24 (ajuste conforme necessário)
+
+        level_text = small_font.render(
+            f"EXP: {self.player.exp}/{int(self.player.exp_required)}", True, self.white
         )
-        self.screen.blit(level_text, (self.config.width // 2 - level_text.get_width() // 2, bar_y + 5))
 
+        # Exibindo o texto no centro da barra de XP
+
+        self.screen.blit(level_text,
+                         (self.config.width // 2 - level_text.get_width() // 2, bar_y))  # Ajuste vertical
     def draw_health_bar(self):
         """
         Draw the health bar below the player's sprite.
@@ -113,8 +104,8 @@ class HUD:
         # Position the level number at the end of the Level-Up bar
         level_text = large_font.render(f"{self.player.level}", True, (255, 255, 255))
 
-        text_x = self.bar_x + 1000
-        text_y = self.config.height - 80# Above the Level-Up bar
+        text_x = self.bar_x + 900
+        text_y = self.config.height - 78# Above the Level-Up bar
 
         self.screen.blit(level_text, (text_x, text_y))
 
@@ -148,8 +139,8 @@ class HUD:
         money_text = money_font.render(f"Coins: {self.player.coins}", True, (255, 223, 0))  # Texto em amarelo ouro
 
         # Posiciona o texto acima do lado esquerdo da barra de Level-Up
-        text_x = self.bar_x + 450
-        text_y = self.config.height - 80  # Um pouco acima da barra de Level-Up
+        text_x = self.bar_x + 440
+        text_y = self.config.height - 90  # Um pouco acima da barra de Level-Up
 
         # Desenha o texto na tela
         self.screen.blit(money_text, (text_x, text_y))
