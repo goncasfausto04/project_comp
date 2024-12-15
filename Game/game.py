@@ -165,7 +165,7 @@ def execute_game(player, pet):
         pet.update()  # Update the pet's behavior (follows player, fires randomly)
         pet_group.update()  # Update the pet group
         pet.pet_shoot(bullets)  # Pet shoots bullets
-        hud.draw()
+
 
         for enemy in enemies:
             enemy.draw(screen)  # Call the draw method for each enemy
@@ -413,5 +413,5 @@ def execute_game(player, pet):
                             0.6 - (0.125 / 2), 0.667, 0.125, 0.083, mouse
                         ):
                             return "shed"
-
+        hud.draw()
         pygame.display.flip()

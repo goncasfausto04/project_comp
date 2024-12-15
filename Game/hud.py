@@ -42,10 +42,10 @@ class HUD:
         """
         Draw 5 weapon slots with fire rates above the Level-Up bar.
         """
-        slot_size = 50
-        spacing = 10
+        slot_size = 70
+        spacing = 15
         start_x = self.bar_x
-        y_position = self.config.height - 85  # Slightly above the Level-Up bar
+        y_position = self.config.height - 105  # Slightly above the Level-Up bar
 
         weapon_names = list(self.player.fire_rate.keys())
 
@@ -61,31 +61,34 @@ class HUD:
             if i < len(weapon_names):
                 weapon_text = self.font.render(weapon_names[i], True, (255, 255, 255))
                 self.screen.blit(weapon_text, (slot_rect.x + 5, slot_rect.y + 15))
-    def draw_level_integer(self):
-            """
-            Display the current player level as a large integer number.
-            """
-            level_text = self.font.render(str(self.player.level), True, (255, 255, 0))  # Golden yellow color
-            text_rect = level_text.get_rect(center=(self.config.width // 2, 60))
-
-            self.screen.blit(level_text, text_rect)
 
     def draw_level_up_bar(self):
-            bar_width = 0.8 * self.config.width
-            bar_height = 20
-            bar_x = 0.1 * self.config.width
-            bar_y = self.config.height - 30
+        """
+        Draw the level-up bar with a border.
+        """
+        bar_width = 0.8 * self.config.width
+        bar_height = 20
+        bar_x = 0.1 * self.config.width
+        bar_y = self.config.height - 30
 
-            pygame.draw.rect(self.screen, (0, 0, 0), (bar_x, bar_y, bar_width, bar_height))
-            fill_width = (self.player.exp / self.player.exp_required) * bar_width
-            pygame.draw.rect(self.screen, (0, 255, 0), (bar_x, bar_y, fill_width, bar_height))
+        # Borda da barra (contorno preto)
+        border_rect = pygame.Rect(bar_x - 2, bar_y - 2, bar_width + 4, bar_height + 4)
+        pygame.draw.rect(self.screen, (255, 255, 255), border_rect)  # Borda branca
 
-            level_text = self.font.render(
-                f"EXP: {self.player.exp}/{int(self.player.exp_required)}",
-                True,
-                self.white
-            )
-            self.screen.blit(level_text, (self.config.width // 2 - level_text.get_width() // 2, bar_y + 5))
+        # Barra de XP (fundo preto)
+        pygame.draw.rect(self.screen, (0, 0, 0), (bar_x, bar_y, bar_width, bar_height))
+
+        # Barra de XP preenchida (verde)
+        fill_width = (self.player.exp / self.player.exp_required) * bar_width
+        pygame.draw.rect(self.screen, (0, 255, 0), (bar_x, bar_y, fill_width, bar_height))
+
+        # Texto de progresso da barra
+        level_text = self.font.render(
+            f"EXP: {self.player.exp}/{int(self.player.exp_required)}",
+            True,
+            self.white
+        )
+        self.screen.blit(level_text, (self.config.width // 2 - level_text.get_width() // 2, bar_y + 5))
 
     def draw_health_bar(self):
         """
@@ -101,6 +104,19 @@ class HUD:
 
         pygame.draw.rect(self.screen, (255, 0, 0), (bar_x, bar_y, bar_width, bar_height))
         pygame.draw.rect(self.screen, (0, 255, 0), (bar_x, bar_y, int(bar_width * health_ratio), bar_height))
+
+    def draw_player_level(self):
+        """
+        Draw the player's current level as a large number just above the end of the Level-Up bar.
+        """
+        large_font = pygame.font.Font(None, 80)
+        # Position the level number at the end of the Level-Up bar
+        level_text = large_font.render(f"{self.player.level}", True, (255, 255, 255))
+
+        text_x = self.bar_x + 1000
+        text_y = self.config.height - 80# Above the Level-Up bar
+
+        self.screen.blit(level_text, (text_x, text_y))
 
     def draw_dash_slot(self):
         if self.player.has_dash:
@@ -123,11 +139,27 @@ class HUD:
                     )
                 )
 
+    def draw_player_money(self):
+        """
+        Draw the player's current coins on the HUD.
+        """
+        # Fonte para o texto das moedas
+        money_font = pygame.font.Font(None, 40)  # Um pouco maior para destaque
+        money_text = money_font.render(f"Coins: {self.player.coins}", True, (255, 223, 0))  # Texto em amarelo ouro
+
+        # Posiciona o texto acima do lado esquerdo da barra de Level-Up
+        text_x = self.bar_x + 450
+        text_y = self.config.height - 80  # Um pouco acima da barra de Level-Up
+
+        # Desenha o texto na tela
+        self.screen.blit(money_text, (text_x, text_y))
+
     def draw(self):
         self.draw_health_bar()  # Player health bar that follows the player
         self.draw_level_up_bar()  # Level-up progress bar at the bottom
-        self.draw_level_integer()
         self.draw_weapon_slots()
+        self.draw_player_level()
+        self.draw_player_money()
         if self.player.has_dash:
             self.draw_dash_slot()  # Dash slot visual
         current_time = pygame.time.get_ticks()  # Current time in milliseconds
