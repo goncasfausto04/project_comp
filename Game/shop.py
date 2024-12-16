@@ -140,11 +140,10 @@ def weapons_shop(player):
                             player.coins >= weapon_prices[weapon_name]
                             and weapon_name not in player.weapons_purchased
                         ):
-                            print(f"{weapon_name} Purchased")
                             player.coins -= weapon_prices[weapon_name]
                             player.weapons_purchased.append(weapon_name)
                         elif weapon_name in player.weapons_purchased:
-                            print("Already purchased")
+                            pass
                         elif player.coins < weapon_prices[weapon_name]:
                             no_money_messaege(screen)
 
@@ -265,13 +264,12 @@ def pet_shop(player):
                             player.coins >= pet_prices[pet_name]
                             and pet_name not in player.pets_purchased
                         ):
-                            print(f"{pet_name} Purchased")
                             player.coins -= pet_prices[pet_name]
                             player.pets_purchased.append(pet_name)
                             config.pet_image_change = True
                             config.pet_image = f"{pet_name}_pet_comp.png"
                         elif pet_name in player.pets_purchased:
-                            print("Already purchased")
+                            pass
                         elif player.coins < pet_prices[pet_name]:
                             no_money_messaege(screen)
 

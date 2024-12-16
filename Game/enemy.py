@@ -201,10 +201,7 @@ class RangedMonster(Enemy):
                     self.rect.centerx, self.rect.centery, angle, self
                 )
                 bullets.add(bullet)
-                print(
-                    f"Bullet spawned at ({self.rect.centerx}, {self.rect.centery}) with angle {angle:.2f}"
-                )
-
+            
             # Reset cooldown
             self.bullet_cooldown = self.fire_rate
 

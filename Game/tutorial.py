@@ -55,8 +55,6 @@ def tutorial():
         # Draw the player
         player_group.draw(screen)
 
-        print("promptcount:", promptcount)
-
         if promptcount == 0:
             prompt(
                 screen, config.width, config.height * 1.5, "Welcome to the tutorial!"
