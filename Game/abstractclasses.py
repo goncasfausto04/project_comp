@@ -117,6 +117,20 @@ class InvertedControls(PowerUp):
         player.inverted = False
 
 
+class Teleportation(PowerUp):
+    def __init__(self, x, y):
+        super().__init__(x, y)
+        self.image.fill((200, 200, 100))
+
+    def affect_player(self, player):
+        player.teleport = True
+
+    def affect_game(self, enemies):
+        pass
+
+    def deactivate(self, player):
+        player.teleport = False
+
 class HealthDrop(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
