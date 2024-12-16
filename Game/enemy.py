@@ -142,9 +142,8 @@ class TankMonster(Enemy):
         self.image = self.sprites[self.frame_count]
 
         # Adjust the size of the hitbox
-        self.rect = self.image.get_rect()
-        self.rect.width = self.rect.width * 0.25
-        self.rect.height = self.rect.height * 0.7  # Increase height by 50%
+        self.rect.width = self.rect.width 
+        self.rect.height = self.rect.height * 2.1  # Increase height by 50%
 
     def draw(self, screen):
         screen.blit(self.image,  (self.rect.x - 55, self.rect.y-25))
