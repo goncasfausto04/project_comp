@@ -53,9 +53,12 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = (width // 2, height // 2)
 
+        self.rect.height = self.rect.height * 0.9 
+        self.rect.width = self.rect.width * 0.8
+
         # GAMEPLAY VARIABLES
         self.speed = 5
-        self.health = 10
+        self.health = 100
         self.max_health = 100
         self.bullet_cooldown = 0
         self.bullet_type = "Basic Spell"
@@ -212,6 +215,13 @@ class Player(pygame.sprite.Sprite):
         Called when the player dies.
         """
         self.dying = True
+
+    
+    def draw(self, screen):
+        screen.blit(self.image, (self.rect.x, self.rect.y))
+        # Draw the hitbox
+        pygame.draw.rect(screen, (255, 0, 0), self.rect, 2)  # Red color, 2-pixel border
+
 
     def shoot(self, bullets):
         """

@@ -68,8 +68,8 @@ class initialEnemy(Enemy):
 
     
     def draw(self, screen):
-        screen.blit(self.image, self.rect)
-        pygame.draw.rect(screen, (255, 0, 0), self.rect, 2)  # Red color, 2-pixel border
+        screen.blit(self.image, (self.rect.x - 15, self.rect.y-17))
+        #pygame.draw.rect(screen, (255, 0, 0), self.rect, 2)  # Red color, 2-pixel border
 
     def update(self, player):
         self.move_towards_player(player)
@@ -103,8 +103,8 @@ class fastEnemy(Enemy):
         self.image = self.sprites[self.frame_count]
 
     def draw(self, screen):
-        screen.blit(self.image, self.rect)
-        pygame.draw.rect(screen, (255, 0, 0), self.rect, 2)  # Red color, 2-pixel border
+        screen.blit(self.image,  (self.rect.x - 15, self.rect.y-27))
+        #pygame.draw.rect(screen, (255, 0, 0), self.rect, 2)  # Red color, 2-pixel border
 
         
 
@@ -131,6 +131,7 @@ class TankMonster(Enemy):
         sprite_path = os.path.join(base_path, "extras", "sprite", "TankMonster")
         self.frame_count = 0
         self.fps_counter = 0
+        
 
         self.sprites = []
         for i in range(0, 8):
@@ -140,9 +141,14 @@ class TankMonster(Enemy):
 
         self.image = self.sprites[self.frame_count]
 
+        # Adjust the size of the hitbox
+        self.rect = self.image.get_rect()
+        self.rect.width = self.rect.width * 0.25
+        self.rect.height = self.rect.height * 0.7  # Increase height by 50%
+
     def draw(self, screen):
-        screen.blit(self.image, self.rect)
-        pygame.draw.rect(screen, (255, 0, 0), self.rect, 2)
+        screen.blit(self.image,  (self.rect.x - 55, self.rect.y-25))
+        #pygame.draw.rect(screen, (255, 0, 0), self.rect, 2)
 
     def update(self, player):
         self.move_towards_player(player)
@@ -177,10 +183,7 @@ class RangedMonster(Enemy):
 
         self.image = self.sprites[self.frame_count]
 
-    def draw(self, screen):
-        screen.blit(self.image, self.rect)
-        pygame.draw.rect(screen, (255, 0, 0), self.rect, 2)
-
+    
     def update(self, player):
         self.move_towards_player(player)
         self.fps_counter += 1
@@ -231,7 +234,7 @@ class DuplicateMonster(Enemy):
     
     def draw(self, screen):
         screen.blit(self.image, self.rect)
-        pygame.draw.rect(screen, (255, 0, 0), self.rect, 2)  # Red color, 2-pixel border
+        #pygame.draw.rect(screen, (255, 0, 0), self.rect, 2)  # Red color, 2-pixel border
 
     def update(self, player):
         self.move_towards_player(player)
