@@ -21,7 +21,6 @@ def tutorial():
     player_group.add(playertutorial)
 
     # setting up the background and the screen
-    base_path = os.path.dirname(__file__)
     background_path = os.path.join(base_path, "extras", "shedbg.png")
     background = pygame.image.load(background_path)
     background = pygame.transform.scale(background, config.resolution)
@@ -206,4 +205,63 @@ def tutorial():
         if promptcount >= 81 and promptcount < 240:
             promptcount += 1
 
+        if playertutorial.rect.left <= 0:
+            playertutorial.rect.left = config.width - playertutorial.rect.width
+            return battle() 
+            
         pygame.display.flip()
+
+
+def battle():
+    # creating the player group and adding the player to it
+    playertutorial = Player()
+    player_group = pygame.sprite.Group()
+    player_group.add(playertutorial)
+
+    # setting up the background and the screen
+    background_path = os.path.join(base_path, "extras", "battleground.png")
+    background = pygame.image.load(background_path)
+    background = pygame.transform.scale(background, config.resolution)
+    screen = pygame.display.set_mode(config.resolution)
+    clock = pygame.time.Clock()
+
+    blockyfont = pygame.font.Font(os.path.join(base_path, "extras", "Pixeboy.ttf"), 32)
+    running = True
+
+    playertutorial.rect.right = config.width - 20
+
+    frame_count = 0
+
+
+
+    while running:
+        clock.tick(config.fps)
+        screen.blit(background, (0, 0))
+        frame_count += 1
+
+        # Update player position based on key presses
+        playertutorial.update()
+
+        # Draw the player
+        player_group.draw(screen)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    return
+                
+        if frame_count == 150:
+            prompt(screen, config.width, config.height * 1.5, "Welcome to the battlefield!")
+
+        if frame_count == 200:
+            prompt(screen, config.width, config.height * 1.5, "This is where you will fight your enemies.")
+                
+        pygame.display.flip()
+
+
+
+
+    return
