@@ -273,6 +273,7 @@ def execute_game(player, pet):
         collected_powerups = pygame.sprite.spritecollide(
             player, abspowerups_group, True
         )
+        
         for powerup in collected_powerups:
             powerup.affect_player(player)
             powerup.affect_game(enemies)
