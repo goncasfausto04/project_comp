@@ -78,9 +78,7 @@ def execute_game(player, pet):
 
     enemy_cooldown = 0
     running = True
-    powerups_group = pygame.sprite.Group()  # Group to hold power-up sprites
     abspowerups_group = pygame.sprite.Group()
-    powerup_spawn_timer = 0  # Timer for power-ups
     despawner_spawn_time = 0
     beforeinstakill = 0
     invencibility_spawn_time = 0
@@ -326,7 +324,7 @@ def execute_game(player, pet):
 
         if player.health_drop== True:
             player.health = min(player.health + 20, player.max_health)
-            player.health_drop == False
+            player.health_drop = False
 
 
         enemy_types = [
@@ -378,18 +376,7 @@ def execute_game(player, pet):
         bullets.update()
         enemies.update(player)
 
-        if player.powerup_active:  # If the player is invincible
-            collided_enemies = pygame.sprite.spritecollide(
-                player, enemies, True
-            )  # True removes enemy
-
-            # for enemy in collided_enemies:
-            # enemy.kill()  # Remove enemy on collision
-            # kills += 1
-            # player.exp += 1
-
         # drawing the player and enemies sprites on the screen
-        powerups_group.draw(screen)
         chests.draw(screen)
 
         # Handle collisions

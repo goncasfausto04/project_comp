@@ -6,9 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="5343582e-b416-4521-b4fb-95a701b985f0" name="Changes" comment="Teleport powerup working i added things that might not be needed (no error)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game/abstractclasses.py" beforeDir="false" afterPath="$PROJECT_DIR$/Game/abstractclasses.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Game/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/Game/game.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game/player.py" beforeDir="false" afterPath="$PROJECT_DIR$/Game/player.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,7 +73,15 @@
       <option name="project" value="LOCAL" />
       <updated>1734388508330</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Teleport powerup working i added things that might not be needed (no error)">
+      <option name="closed" value="true" />
+      <created>1734465089818</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1734465089818</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
