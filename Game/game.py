@@ -87,7 +87,12 @@ def execute_game(player, pet):
     health_drop_spawn_time = 0
     reverse_spawn_time = 0
     teleport_spawn_time = 0
-    health_drop_spawn_timer = 0  # Timer for health drops
+    invencibility_spawn_interval = random.randint(fps * 50, fps * 100)
+    despawner_spawn_interval = random.randint(fps * 30, fps * 70)
+    oneshot_spawn_interval = random.randint(fps * 25, fps * 50)
+    reverse_spawn_interval = random.randint(fps * 40, fps * 80)
+    teleport_spawn_interval = random.randint(fps * 30, fps * 70)
+    health_drop_spawn_interval = random.randint(fps * 30, fps * 60)
     reverse_time = 120
     spawn_rate = fps * 6  # Spawn a health drop every 6 seconds (60 frames per second)
     spawn_chance = 100  # Percentage rarity of power-up (lower is rarer)
@@ -234,69 +239,63 @@ def execute_game(player, pet):
             player_cooldown -= 1  # Reduce player's cooldown by 1 each frame
 
         invencibility_spawn_time += 1  # change
-        if invencibility_spawn_time >= random.randint(
-            fps * 50, fps * 100
-        ):
+        if invencibility_spawn_time >= invencibility_spawn_interval:
             x, y = random.randint(50, 1230), random.randint(50, 650)
             powerup_type = Invincibility
             powerup1 = powerup_type(x, y)
             abspowerups_group.add(powerup1)
             invencibility_spawn_time = 0
+            invencibility_spawn_time = random.randint(fps * 50, fps * 100)
         abspowerups_group.update()
 
         despawner_spawn_time += 1
-        if despawner_spawn_time >= random.randint(
-            fps * 30, fps * 70
-        ):
+        if despawner_spawn_time >= despawner_spawn_interval:
             x, y = random.randint(50, 1230), random.randint(50, 650)
             powerup_type = DeSpawner
             powerup2 = DeSpawner(x, y)
             abspowerups_group.add(powerup2)
             despawner_spawn_time = 0
+            despawner_spawn_interval = random.randint(fps * 30, fps * 70)
         abspowerups_group.update()
 
         oneshot_spawn_time += 1  # change
-        if oneshot_spawn_time >= random.randint(
-            fps * 25, fps * 50
-        ):
+        if oneshot_spawn_time >= oneshot_spawn_interval:
             x, y = random.randint(50, 1230), random.randint(50, 650)
             powerup_type = Instakill
             powerup3 = powerup_type(x, y)
             abspowerups_group.add(powerup3)
             oneshot_spawn_time = 0
+            oneshot_spawn_interval = random.randint(fps * 25, fps * 50)
         abspowerups_group.update()
 
         reverse_spawn_time += 1  # change
-        if reverse_spawn_time >= random.randint(
-            fps * 40, fps * 80
-        ):
+        if reverse_spawn_time >= reverse_spawn_interval:
             x, y = random.randint(50, 1230), random.randint(50, 650)
             powerup_type = InvertedControls
             powerup4 = powerup_type(x, y)
             abspowerups_group.add(powerup4)
             reverse_spawn_time = 0
+            reverse_spawn_interval = random.randint(fps * 40, fps * 80)
         abspowerups_group.update()
 
         teleport_spawn_time += 1
-        if teleport_spawn_time >= random.randint(
-            fps * 30, fps * 70
-        ):
+        if teleport_spawn_time >= teleport_spawn_interval:
             x, y = random.randint(50, 1230), random.randint(50, 650)
             powerup_type = Teleportation
             powerup5 = powerup_type(x, y)
             abspowerups_group.add(powerup5)
             teleport_spawn_time = 0
+            teleport_spawn_interval = random.randint(fps * 30, fps * 70)
         abspowerups_group.update()
 
         health_drop_spawn_time += 1
-        if health_drop_spawn_time >= random.randint(
-            fps * 30, fps * 60
-        ):
+        if health_drop_spawn_time >= health_drop_spawn_interval:
             x, y = random.randint(50, 1230), random.randint(50, 650)
             powerup_type = Health_Drop
             powerup6 = powerup_type(x, y)
             abspowerups_group.add(powerup6)
             health_drop_spawn_time = 0
+            health_drop_spawn_interval = random.randint(fps * 30, fps * 60)
         abspowerups_group.update()
 
         abspowerups_group.update()

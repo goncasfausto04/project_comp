@@ -9,10 +9,10 @@ class PowerUp(pygame.sprite.Sprite, ABC):
     def __init__(self, x, y, duration=300):
         """
         Base Power-Up class.
-        :param x: Initial x position
-        :param y: Initial y position
-        :param color: Visual color of the power-up
-        :param duration: Duration in frames the power-up is active
+        x: Initial x position
+        y: Initial y position
+        param color: Visual color of the power-up
+        param duration: Duration in frames the power-up is active
         """
         super().__init__()
         self.image = pygame.Surface((20, 20))  # Default size for power-ups
