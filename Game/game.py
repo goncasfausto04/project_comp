@@ -196,8 +196,8 @@ def execute_game(player, pet):
 
         def teleport_player(self):
             # Generate random position within the screen bounds
-            new_x = random.randint(50, config.width - 50)
-            new_y = random.randint(50, config.height - 50)
+            new_x = random.randint(60, config.width - 60)
+            new_y = random.randint(60, config.height - 60)
 
             # Update the player's position
             self.rect.x = new_x
@@ -235,8 +235,8 @@ def execute_game(player, pet):
 
         invencibility_spawn_time += 1  # change
         if invencibility_spawn_time >= random.randint(
-            fps * 40, fps * 80
-        ):  # Spawn a power-up every 5 seconds
+            fps * 50, fps * 100
+        ):
             x, y = random.randint(50, 1230), random.randint(50, 650)
             powerup_type = Invincibility
             powerup1 = powerup_type(x, y)
@@ -246,8 +246,8 @@ def execute_game(player, pet):
 
         despawner_spawn_time += 1
         if despawner_spawn_time >= random.randint(
-            fps * 40, fps * 80
-        ):  # Spawn a power-up every 5 seconds
+            fps * 30, fps * 70
+        ):
             x, y = random.randint(50, 1230), random.randint(50, 650)
             powerup_type = DeSpawner
             powerup2 = DeSpawner(x, y)
@@ -257,8 +257,8 @@ def execute_game(player, pet):
 
         oneshot_spawn_time += 1  # change
         if oneshot_spawn_time >= random.randint(
-            fps * 40, fps * 80
-        ):  # Spawn a power-up every 5 seconds
+            fps * 25, fps * 50
+        ):
             x, y = random.randint(50, 1230), random.randint(50, 650)
             powerup_type = Instakill
             powerup3 = powerup_type(x, y)
@@ -269,7 +269,7 @@ def execute_game(player, pet):
         reverse_spawn_time += 1  # change
         if reverse_spawn_time >= random.randint(
             fps * 40, fps * 80
-        ):  # Spawn a power-up every 5 seconds
+        ):
             x, y = random.randint(50, 1230), random.randint(50, 650)
             powerup_type = InvertedControls
             powerup4 = powerup_type(x, y)
@@ -278,7 +278,9 @@ def execute_game(player, pet):
         abspowerups_group.update()
 
         teleport_spawn_time += 1
-        if teleport_spawn_time >= 300:  # Spawn a power-up every 5 seconds
+        if teleport_spawn_time >= random.randint(
+            fps * 30, fps * 70
+        ):
             x, y = random.randint(50, 1230), random.randint(50, 650)
             powerup_type = Teleportation
             powerup5 = powerup_type(x, y)
@@ -287,7 +289,9 @@ def execute_game(player, pet):
         abspowerups_group.update()
 
         health_drop_spawn_time += 1
-        if health_drop_spawn_time >= 300:  # Spawn a power-up every 5 seconds
+        if health_drop_spawn_time >= random.randint(
+            fps * 30, fps * 60
+        ):
             x, y = random.randint(50, 1230), random.randint(50, 650)
             powerup_type = Health_Drop
             powerup6 = powerup_type(x, y)

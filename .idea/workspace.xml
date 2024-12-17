@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5343582e-b416-4521-b4fb-95a701b985f0" name="Changes" comment="Teleport powerup working i added things that might not be needed (no error)">
+    <list default="true" id="5343582e-b416-4521-b4fb-95a701b985f0" name="Changes" comment="Health drop is now an abstract class and working the same as it was previously">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Game/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/Game/game.py" afterDir="false" />
     </list>
@@ -81,7 +81,15 @@
       <option name="project" value="LOCAL" />
       <updated>1734465089818</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Health drop is now an abstract class and working the same as it was previously">
+      <option name="closed" value="true" />
+      <created>1734465812548</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1734465812548</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -90,7 +98,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Teleport powerup working" />
     <MESSAGE value="Teleport powerup working i added things that might not be needed (no error)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Teleport powerup working i added things that might not be needed (no error)" />
+    <MESSAGE value="Health drop is now an abstract class and working the same as it was previously" />
+    <option name="LAST_COMMIT_MESSAGE" value="Health drop is now an abstract class and working the same as it was previously" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/project_comp3Final$main.coverage" NAME="main Coverage Results" MODIFIED="1733873220397" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Game" />
