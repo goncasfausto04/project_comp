@@ -88,6 +88,7 @@ def execute_game(player, pet):
     oneshot_spawn_time = 0
     invencibility_time = 300
     reverse_spawn_time = 0
+    teleport_spawn_time = 0
     health_drop_spawn_timer = 0  # Timer for health drops
     reverse_time = 120
     spawn_rate = fps * 6  # Spawn a health drop every 6 seconds (60 frames per second)
@@ -116,7 +117,7 @@ def execute_game(player, pet):
             f"Time: {minutes:02}:{seconds:02}", True, white
         )  # Format MM:SS
 
-        # Handle events
+            # Handle events
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -162,6 +163,14 @@ def execute_game(player, pet):
         player.shoot(bullets)
         pet.pet_shoot(bullets)  # Pet shoots bullets
 
+        def teleport_player(self):
+            # Generate random position within the screen bounds
+            new_x = random.randint(50, config.width - 50)
+            new_y = random.randint(50, config.height - 50)
+
+            # Update the player's position
+            self.rect.x = new_x
+            self.rect.y = new_y
 
         if player.exp >= player.exp_required:
             x = random.randint(50, config.width - 50)
@@ -194,7 +203,7 @@ def execute_game(player, pet):
         invencibility_spawn_time += 1  # change
         if invencibility_spawn_time >= random.randint(
             fps * 40, fps * 80
-        ):  # Spawn a power-up every 5 seconds
+        ):  
             x, y = random.randint(50, 1230), random.randint(50, 650)
             powerup_type = Invincibility
             powerup1 = powerup_type(x, y)
@@ -204,7 +213,7 @@ def execute_game(player, pet):
         despawner_spawn_time += 1
         if despawner_spawn_time >= random.randint(
             fps * 40, fps * 80
-        ):  # Spawn a power-up every 5 seconds
+        ):  
             x, y = random.randint(50, 1230), random.randint(50, 650)
             powerup_type = DeSpawner
             powerup2 = DeSpawner(x, y)
@@ -213,7 +222,7 @@ def execute_game(player, pet):
 
         oneshot_spawn_time += 1  # change
         if oneshot_spawn_time >= random.randint(
-            fps * 40, fps * 80
+            fps * 20, fps * 80
         ):  # Spawn a power-up every 5 seconds
             x, y = random.randint(50, 1230), random.randint(50, 650)
             powerup_type = Instakill
@@ -231,6 +240,16 @@ def execute_game(player, pet):
             abspowerups_group.add(powerup4)
             reverse_spawn_time = 0
 
+        teleport_spawn_time += 1
+        if teleport_spawn_time >= random.randint(fps * 40, fps * 80):  # Spawn a power-up every 5 seconds
+            x, y = random.randint(50, 1230), random.randint(50, 650)
+            powerup_type = Teleportation
+            powerup5 = powerup_type(x, y)
+            abspowerups_group.add(powerup5)
+            teleport_spawn_time = 0
+
+
+        abspowerups_group.update()
         # Check for collisions between player and power-ups
         collected_powerups = pygame.sprite.spritecollide(
             player, abspowerups_group, True
@@ -253,6 +272,10 @@ def execute_game(player, pet):
             player.inverted = False
             reverse_time = 120
 
+        if player.teleport == True:
+            teleport_player(player)
+            player.teleport = False
+
         enemy_types = [
             initialEnemy,
             fastEnemy,
@@ -261,7 +284,7 @@ def execute_game(player, pet):
             DuplicateMonster,
         ]
         spawn_configs = [
-            (60, [70, 20, 0, 0, 0], 1, 2),
+            (60, [70, 20, 10, 0, 100], 1, 2),
             (120, [50, 30, 15, 5, 0], 1, 1.8),
             (180, [40, 30, 20, 10, 5], 2, 1.5),
             (240, [30, 30, 25, 15, 5], 2, 1.3),
@@ -272,6 +295,8 @@ def execute_game(player, pet):
             (540, [10, 10, 40, 40, 25], 4, 1),
             (float("inf"), [5, 5, 45, 45, 35], 5, 0.8),
         ]
+
+
 
         if enemy_cooldown <= 0:
             for max_time, weights, num_spawn, cooldown_factor in spawn_configs:

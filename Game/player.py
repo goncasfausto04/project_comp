@@ -3,6 +3,7 @@ from config import *
 import pygame
 import math
 from bullet import *
+import random
 
 
 # making Player a child of the Sprite class
@@ -82,10 +83,12 @@ class Player(pygame.sprite.Sprite):
         self.spawn_rate_multiplier = 1
         self.oneshotkill = False
         self.inverted = False
+        self.teleport = False
         self.weapons_purchased = ["Basic Spell"]
         self.pets_purchased = ["Dog"]
         self.dying = False
         self.dead = False
+        self.enemies_spawn_multiplier = 1.1
 
     def activate_powerup(self):
         """
@@ -133,6 +136,7 @@ class Player(pygame.sprite.Sprite):
             # Apply movement to the player
             self.rect.x += movement[0]
             self.rect.y += movement[1]
+
 
 
         if self.dying:
