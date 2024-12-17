@@ -21,7 +21,7 @@ class Player(pygame.sprite.Sprite):
         self.frame_count = 0
         self.exp_required = 10
         self.dash_cooldown = 0
-        self.has_dash = False
+        self.has_dash = True
 
         self.sprites_idle = []
         for i in range(0, 9):
@@ -274,30 +274,19 @@ class Player(pygame.sprite.Sprite):
         )
 
     def dash(self):
-        """
-        Makes the player dash in the direction they are currently moving.
-        """
-        if self.dash_cooldown <= 0:  # Check if dash is off cooldown
-            dash_distance = 100  # Distance to dash
+        if self.dash_cooldown <= 0:
+            dash_distance = 100
             direction = pygame.Vector2(0, 0)
-
-            # Determine the direction based on the keys pressed
             keys = pygame.key.get_pressed()
-            if keys[pygame.K_w]:
-                direction.y = -1
-            if keys[pygame.K_s]:
-                direction.y = 1
-            if keys[pygame.K_a]:
-                direction.x = -1
-            if keys[pygame.K_d]:
-                direction.x = 1
 
-            # Normalize the direction to avoid faster diagonal dashes
+            if keys[pygame.K_w]: direction.y = -1
+            if keys[pygame.K_s]: direction.y = 1
+            if keys[pygame.K_a]: direction.x = -1
+            if keys[pygame.K_d]: direction.x = 1
+
             if direction.length() > 0:
                 direction = direction.normalize()
+                self.rect.move_ip(direction * dash_distance)
+                self.dash_cooldown = config.fps * 2  # Cooldown in seconds
+                # Add visual/audio feedback here
 
-            # Dash to direction
-            self.rect.x += direction.x * dash_distance
-            self.rect.y += direction.y * dash_distance
-
-            self.dash_cooldown = fps * 2  # 2 seconds cooldown (adjust as needed)

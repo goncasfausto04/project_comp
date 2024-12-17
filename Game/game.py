@@ -55,6 +55,7 @@ def game_loop():
 
 
 def execute_game(player, pet):
+
     base_path = os.path.dirname(__file__)
     background_path = os.path.join(base_path, "extras", "Battleground.png")
     background = pygame.image.load(background_path)
@@ -93,10 +94,7 @@ def execute_game(player, pet):
     spawn_chance = 100  # Percentage rarity of power-up (lower is rarer)
     exp_multiplier = 1.2
 
-    bar_width = 300
-    bar_height = 10
-    bar_x = (config.width - bar_width) // 2
-    bar_y = height - bar_height - 50
+    
 
     game_time = 0
     game_time_frames = 0  # Tracks elapsed time in seconds
@@ -106,64 +104,10 @@ def execute_game(player, pet):
     damage_cooldown = 35  # Cooldown in frames (1 second at 60 FPS (if it was 60))
     player_cooldown = 0  # Tracks the remaining cooldown time for the player
 
-    def draw_level_up_bar(screen):
-        # Draw the background bar (empty)
-        pygame.draw.rect(screen, deep_black, (bar_x, bar_y, bar_width, bar_height))
-
-        # Calculate the width of the filled part of the bar
-        fill_width = (player.exp / player.exp_required) * bar_width
-        pygame.draw.rect(screen, green, (bar_x, bar_y, fill_width, bar_height))
-
-        # Draw the text showing the current level and experience
-        level_text = font.render(
-            f"Level: {player.level}  EXP: {player.exp}/{int(player.exp_required)}",
-            True,
-            white,
-        )
-        screen.blit(
-            level_text,
-            (config.width // 2 - level_text.get_width() // 2, bar_y + bar_height + 10),
-        )
-
-    def draw_slot(screen):
-        # Load and scale the image to make it smaller
-        dash_image_path = os.path.join(base_path, "extras", "dash.png")
-        dash_image = pygame.image.load(dash_image_path)
-        dash_image = pygame.transform.scale(
-            dash_image, (int(0.06 * config.width), int(0.06 * config.width))
-        )  # Smaller size
-
-        # Draw the image as the background for the slot
-        screen.blit(
-            dash_image,
-            (
-                0.012 * config.width,
-                0.87 * config.height,
-            ),
-        )
-
-        timer = player.dash_cooldown
-        # draw the timer on the slot with less opacity
-        if timer > 0:
-            # Modify the green color to include less opacity (e.g., 100 out of 255)
-            semi_transparent_green = (0, 255, 0)  # 100 is the alpha (opacity)
-
-            pygame.draw.rect(
-                screen,
-                semi_transparent_green,
-                (
-                    0.012 * config.width,
-                    0.87 * config.height,
-                    0.06
-                    * config.width
-                    * (timer / (fps * 2)),  # Adjusted to match the new size
-                    0.06 * config.width,  # Adjusted to match the new size
-                ),
-            )
 
     while running:
-        clock.tick(fps)
 
+        clock.tick(fps)
         game_time_frames += 1  # Increment the timer based on frames
         total_seconds = game_time_frames // fps  # Convert frames to seconds
         minutes = total_seconds // 60  # Calculate minutes
@@ -185,14 +129,39 @@ def execute_game(player, pet):
         player.change_bullet_type(keys)
 
         # Update game logic
-        screen.blit(background, (0, 0))
-        player.shoot(bullets)
-        pet.update()  # Update the pet's behavior (follows player, fires randomly)
-        pet_group.update()  # Update the pet group
-        pet.pet_shoot(bullets)  # Pet shoots bullets
+        pet_group.update()  # Update the pet's position
+        abspowerups_group.update()
+        player_group.update()
+        bullets.update()
+        enemies.update(player)
 
+
+         # drawing the player and enemies sprites on the screen
+        screen.blit(background, (0, 0))
+        powerups_group.draw(screen)
+        chests.draw(screen)
+        draw_level_up_bar(screen, player)
+        if player.has_dash == True:
+            draw_slot(screen,player)
+        abspowerups_group.draw(screen)
+        for bullet in bullets:
+            bullet.draw(screen)
+        pet_group.draw(screen)
+        player.draw_health_bar(screen)
+        draw_fps(screen, clock)
+        player_group.draw(screen)
         for enemy in enemies:
             enemy.draw(screen)  # Call the draw method for each enemy
+
+        timer_text = font.render(f"Time: {minutes:02}:{seconds:02}", True, white)
+        kills_text = font.render(f"Kills: {kills}", True, white)
+        screen.blit(timer_text, (10, 10))  # Timer at top-left corner
+        screen.blit(kills_text, (10, 40))  # Kill counter below timer
+
+
+        player.shoot(bullets)
+        pet.pet_shoot(bullets)  # Pet shoots bullets
+
 
         if player.exp >= player.exp_required:
             x = random.randint(50, config.width - 50)
@@ -211,8 +180,6 @@ def execute_game(player, pet):
             )  # Increase the XP required for the next level
 
         # Detect collision and apply damage
-      
-
         collided_enemies = pygame.sprite.spritecollide(player, enemies, False)
 
         if collided_enemies and player_cooldown <= 0 and player.invincible == False:
@@ -233,7 +200,6 @@ def execute_game(player, pet):
             powerup1 = powerup_type(x, y)
             abspowerups_group.add(powerup1)
             invencibility_spawn_time = 0
-        abspowerups_group.update()
 
         despawner_spawn_time += 1
         if despawner_spawn_time >= random.randint(
@@ -244,7 +210,6 @@ def execute_game(player, pet):
             powerup2 = DeSpawner(x, y)
             abspowerups_group.add(powerup2)
             despawner_spawn_time = 0
-        abspowerups_group.update()
 
         oneshot_spawn_time += 1  # change
         if oneshot_spawn_time >= random.randint(
@@ -255,7 +220,6 @@ def execute_game(player, pet):
             powerup3 = powerup_type(x, y)
             abspowerups_group.add(powerup3)
             oneshot_spawn_time = 0
-        abspowerups_group.update()
 
         reverse_spawn_time += 1  # change
         if reverse_spawn_time >= random.randint(
@@ -266,9 +230,7 @@ def execute_game(player, pet):
             powerup4 = powerup_type(x, y)
             abspowerups_group.add(powerup4)
             reverse_spawn_time = 0
-        abspowerups_group.update()
 
-        abspowerups_group.update()
         # Check for collisions between player and power-ups
         collected_powerups = pygame.sprite.spritecollide(
             player, abspowerups_group, True
@@ -299,7 +261,7 @@ def execute_game(player, pet):
             DuplicateMonster,
         ]
         spawn_configs = [
-            (60, [0, 20, 70, 0, 0], 1, 2),
+            (60, [70, 20, 0, 0, 0], 1, 2),
             (120, [50, 30, 15, 5, 0], 1, 1.8),
             (180, [40, 30, 20, 10, 5], 2, 1.5),
             (240, [30, 30, 25, 15, 5], 2, 1.3),
@@ -358,24 +320,13 @@ def execute_game(player, pet):
                 enemy.enemy_shoot(bullets)  # Call the shoot method
 
         # updating positions and visuals
-        player_group.update()
-        bullets.update()
-        enemies.update(player)
-
+        
         if player.powerup_active:  # If the player is invincible
             collided_enemies = pygame.sprite.spritecollide(
                 player, enemies, True
-            )  # True removes enemy
+            ) 
 
-            # for enemy in collided_enemies:
-            # enemy.kill()  # Remove enemy on collision
-            # kills += 1
-            # player.exp += 1
-
-        # drawing the player and enemies sprites on the screen
-        powerups_group.draw(screen)
-        chests.draw(screen)
-
+       
         # Handle collisions
         for bullet in bullets:
             # Verificar se a bala é de um inimigo
@@ -401,18 +352,7 @@ def execute_game(player, pet):
 
         if beforeinstakill < kills:
             player.oneshotkill = False
-        # Draw game objects
-        draw_level_up_bar(screen)
-        if player.has_dash:
-            draw_slot(screen)
-        abspowerups_group.draw(screen)
-        for bullet in bullets:
-            bullet.draw(screen)
-        player.draw_health_bar(screen)
-        timer_text = font.render(f"Time: {minutes:02}:{seconds:02}", True, white)
-        kills_text = font.render(f"Kills: {kills}", True, white)
-        screen.blit(timer_text, (10, 10))  # Timer at top-left corner
-        screen.blit(kills_text, (10, 40))  # Kill counter below timer
+        
 
         collected_chests = pygame.sprite.spritecollide(player, chests, True)
         for chest in collected_chests:
@@ -454,9 +394,6 @@ def execute_game(player, pet):
                         ):
                             player.dead = False
                             return "initial"
-                        
-        player_group.draw(screen)
-        pet_group.draw(screen)
 
 
         if player.rect.right >= config.width:

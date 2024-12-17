@@ -81,6 +81,10 @@ def shed(player, pet, spawn_location):
         # draw casino area
         pygame.draw.rect(screen, (0, 255, 0), casino_area, 2)
 
+        draw_fps(screen, clock)
+        draw_slot(screen, player)
+        draw_level_up_bar(screen, player)
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
