@@ -82,7 +82,7 @@ def shed(player, pet, spawn_location):
         pygame.draw.rect(screen, (0, 255, 0), casino_area, 2)
 
         draw_fps(screen, clock)
-        draw_slot(screen, player)
+        draw_slot(screen, player) if player.has_dash else None
         draw_level_up_bar(screen, player)
 
         for event in pygame.event.get():

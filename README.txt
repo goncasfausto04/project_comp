@@ -6,5 +6,3 @@ waves de mobs **
 acabar shops (mostrar items comprados no botão)
 
 melhorar visual do chest
-
-lez
