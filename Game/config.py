@@ -30,8 +30,12 @@ resolution = (1280, 720)
 width, height = resolution[0], resolution[1]
 fps = 60
 
+# pet type
+pet_image = "dog_pet_comp.png"
+pet_image_change = False
+
 # SIZES
-player_size = (int(width * 0.025), int(height * 0.08))  # Smaller player size
+player_size = (int(width * 0.0475), int(width * 0.0475))  # Smaller player size
 enemy_size = (int(width * 0.025), int(height * 0.045))  # Smaller enemy size
 bullet_size = int(width * 0.006)  # Smaller bullet size
 powerup_size = (int(width * 0.025), int(height * 0.045))  # Smaller power-up size
