@@ -219,6 +219,9 @@ class DuplicateMonster(Enemy):
         self.frame_count = 0
         self.fps_counter = 0
 
+        self.rect.width = self.rect.width *1.8
+        self.rect.height = self.rect.height * 1.3
+
         self.sprites = []
         for i in range(0, 5):
             image = pygame.image.load(os.path.join(sprite_path, f"tile00{i}.png"))
@@ -229,8 +232,8 @@ class DuplicateMonster(Enemy):
 
     
     def draw(self, screen):
-        screen.blit(self.image, self.rect)
-        #pygame.draw.rect(screen, (255, 0, 0), self.rect, 2)  # Red color, 2-pixel border
+        screen.blit(self.image,  (self.rect.x - 12, self.rect.y-25))
+        pygame.draw.rect(screen, (255, 0, 0), self.rect, 2)  # Red color, 2-pixel border
 
     def update(self, player):
         self.move_towards_player(player)
