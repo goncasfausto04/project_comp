@@ -89,6 +89,7 @@ class Player(pygame.sprite.Sprite):
         self.dying = False
         self.dead = False
         self.enemies_spawn_multiplier = 1.1
+        self.health_drop = False
 
     def activate_powerup(self):
         """

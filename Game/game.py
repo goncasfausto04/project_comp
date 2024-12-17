@@ -86,6 +86,7 @@ def execute_game(player, pet):
     invencibility_spawn_time = 0
     oneshot_spawn_time = 0
     invencibility_time = 300
+    health_drop_spawn_time = 0
     reverse_spawn_time = 0
     teleport_spawn_time = 0
     health_drop_spawn_timer = 0  # Timer for health drops
@@ -287,6 +288,14 @@ def execute_game(player, pet):
             teleport_spawn_time = 0
         abspowerups_group.update()
 
+        health_drop_spawn_time += 1
+        if health_drop_spawn_time >= 300:  # Spawn a power-up every 5 seconds
+            x, y = random.randint(50, 1230), random.randint(50, 650)
+            powerup_type = Health_Drop
+            powerup6 = powerup_type(x, y)
+            abspowerups_group.add(powerup6)
+            health_drop_spawn_time = 0
+        abspowerups_group.update()
 
         abspowerups_group.update()
         # Check for collisions between player and power-ups
@@ -315,6 +324,11 @@ def execute_game(player, pet):
             teleport_player(player)
             player.teleport = False
 
+        if player.health_drop== True:
+            player.health = min(player.health + 20, player.max_health)
+            player.health_drop == False
+
+
         enemy_types = [
             initialEnemy,
             fastEnemy,
@@ -323,7 +337,7 @@ def execute_game(player, pet):
             DuplicateMonster,
         ]
         spawn_configs = [
-            (60, [70, 20, 10, 0, 100], 1, 2),
+            (60, [70, 20, 10, 0, 0], 1, 2),
             (120, [50, 30, 15, 5, 0], 1, 1.8),
             (180, [40, 30, 20, 10, 5], 2, 1.5),
             (240, [30, 30, 25, 15, 5], 2, 1.3),
@@ -352,30 +366,6 @@ def execute_game(player, pet):
 
         enemy_cooldown -= 1
 
-        # === Health Drop Spawn Logic ===
-        health_drop_spawn_timer += 1
-        if health_drop_spawn_timer >= spawn_rate:  # Health drop spawn timer
-            if random.randint(1, spawn_chance // 2) <= 20:  # 20% chance for health drop
-                x = random.randint(50, config.width - 50)
-                y = random.randint(50, config.height - 50)
-                health_drop = HealthDrop(x, y)
-                powerups_group.add(health_drop)
-            health_drop_spawn_timer = 0  # Reset health drop timer
-
-        # Handle collisions with power-ups and health drops
-        collected_powerups = pygame.sprite.spritecollide(player, powerups_group, True)
-        for item in collected_powerups:
-            if isinstance(item, PowerUp):  # Activate power-up
-                player.activate_powerup()
-            elif isinstance(
-                item, HealthDrop
-            ):  # Increase health, but not above max health
-                player.health = min(player.health + 20, player.max_health)
-
-        if pygame.sprite.spritecollide(
-            player, powerups_group, True
-        ):  # True removes power-up
-            player.activate_powerup()  # Activate invincibility for the player
 
         for enemy in enemies:
             if isinstance(

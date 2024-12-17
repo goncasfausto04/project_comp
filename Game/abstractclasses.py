@@ -131,10 +131,17 @@ class Teleportation(PowerUp):
     def deactivate(self, player):
         player.teleport = False
 
-class HealthDrop(pygame.sprite.Sprite):
+
+class Health_Drop(PowerUp):
     def __init__(self, x, y):
-        super().__init__()
-        self.image = pygame.Surface(powerup_size)  # Half size of an enemy
+        super().__init__(x, y)
         self.image.fill(green_ish)
-        self.rect = self.image.get_rect()
-        self.rect.center = (x, y)
+
+    def affect_player(self, player):
+        player.health_drop = True
+
+    def affect_game(self, enemies):
+        pass
+
+    def deactivate(self, player):
+        player.heal = False
