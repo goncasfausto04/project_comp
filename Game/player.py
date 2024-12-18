@@ -78,7 +78,7 @@ class Player(pygame.sprite.Sprite):
         self.exp = 0
         self.spawn_rate_multiplier = 1.0  # Default spawn rate multiplier
         self.de_spawner_active = False
-        self.de_spawner_timer = 0
+        self.de_spawner_timer = 5*fps
         self.invincible = False
         self.spawn_rate_multiplier = 1
         self.oneshotkill = False
@@ -189,11 +189,11 @@ class Player(pygame.sprite.Sprite):
                         )
                     else:
                         self.image = self.sprites_run[int(self.curernt_sprite_run)]
-            if self.de_spawner_active:
+            if self.de_spawner_active == True:
                 self.de_spawner_timer -= 1
                 if self.de_spawner_timer <= 0:
-                    self.spawn_rate_multiplier = 1.0  # Reset spawn rate multiplier
                     self.de_spawner_active = False
+                    print("despawner_active is now False")
 
             if self.dash_cooldown > 0:
                 self.dash_cooldown -= 1

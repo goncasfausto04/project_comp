@@ -361,9 +361,16 @@ def execute_game(player, pet):
                     break
 
             for _ in range(num_enemies_to_spawn):
-                enemy_type = random.choices(enemy_types, weights=spawn_weights, k=1)[0]
-                new_enemy = enemy_type()
-                enemies.add(new_enemy)
+                if player.de_spawner_active == False:
+                    enemy_type = random.choices(enemy_types, weights=spawn_weights, k=1)[0]
+                    new_enemy = enemy_type()
+                    enemies.add(new_enemy)
+                elif player.de_spawner_active == True: #now when despawner is activated enemies only have 75% chance of spawning
+                    if random.randint(1, 100) <= 75:
+                        enemy_type = random.choices(enemy_types, weights=spawn_weights, k=1)[0]
+                        new_enemy = enemy_type()
+                        enemies.add(new_enemy)
+
 
         enemy_cooldown -= 1
 
