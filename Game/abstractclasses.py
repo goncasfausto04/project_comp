@@ -144,4 +144,4 @@ class Health_Drop(PowerUp):
         pass
 
     def deactivate(self, player):
-        player.heal = False
+        player.health_drop = False

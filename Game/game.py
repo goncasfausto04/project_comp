@@ -245,7 +245,7 @@ def execute_game(player, pet):
             powerup1 = powerup_type(x, y)
             abspowerups_group.add(powerup1)
             invencibility_spawn_time = 0
-            invencibility_spawn_time = random.randint(fps * 50, fps * 100)
+            invencibility_spawn_interval = random.randint(fps * 50, fps * 100)
         abspowerups_group.update()
 
         despawner_spawn_time += 1
@@ -310,16 +310,21 @@ def execute_game(player, pet):
 
         if invencibility_time > 0 and player.invincible == True:
             invencibility_time -= 1
+            player.glow(screen, radius=60, color=(0,20,0,50))
         if invencibility_time <= 0:
             player.invincible = False
             invencibility_time = 300
         if player.oneshotkill == True:
             beforeinstakill = kills
+            player.glow(screen, radius=60, color = (0,0,200,50))
         if reverse_time > 0 and player.inverted == True:
             reverse_time -= 1
+            player.glow(screen, radius=60, color= (0,100,100, 50))
         if reverse_time <= 0:
             player.inverted = False
             reverse_time = 120
+        if player.de_spawner_active == True:
+            player.glow(screen, radius=60, color=(255,0,0,50))
 
         if player.teleport == True:
             teleport_player(player)
@@ -397,7 +402,8 @@ def execute_game(player, pet):
             ):  # Verifica se é uma bala inimiga
                 # Detectar colisão com o jogador
                 if player.rect.colliderect(bullet.rect):
-                    player.health -= bullet.damage
+                    if player.invincible == False:
+                        player.health -= bullet.damage
                     bullet.kill()  # Remove a bala após a colisão
             else:
                 # Verificar colisão com todos os inimigos

@@ -215,6 +215,18 @@ class Player(pygame.sprite.Sprite):
         elif keys[pygame.K_5] and "Astral Beam" in self.weapons_purchased:
             self.bullet_type = "Astral Beam"
 
+    def glow(self, surface, radius, color):
+        # Create a surface for the glow
+        glow_surface = pygame.Surface((radius * 2, radius * 2), pygame.SRCALPHA)
+
+        # Draw concentric circles with decreasing opacity
+        for i in range(radius, 0, -1):
+            pygame.draw.circle(glow_surface, color, (radius, radius), i)
+
+        # Blit the glow onto the main surface at the player's center
+        surface.blit(
+            glow_surface,
+            (self.rect.centerx - radius, self.rect.centery - radius))
     def death(self):
         """
         Called when the player dies.
