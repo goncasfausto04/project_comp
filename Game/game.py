@@ -373,8 +373,12 @@ def execute_game(player, pet):
                 # Verificar colisão com todos os inimigos
                 for enemy in enemies:
                     if enemy.rect.colliderect(bullet.rect):
-                        enemy.health -= bullet.damage  # Aplica dano no inimigo
-                        bullet.kill()  # Remove a bala após a colisão
+                        if player.oneshotkill == True:
+                            enemy.health -= bullet.damage * 100000  # Aplica dano no inimigo
+                            bullet.kill()  # Remove a bala após a colisão
+                        else:
+                            enemy.health -= bullet.damage*100000  # Aplica dano no inimigo
+                            bullet.kill()  # Remove a bala após a colisão
                         if enemy.health <= 0:
                             if isinstance(enemy, DuplicateMonster):
                                 enemy.spawn_on_death(enemies)  # Spawn new enemies
