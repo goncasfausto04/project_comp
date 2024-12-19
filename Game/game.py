@@ -119,6 +119,7 @@ def execute_game(player, pet):
         total_seconds = game_time_frames // fps  # Convert frames to seconds
         minutes = total_seconds // 60  # Calculate minutes
         seconds = total_seconds % 60  # Calculate seconds
+        time = (minutes,seconds)  # Calculate total time in seconds
         timer_text = font.render(
             f"Time: {minutes:02}:{seconds:02}", True, white
         )  # Format MM:SS
@@ -395,6 +396,9 @@ def execute_game(player, pet):
 
         if player.health <= 0:
             player.death()
+            if time > player.best_time:
+                player.best_time = time
+            
 
         if player.dead:
             dead = True
@@ -472,6 +476,8 @@ def execute_game(player, pet):
                             0.6 - (0.125 / 2), 0.5- (0.083 /2), 0.125, 0.083, mouse
                         ):
                             player.health = 100
+                            if player.best_time < time:
+                                player.best_time = time
                             return "shed"
 
         pygame.display.flip()

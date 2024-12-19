@@ -73,6 +73,7 @@ class HUD:
 
         self.screen.blit(level_text,
                          (self.config.width // 2 - level_text.get_width() // 2, bar_y))  # Ajuste vertical
+        
     def draw_health_bar(self):
         """
         Draw the health bar below the player's sprite.
@@ -100,6 +101,24 @@ class HUD:
         text_y = self.config.height * 0.912# Above the Level-Up bar
 
         self.screen.blit(level_text, (text_x, text_y))
+
+    def draw_best_time(self):
+        """
+        Draw the player's best time on the HUD.
+        """
+        # Fonte para o texto do tempo
+        time_font = pygame.font.Font(None, 30)
+        minutes, seconds = self.player.best_time[0], self.player.best_time[1]
+
+        # Formatação do texto
+        time_text = time_font.render(f"Record: {minutes:02}:{seconds:02}", True, (255, 255, 255))
+
+        # Posiciona o texto acima do lado direito da barra de Level-Up
+        text_x = config.width * 0.697
+        text_y = self.config.height *0.912  # Ajuste vertical
+
+        # Desenha o texto na tela
+        self.screen.blit(time_text, (text_x, text_y))
 
   
     def draw_player_money(self):
@@ -141,12 +160,12 @@ class HUD:
         timer = player.dash_cooldown
         max_cooldown = fps * 2  # Adjust based on your game's cooldown duration
         if timer > 0:
-            # Draw the cooldown progress (green)
+            # Draw the cooldown progress 
             progress_width = bar_width * (timer / max_cooldown)
             progress_color = (0, 255, 0)  # Green bar
             pygame.draw.rect(screen, progress_color, (bar_x, bar_y, progress_width, bar_height))
         
-        # Optionally, display the remaining time as text
+        # display the remaining time as text
         if timer > 0:
             text_color = (255, 255, 255)  # White text
             time_remaining = f"{timer / fps:.1f}"  # Format as seconds
@@ -163,3 +182,5 @@ class HUD:
         self.draw_player_level()
         self.draw_player_money()
         self.draw_slot(screen,player) if player.has_dash else None
+        self.draw_best_time()
+

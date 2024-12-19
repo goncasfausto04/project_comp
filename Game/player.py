@@ -22,7 +22,7 @@ class Player(pygame.sprite.Sprite):
         self.frame_count = 0
         self.exp_required = 10
         self.dash_cooldown = 0
-        self.has_dash = True
+        self.has_dash = False
 
         self.sprites_idle = []
         for i in range(0, 9):
@@ -74,7 +74,7 @@ class Player(pygame.sprite.Sprite):
         self.coins = 20000
         self.powerup_active = False
         self.powerup_timer = 0
-        self.level = 1
+        self.level = 10
         self.exp = 0
         self.spawn_rate_multiplier = 1.0  # Default spawn rate multiplier
         self.de_spawner_active = False
@@ -90,6 +90,7 @@ class Player(pygame.sprite.Sprite):
         self.dead = False
         self.enemies_spawn_multiplier = 1.1
         self.health_drop = False
+        self.best_time = (0,0)
 
     def activate_powerup(self):
         """
