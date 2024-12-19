@@ -4,6 +4,7 @@ from utils import *
 import os
 from shop import *
 from casino import *
+from hud import HUD
 
 
 def shed(player, pet, spawn_location):
@@ -16,6 +17,7 @@ def shed(player, pet, spawn_location):
     # setting up the screen
     background = pygame.transform.scale(background, config.resolution)
     screen = pygame.display.set_mode(config.resolution)
+    hud = HUD(screen, config,player)
 
     clock = pygame.time.Clock()
 
@@ -74,16 +76,16 @@ def shed(player, pet, spawn_location):
         # Draw the player and the pet
         player_group.draw(screen)
         pet_group.draw(screen)
+        hud.draw(screen,player)
 
         # draw the special area
-        pygame.draw.rect(screen, (0, 255, 0), special_area, 2)
+        #pygame.draw.rect(screen, (0, 255, 0), special_area, 2)
 
         # draw casino area
-        pygame.draw.rect(screen, (0, 255, 0), casino_area, 2)
+        #pygame.draw.rect(screen, (0, 255, 0), casino_area, 2)
 
         draw_fps(screen, clock)
-        draw_slot(screen, player) if player.has_dash else None
-        draw_level_up_bar(screen, player)
+        
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

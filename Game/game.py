@@ -10,6 +10,7 @@ from shed import shed
 from shop import shop
 from chest import TreasureChest
 from abstractclasses import *
+from hud import HUD
 
 
 # endless loop that will keep the game running
@@ -66,6 +67,7 @@ def execute_game(player, pet):
     blockyfont = pygame.font.Font(blockyfontpath, int(config.height * 0.05))
     mouse = pygame.mouse.get_pos()  # Get mouse position
     pygame.display.set_caption("Hit or Stand")
+    hud = HUD(screen, config, player)
 
     leave_text = blockyfont.render("Leave", True, white)
     not_leave_text = blockyfont.render("Stay", True, white)
@@ -144,9 +146,7 @@ def execute_game(player, pet):
          # drawing the player and enemies sprites on the screen
         screen.blit(background, (0, 0))
         chests.draw(screen)
-        draw_level_up_bar(screen, player)
-        if player.has_dash == True:
-            draw_slot(screen,player)
+        #draw_level_up_bar(screen, player)
         abspowerups_group.draw(screen)
         for bullet in bullets:
             bullet.draw(screen)
@@ -156,6 +156,8 @@ def execute_game(player, pet):
         player_group.draw(screen)
         for enemy in enemies:
             enemy.draw(screen)  # Call the draw method for each enemy
+        hud.draw(screen,player)
+        
 
         timer_text = font.render(f"Time: {minutes:02}:{seconds:02}", True, white)
         kills_text = font.render(f"Kills: {kills}", True, white)
@@ -373,6 +375,8 @@ def execute_game(player, pet):
                         enemy.health -= bullet.damage  # Aplica dano no inimigo
                         bullet.kill()  # Remove a bala após a colisão
                         if enemy.health <= 0:
+                            if isinstance(enemy, DuplicateMonster):
+                                enemy.spawn_on_death(enemies)  # Spawn new enemies
                             enemy.kill()
                             kills += 1
                             player.exp += 1

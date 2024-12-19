@@ -233,7 +233,7 @@ class DuplicateMonster(Enemy):
     
     def draw(self, screen):
         screen.blit(self.image,  (self.rect.x - 12, self.rect.y-25))
-        pygame.draw.rect(screen, (255, 0, 0), self.rect, 2)  # Red color, 2-pixel border
+        #pygame.draw.rect(screen, (255, 0, 0), self.rect, 2)  # Red color, 2-pixel border
 
     def update(self, player):
         self.move_towards_player(player)
@@ -243,3 +243,11 @@ class DuplicateMonster(Enemy):
             if self.frame_count >= len(self.sprites):
                 self.frame_count = 0
             self.image = self.sprites[self.frame_count]
+
+    def spawn_on_death(self, enemies_group):
+        """Spawn two new enemies upon death."""
+        for _ in range(2):
+            new_enemy = initialEnemy()  # Create a new regular enemy
+            new_enemy.rect.x = self.rect.x + random.randint(-20, 20)  # Spawn near the parent enemy
+            new_enemy.rect.y = self.rect.y + random.randint(-20, 20)
+            enemies_group.add(new_enemy)
