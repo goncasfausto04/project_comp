@@ -9,10 +9,10 @@ class PowerUp(pygame.sprite.Sprite, ABC):
     def __init__(self, x, y, duration=300):
         """
         Base Power-Up class.
-        :param x: Initial x position
-        :param y: Initial y position
-        :param color: Visual color of the power-up
-        :param duration: Duration in frames the power-up is active
+        x: Initial x position
+        y: Initial y position
+        param color: Visual color of the power-up
+        param duration: Duration in frames the power-up is active
         """
         super().__init__()
         self.image = pygame.Surface((20, 20))  # Default size for power-ups
@@ -131,10 +131,17 @@ class Teleportation(PowerUp):
     def deactivate(self, player):
         player.teleport = False
 
-class HealthDrop(pygame.sprite.Sprite):
+
+class Health_Drop(PowerUp):
     def __init__(self, x, y):
-        super().__init__()
-        self.image = pygame.Surface(powerup_size)  # Half size of an enemy
+        super().__init__(x, y)
         self.image.fill(green_ish)
-        self.rect = self.image.get_rect()
-        self.rect.center = (x, y)
+
+    def affect_player(self, player):
+        player.health_drop = True
+
+    def affect_game(self, enemies):
+        pass
+
+    def deactivate(self, player):
+        player.health_drop = False

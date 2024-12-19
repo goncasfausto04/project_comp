@@ -79,17 +79,21 @@ def execute_game(player, pet):
 
     enemy_cooldown = 0
     running = True
-    powerups_group = pygame.sprite.Group()  # Group to hold power-up sprites
     abspowerups_group = pygame.sprite.Group()
-    powerup_spawn_timer = 0  # Timer for power-ups
     despawner_spawn_time = 0
     beforeinstakill = 0
     invencibility_spawn_time = 0
     oneshot_spawn_time = 0
     invencibility_time = 300
+    health_drop_spawn_time = 0
     reverse_spawn_time = 0
     teleport_spawn_time = 0
-    health_drop_spawn_timer = 0  # Timer for health drops
+    invencibility_spawn_interval = random.randint(fps * 50, fps * 100)
+    despawner_spawn_interval = random.randint(fps * 30, fps * 70)
+    oneshot_spawn_interval = random.randint(fps * 25, fps * 50)
+    reverse_spawn_interval = random.randint(fps * 40, fps * 80)
+    teleport_spawn_interval = random.randint(fps * 30, fps * 70)
+    health_drop_spawn_interval = random.randint(fps * 30, fps * 60)
     reverse_time = 120
     spawn_rate = fps * 6  # Spawn a health drop every 6 seconds (60 frames per second)
     spawn_chance = 100  # Percentage rarity of power-up (lower is rarer)
@@ -139,7 +143,6 @@ def execute_game(player, pet):
 
          # drawing the player and enemies sprites on the screen
         screen.blit(background, (0, 0))
-        powerups_group.draw(screen)
         chests.draw(screen)
         draw_level_up_bar(screen, player)
         if player.has_dash == True:
@@ -165,8 +168,8 @@ def execute_game(player, pet):
 
         def teleport_player(self):
             # Generate random position within the screen bounds
-            new_x = random.randint(50, config.width - 50)
-            new_y = random.randint(50, config.height - 50)
+            new_x = random.randint(60, config.width - 60)
+            new_y = random.randint(60, config.height - 60)
 
             # Update the player's position
             self.rect.x = new_x
@@ -231,9 +234,7 @@ def execute_game(player, pet):
             oneshot_spawn_time = 0
 
         reverse_spawn_time += 1  # change
-        if reverse_spawn_time >= random.randint(
-            fps * 40, fps * 80
-        ):  # Spawn a power-up every 5 seconds
+        if reverse_spawn_time >= reverse_spawn_interval:
             x, y = random.randint(50, 1230), random.randint(50, 650)
             powerup_type = InvertedControls
             powerup4 = powerup_type(x, y)
@@ -248,6 +249,15 @@ def execute_game(player, pet):
             abspowerups_group.add(powerup5)
             teleport_spawn_time = 0
 
+        health_drop_spawn_time += 1
+        if health_drop_spawn_time >= health_drop_spawn_interval:
+            x, y = random.randint(50, 1230), random.randint(50, 650)
+            powerup_type = Health_Drop
+            powerup6 = powerup_type(x, y)
+            abspowerups_group.add(powerup6)
+            health_drop_spawn_time = 0
+            health_drop_spawn_interval = random.randint(fps * 30, fps * 60)
+        abspowerups_group.update()
 
         abspowerups_group.update()
         # Check for collisions between player and power-ups
@@ -261,20 +271,30 @@ def execute_game(player, pet):
 
         if invencibility_time > 0 and player.invincible == True:
             invencibility_time -= 1
+            player.glow(screen, radius=60, color=(0,20,0,50))
         if invencibility_time <= 0:
             player.invincible = False
             invencibility_time = 300
         if player.oneshotkill == True:
             beforeinstakill = kills
+            player.glow(screen, radius=60, color = (0,0,200,50))
         if reverse_time > 0 and player.inverted == True:
             reverse_time -= 1
+            player.glow(screen, radius=60, color= (0,100,100, 50))
         if reverse_time <= 0:
             player.inverted = False
             reverse_time = 120
+        if player.de_spawner_active == True:
+            player.glow(screen, radius=60, color=(255,0,0,50))
 
         if player.teleport == True:
             teleport_player(player)
             player.teleport = False
+
+        if player.health_drop== True:
+            player.health = min(player.health + 20, player.max_health)
+            player.health_drop = False
+
 
         enemy_types = [
             initialEnemy,
@@ -307,36 +327,19 @@ def execute_game(player, pet):
                     break
 
             for _ in range(num_enemies_to_spawn):
-                enemy_type = random.choices(enemy_types, weights=spawn_weights, k=1)[0]
-                new_enemy = enemy_type()
-                enemies.add(new_enemy)
+                if player.de_spawner_active == False:
+                    enemy_type = random.choices(enemy_types, weights=spawn_weights, k=1)[0]
+                    new_enemy = enemy_type()
+                    enemies.add(new_enemy)
+                elif player.de_spawner_active == True: #now when despawner is activated enemies only have 75% chance of spawning
+                    if random.randint(1, 100) <= 75:
+                        enemy_type = random.choices(enemy_types, weights=spawn_weights, k=1)[0]
+                        new_enemy = enemy_type()
+                        enemies.add(new_enemy)
+
 
         enemy_cooldown -= 1
 
-        # === Health Drop Spawn Logic ===
-        health_drop_spawn_timer += 1
-        if health_drop_spawn_timer >= spawn_rate:  # Health drop spawn timer
-            if random.randint(1, spawn_chance // 2) <= 20:  # 20% chance for health drop
-                x = random.randint(50, config.width - 50)
-                y = random.randint(50, config.height - 50)
-                health_drop = HealthDrop(x, y)
-                powerups_group.add(health_drop)
-            health_drop_spawn_timer = 0  # Reset health drop timer
-
-        # Handle collisions with power-ups and health drops
-        collected_powerups = pygame.sprite.spritecollide(player, powerups_group, True)
-        for item in collected_powerups:
-            if isinstance(item, PowerUp):  # Activate power-up
-                player.activate_powerup()
-            elif isinstance(
-                item, HealthDrop
-            ):  # Increase health, but not above max health
-                player.health = min(player.health + 20, player.max_health)
-
-        if pygame.sprite.spritecollide(
-            player, powerups_group, True
-        ):  # True removes power-up
-            player.activate_powerup()  # Activate invincibility for the player
 
         for enemy in enemies:
             if isinstance(
@@ -360,7 +363,8 @@ def execute_game(player, pet):
             ):  # Verifica se é uma bala inimiga
                 # Detectar colisão com o jogador
                 if player.rect.colliderect(bullet.rect):
-                    player.health -= bullet.damage
+                    if player.invincible == False:
+                        player.health -= bullet.damage
                     bullet.kill()  # Remove a bala após a colisão
             else:
                 # Verificar colisão com todos os inimigos

@@ -78,7 +78,7 @@ class Player(pygame.sprite.Sprite):
         self.exp = 0
         self.spawn_rate_multiplier = 1.0  # Default spawn rate multiplier
         self.de_spawner_active = False
-        self.de_spawner_timer = 0
+        self.de_spawner_timer = 5*fps
         self.invincible = False
         self.spawn_rate_multiplier = 1
         self.oneshotkill = False
@@ -89,6 +89,7 @@ class Player(pygame.sprite.Sprite):
         self.dying = False
         self.dead = False
         self.enemies_spawn_multiplier = 1.1
+        self.health_drop = False
 
     def activate_powerup(self):
         """
@@ -188,11 +189,11 @@ class Player(pygame.sprite.Sprite):
                         )
                     else:
                         self.image = self.sprites_run[int(self.curernt_sprite_run)]
-            if self.de_spawner_active:
+            if self.de_spawner_active == True:
                 self.de_spawner_timer -= 1
                 if self.de_spawner_timer <= 0:
-                    self.spawn_rate_multiplier = 1.0  # Reset spawn rate multiplier
                     self.de_spawner_active = False
+                    print("despawner_active is now False")
 
             if self.dash_cooldown > 0:
                 self.dash_cooldown -= 1
@@ -214,6 +215,18 @@ class Player(pygame.sprite.Sprite):
         elif keys[pygame.K_5] and "Astral Beam" in self.weapons_purchased:
             self.bullet_type = "Astral Beam"
 
+    def glow(self, surface, radius, color):
+        # Create a surface for the glow
+        glow_surface = pygame.Surface((radius * 2, radius * 2), pygame.SRCALPHA)
+
+        # Draw concentric circles with decreasing opacity
+        for i in range(radius, 0, -1):
+            pygame.draw.circle(glow_surface, color, (radius, radius), i)
+
+        # Blit the glow onto the main surface at the player's center
+        surface.blit(
+            glow_surface,
+            (self.rect.centerx - radius, self.rect.centery - radius))
     def death(self):
         """
         Called when the player dies.
