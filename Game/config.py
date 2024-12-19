@@ -39,7 +39,7 @@ player_size = (int(width * 0.0475), int(width * 0.0475))  # Smaller player size
 enemy_size = (int(width * 0.025), int(height * 0.045))  # Smaller enemy size
 bullet_size = int(width * 0.006)  # Smaller bullet size
 powerup_size = (int(width * 0.025), int(height * 0.045))  # Smaller power-up size
-chest_size = (int(width * 0.025), int(height * 0.045))  # Smaller chest size
+chest_size = (int(width * 0.03), int(height * 0.055))  # Smaller chest size
 
 # music volume
 music_volume = 0.2

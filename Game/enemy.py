@@ -182,6 +182,10 @@ class RangedMonster(Enemy):
 
         self.image = self.sprites[self.frame_count]
 
+    def draw(self, screen):
+        screen.blit(self.image,  (self.rect.x - 15, self.rect.y-17))
+        #pygame.draw.rect(screen, (255, 0, 0), self.rect, 2)  # Red color, 2-pixel border
+
     
     def update(self, player):
         self.move_towards_player(player)
