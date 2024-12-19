@@ -63,13 +63,22 @@ class TreasureChest(pygame.sprite.Sprite):
                 )
                 font = pygame.font.Font(None, 36)
                 text_surface = font.render(self.cards[i], True, (0, 0, 0))
+                coins_surface = font.render("Coins", True, (0, 0, 0))
                 text_rect = text_surface.get_rect(
                     center=(
                         self.card_positions[i][0] + 50,
                         self.card_positions[i][1] + 75,
                     )
                 )
+                coins_rect = coins_surface.get_rect(
+                    center=(
+                        self.card_positions[i][0] + 50,
+                        self.card_positions[i][1] + 100,
+                    )
+                )
                 screen.blit(text_surface, text_rect)
+                if self.cards[i] in ["100", "200", "300"]:
+                    screen.blit(coins_surface, coins_rect)
             else:
                 screen.blit(self.card_image, self.card_positions[i])
 

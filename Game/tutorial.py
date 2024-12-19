@@ -359,10 +359,13 @@ def battle():
             prompt(screen, config.width, config.height * 1.5, "Like this are many others!")
 
         if frame_count == 630:
-            prompt(screen, config.width, config.height * 1.5, "But i think you should go play now!")
+            prompt(screen, config.width, config.height * 1.5, "Your main objective is to last as long as you can!")
 
         if frame_count == 670:
-            prompt(screen, config.width, config.height * 1.5, "Press ESC to leave the tutorial!")
+            prompt(screen, config.width, config.height * 1.5, "Go and try for yourself!")
+
+        if frame_count == 700:
+            prompt(screen, config.width, config.height * 1.5, "Good Luck! Press ESC to exit.")
 
         
 
