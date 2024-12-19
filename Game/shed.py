@@ -76,7 +76,7 @@ def shed(player, pet, spawn_location):
         # Draw the player and the pet
         player_group.draw(screen)
         pet_group.draw(screen)
-        hud.draw(screen,player)
+        hud.draw()
 
         # draw the special area
         #pygame.draw.rect(screen, (0, 255, 0), special_area, 2)

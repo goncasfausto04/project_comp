@@ -157,7 +157,7 @@ def execute_game(player, pet):
         player_group.draw(screen)
         for enemy in enemies:
             enemy.draw(screen)  # Call the draw method for each enemy
-        hud.draw(screen,player)
+        hud.draw()
         
 
         timer_text = font.render(f"Time: {minutes:02}:{seconds:02}", True, white)
