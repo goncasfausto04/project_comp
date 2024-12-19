@@ -84,11 +84,15 @@ def shed(player, pet, spawn_location):
         # draw casino area
         #pygame.draw.rect(screen, (0, 255, 0), casino_area, 2)
 
+        keys = pygame.key.get_pressed()
+        player.change_bullet_type(keys)
+
         draw_fps(screen, clock)
         
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                player.save_progress()
                 pygame.quit()
                 exit()
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:

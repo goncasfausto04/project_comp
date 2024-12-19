@@ -171,6 +171,7 @@ def blackjack(player):
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
+                    player.save_progress()
                     pygame.quit()
                     exit()
                 if event.type == pygame.KEYDOWN:
@@ -244,6 +245,7 @@ def blackjack(player):
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                player.save_progress()
                 running = False
 
             if event.type == pygame.KEYDOWN and not game_over_message:

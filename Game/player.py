@@ -3,7 +3,7 @@ from config import *
 import pygame
 import math
 from bullet import *
-import random
+import json
 
 
 # making Player a child of the Sprite class
@@ -71,10 +71,10 @@ class Player(pygame.sprite.Sprite):
             "Astral Beam": 100,
         }  # Cooldown in frames
 
-        self.coins = 20000
+        self.coins = 0
         self.powerup_active = False
         self.powerup_timer = 0
-        self.level = 10
+        self.level = 1
         self.exp = 0
         self.spawn_rate_multiplier = 1.0  # Default spawn rate multiplier
         self.de_spawner_active = False
@@ -90,7 +90,42 @@ class Player(pygame.sprite.Sprite):
         self.dead = False
         self.enemies_spawn_multiplier = 1.1
         self.health_drop = False
-        self.best_time = (0,0)
+        self.best_time = 0
+        self.load_progress()
+        
+
+    def save_progress(self):
+        player_data = {
+            "has_dash": self.has_dash,
+            "level" : self.level,
+            "exp": self.exp,
+            "coins": self.coins,
+            "weapons_purchased": self.weapons_purchased,
+            "pets_purchased": self.pets_purchased,
+            "best_time": self.best_time,
+            "exp_required": self.exp_required,
+            # Add other attributes you want to save
+        }
+        with open("player_progress.json", "w") as file:
+            json.dump(player_data, file)
+
+    def load_progress(self):
+        if os.path.exists("player_progress.json"):
+            with open("player_progress.json", "r") as file:
+                player_data = json.load(file)
+                self.has_dash = player_data["has_dash"]
+                self.level = player_data["level"]
+                self.exp = player_data["exp"]
+                self.coins = player_data["coins"]
+                self.weapons_purchased = player_data["weapons_purchased"]
+                self.pets_purchased = player_data["pets_purchased"]
+                self.best_time = player_data["best_time"]
+                self.exp_required = player_data["exp_required"]
+                # Load other attributes as needed
+        else:
+            print("No saved progress found")
+
+    
 
     def activate_powerup(self):
         """

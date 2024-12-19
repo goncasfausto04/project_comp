@@ -38,6 +38,7 @@ def shop(player):
         # Event detection
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                player.save_progress()
                 pygame.quit()
 
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -130,6 +131,7 @@ def weapons_shop(player):
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                player.save_progress()
                 pygame.quit()
 
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -251,6 +253,7 @@ def pet_shop(player):
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                player.save_progress()
                 pygame.quit()
 
             if event.type == pygame.MOUSEBUTTONDOWN:

@@ -41,6 +41,7 @@ def casino(player):
         # Event detection
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                player.save_progress()
                 pygame.quit()
 
             if event.type == pygame.MOUSEBUTTONDOWN:

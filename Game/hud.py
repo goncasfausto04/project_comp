@@ -108,7 +108,7 @@ class HUD:
         """
         # Fonte para o texto do tempo
         time_font = pygame.font.Font(None, 30)
-        minutes, seconds = self.player.best_time[0], self.player.best_time[1]
+        minutes, seconds = self.player.best_time // 60, self.player.best_time % 60
 
         # Formatação do texto
         time_text = time_font.render(f"Record: {minutes:02}:{seconds:02}", True, (255, 255, 255))

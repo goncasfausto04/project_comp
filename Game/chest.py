@@ -73,7 +73,7 @@ class TreasureChest(pygame.sprite.Sprite):
             else:
                 screen.blit(self.card_image, self.card_positions[i])
 
-    def open_chest(self, screen):
+    def open_chest(self, screen, player):
         running = True
         last_loop = True
         print(self.rewards)
@@ -89,7 +89,8 @@ class TreasureChest(pygame.sprite.Sprite):
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    running = False
+                    player.save_progress()
+                    pygame.quit()
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     mouse_pos = pygame.mouse.get_pos()
                     for i, pos in enumerate(self.card_positions):

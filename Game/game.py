@@ -103,7 +103,6 @@ def execute_game(player, pet):
 
     
 
-    game_time = 0
     game_time_frames = 0  # Tracks elapsed time in seconds
     kills = 0  # Tracks the number of kills
     font = pygame.font.SysFont("Arial", 30)  # Font for rendering text
@@ -119,7 +118,7 @@ def execute_game(player, pet):
         total_seconds = game_time_frames // fps  # Convert frames to seconds
         minutes = total_seconds // 60  # Calculate minutes
         seconds = total_seconds % 60  # Calculate seconds
-        time = (minutes,seconds)  # Calculate total time in seconds
+        time = minutes * 60 + seconds # Calculate total time in seconds
         timer_text = font.render(
             f"Time: {minutes:02}:{seconds:02}", True, white
         )  # Format MM:SS
@@ -127,6 +126,7 @@ def execute_game(player, pet):
             # Handle events
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                player.save_progress()
                 pygame.quit()
                 exit()
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
@@ -390,7 +390,7 @@ def execute_game(player, pet):
 
         collected_chests = pygame.sprite.spritecollide(player, chests, True)
         for chest in collected_chests:
-            chest.open_chest(screen)
+            chest.open_chest(screen, player)
 
         # kill player
 
@@ -423,6 +423,7 @@ def execute_game(player, pet):
                 pygame.display.flip()
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
+                        player.save_progress()
                         pygame.quit()
                         exit()
                     elif event.type == pygame.MOUSEBUTTONDOWN:
@@ -464,6 +465,7 @@ def execute_game(player, pet):
                 pygame.display.flip()
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
+                        player.save_progress()
                         pygame.quit()
                         exit()
                     elif event.type == pygame.MOUSEBUTTONDOWN:
