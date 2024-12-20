@@ -98,13 +98,35 @@ def shed(player, pet, spawn_location):
             config.width * 0.08,  # width
             config.height * 0.15  # height
         )
-        # To visualize the collision areas :
+        lagoon = pygame.Rect(
+            config.width * 0.305,  # x-coordinate
+            config.height * 0.07,  # y-coordinate
+            config.width * 0.09,  # width
+            config.height * 0.16  # height
+        )
+        lagoon_2 = pygame.Rect(
+            config.width * 0.355,  # x-coordinate
+            config.height * 0.07,  # y-coordinate
+            config.width * 0.06,  # width
+            config.height * 0.13  # height
+        )
+        lagoon_3 = pygame.Rect(
+            config.width * 0.395,  # x-coordinate
+            config.height * 0.07,  # y-coordinate
+            config.width * 0.06,  # width
+            config.height * 0.04  # height
+        )
+
         # pygame.draw.rect(screen, (255, 0, 0), house1_collision_1, 2)  # Casa 1.1
         # pygame.draw.rect(screen, (255, 0, 0), house1_collision_2, 2)  # Casa 1.2
         # pygame.draw.rect(screen, (0, 255, 0), house2_collision_1, 2)  # Casa 2.1
         # pygame.draw.rect(screen, (0, 255, 0), house2_collision_2, 2)  # Casa 2.2
+        # pygame.draw.rect(screen, (0, 0, 255), lagoon, 2)  # Lagoon
+        # pygame.draw.rect(screen, (0, 0, 255), lagoon_2, 2)  # Lagoon
+        # pygame.draw.rect(screen, (0, 0, 255), lagoon_3, 2)  # Lagoon
 
-        collision_rects = [house1_collision_1, house1_collision_2, house2_collision_1, house2_collision_2]
+        collision_rects = [house1_collision_1, house1_collision_2, house2_collision_1, house2_collision_2,
+                           lagoon,lagoon_2,lagoon_3]
 
         for rect in collision_rects:
             if player.rect.colliderect(rect):
