@@ -125,6 +125,7 @@ class Player(pygame.sprite.Sprite):
         else:
             print("No saved progress found")
 
+
     
 
     def activate_powerup(self):

@@ -73,6 +73,51 @@ def shed(player, pet, spawn_location):
             pet.rect.left = player.rect.left + 50  # Pet follows the player
             return "main"
 
+        house1_collision_1 = pygame.Rect(
+            config.width * 0.755,  # x-coordinate
+            config.height * 0.15,  # y-coordinate
+            config.width * 0.22,  # width
+            config.height * 0.08  # height
+        )
+        house1_collision_2 = pygame.Rect(
+            config.width * 0.82,  # x-coordinate
+            config.height * 0.09,  # y-coordinate
+            config.width * 0.08,  # width
+            config.height * 0.06  # height
+        )
+
+        house2_collision_1 = pygame.Rect(
+            config.width * 0.75,  # x-coordinate
+            config.height * 0.54,  # y-coordinate
+            config.width * 0.1,  # width
+            config.height * 0.18 # height
+        )
+        house2_collision_2 = pygame.Rect(
+            config.width * 0.85,  # x-coordinate
+            config.height * 0.54,  # y-coordinate
+            config.width * 0.08,  # width
+            config.height * 0.15  # height
+        )
+        # To visualize the collision areas :
+        # pygame.draw.rect(screen, (255, 0, 0), house1_collision_1, 2)  # Casa 1.1
+        # pygame.draw.rect(screen, (255, 0, 0), house1_collision_2, 2)  # Casa 1.2
+        # pygame.draw.rect(screen, (0, 255, 0), house2_collision_1, 2)  # Casa 2.1
+        # pygame.draw.rect(screen, (0, 255, 0), house2_collision_2, 2)  # Casa 2.2
+
+        collision_rects = [house1_collision_1, house1_collision_2, house2_collision_1, house2_collision_2]
+
+        for rect in collision_rects:
+            if player.rect.colliderect(rect):
+                # Resolve collision by checking movement direction
+                if player.rect.right > rect.left and player.rect.left < rect.left:  # Colliding from the left
+                    player.rect.right = rect.left
+                elif player.rect.left < rect.right and player.rect.right > rect.right:  # Colliding from the right
+                    player.rect.left = rect.right
+                if player.rect.bottom > rect.top and player.rect.top < rect.top:  # Colliding from above
+                    player.rect.bottom = rect.top
+                elif player.rect.top < rect.bottom and player.rect.bottom > rect.bottom:  # Colliding from below
+                    player.rect.top = rect.bottom
+
         # Draw the player and the pet
         player_group.draw(screen)
         pet_group.draw(screen)
