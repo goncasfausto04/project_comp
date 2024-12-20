@@ -120,10 +120,10 @@ def weapons_shop(player):
 
     # Weapon prices
     weapon_prices = {
-        "Shatterblast": 300,
-        "Arcane Cascade": 500,
-        "Rebound Rune": 800,
-        "Astral Beam": 1000,
+        "Shatterblast": 2000,
+        "Arcane Cascade": 3500,
+        "Rebound Rune": 6000,
+        "Astral Beam": 7000,
     }
 
     while True:

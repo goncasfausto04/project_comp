@@ -45,7 +45,7 @@ class TreasureChest(pygame.sprite.Sprite):
         if 0 <= card_index < len(self.cards) and not self.flipped_cards[card_index]:
             self.flipped_cards[card_index] = True
             print(f"Card {card_index + 1}: {self.cards[card_index]}")
-            if self.cards[card_index] in ["100", "200", "300"]:
+            if self.cards[card_index] in ["100", "200", "300", "400", "500"]:
                 self.player.coins += int(self.cards[card_index])
             elif self.cards[card_index] == "Dash":
                 self.player.has_dash = True

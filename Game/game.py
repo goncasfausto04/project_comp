@@ -183,10 +183,12 @@ def execute_game(player, pet):
             y = random.randint(50, config.height - 50)
             if player.has_dash == True:
                 chest = TreasureChest(x, y, player, ["100", "200", "300", "400", "500"])
+                print("dash")
             else:
                 chest = TreasureChest(
-                    x, y, player, ["100", "200", "300", "400", "Dash"]
+                    x, y, player, ["100", "200", "Dash", "400", "100"]
                 )
+                print("no dash")
             chests.add(chest)
             player.level += 1
             player.exp -= player.exp_required
