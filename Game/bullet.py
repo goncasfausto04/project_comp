@@ -4,6 +4,7 @@ from config import *
 import config
 import pygame
 import math
+import random
 
 
 # class Bullet is a child of the Sprite class from pygame
@@ -65,25 +66,30 @@ class machinegun(Bullet):
         self.speed = 7
         self.damage = 9
 
-
 class bouncing(Bullet):
     def __init__(self, x, y, direction):
+        # Generate a random direction angle in radians (0 to 2π)
+        direction = random.uniform(0, 2 * math.pi)
+        # Call the superclass constructor with x, y, and the random direction
         super().__init__(x, y, direction)
         self.color = pink
         self.speed = 7
         self.damage = 15
-        self.bounce_count = 3
+        self.bounce_count = 2
 
     def update(self):
+        # Check for collisions with screen edges and bounce
         if self.rect.x <= 5 or self.rect.x >= width - 5:
             self.direction = math.pi - self.direction
             self.bounce_count -= 1
         if self.rect.y <= 5 or self.rect.y >= height - 5:
             self.direction = -self.direction
             self.bounce_count -= 1
+        # Destroy bullet after bouncing twice
         if self.bounce_count <= 0:
             self.kill()
         super().update()
+
 
 
 class sniper(Bullet):
