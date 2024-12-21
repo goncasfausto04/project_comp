@@ -5,7 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5343582e-b416-4521-b4fb-95a701b985f0" name="Changes" comment="when despawner is active enemy only have 75% chance of spawning (it lasts 5 seconds)">
-      <change beforePath="$PROJECT_DIR$/Game/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/Game/game.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Game/extras/caveira.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Game/extras/flameskull.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Game/extras/golden_star.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Game/extras/health_pack.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Game/extras/lobo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Game/extras/poison.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Game/extras/portal.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Game/extras/reaper.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Game/extras/star.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Game/extras/star8bit.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Game/extras/super_star.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Game/extras/wolf.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Game/extras/yellowstar.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game/abstractclasses.py" beforeDir="false" afterPath="$PROJECT_DIR$/Game/abstractclasses.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,6 +54,11 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Asus\Documents\GitHub\project_comp\Game\extras" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>

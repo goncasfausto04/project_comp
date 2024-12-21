@@ -3,6 +3,7 @@ import random
 from config import *
 from abc import ABC, abstractmethod
 import time
+base_path = os.path.dirname(__file__)
 
 
 class PowerUp(pygame.sprite.Sprite, ABC):
@@ -38,9 +39,11 @@ class PowerUp(pygame.sprite.Sprite, ABC):
 class Invincibility(PowerUp):
     def __init__(self, x, y):
         super().__init__(x, y)
-        self.image.fill(
-            (0, 20, 0)
-        )  # Fill the power-up with blue to represent invincibility.
+        image_path = os.path.join(base_path, "extras", "golden_star.png")
+        self.image = pygame.image.load(image_path).convert_alpha()
+        self.image = pygame.transform.scale(
+            self.image, (40,40)
+        )  # Scale to desired size
         self.duration = fps * 5
 
     def affect_player(self, player):
@@ -60,9 +63,10 @@ class Invincibility(PowerUp):
 class DeSpawner(PowerUp):
     def __init__(self, x, y):
         super().__init__(x, y)
-        self.image = pygame.Surface((40, 40))  # Set the size of the power-up
-        self.image.fill((255, 0, 0))  # Red color to indicate the De-spawner
-        self.rect = self.image.get_rect(center=(x, y))
+        image_path = os.path.join(base_path, "extras", "reaper.png")
+        self.image = pygame.image.load(image_path).convert_alpha()
+        self.image = pygame.transform.scale(
+            self.image, (40, 40))
         self.duration = fps * 5  # Duration in frames (e.g., 5 seconds at 60 FPS)
 
     def affect_game(self, enemies):
@@ -90,7 +94,10 @@ class DeSpawner(PowerUp):
 class Instakill(PowerUp):
     def __init__(self, x, y):
         super().__init__(x, y)
-        self.image.fill((0, 0, 200))
+        image_path = os.path.join(base_path, "extras", "flameskull.png")
+        self.image = pygame.image.load(image_path).convert_alpha()
+        self.image = pygame.transform.scale(
+            self.image, (40, 40))
 
     def affect_player(self, player):
         player.oneshotkill = True
@@ -105,7 +112,10 @@ class Instakill(PowerUp):
 class InvertedControls(PowerUp):
     def __init__(self, x, y):
         super().__init__(x, y)
-        self.image.fill((0, 100, 100))
+        image_path = os.path.join(base_path, "extras", "poison.png")
+        self.image = pygame.image.load(image_path).convert_alpha()
+        self.image = pygame.transform.scale(
+            self.image, (40, 40))
 
     def affect_player(self, player):
         player.inverted = True
@@ -120,7 +130,10 @@ class InvertedControls(PowerUp):
 class Teleportation(PowerUp):
     def __init__(self, x, y):
         super().__init__(x, y)
-        self.image.fill((200, 200, 100))
+        image_path = os.path.join(base_path, "extras", "portal.png")
+        self.image = pygame.image.load(image_path).convert_alpha()
+        self.image = pygame.transform.scale(
+            self.image, (40, 40))
 
     def affect_player(self, player):
         player.teleport = True
@@ -135,7 +148,10 @@ class Teleportation(PowerUp):
 class Health_Drop(PowerUp):
     def __init__(self, x, y):
         super().__init__(x, y)
-        self.image.fill(green_ish)
+        image_path = os.path.join(base_path, "extras", "health_pack.png")
+        self.image = pygame.image.load(image_path).convert_alpha()
+        self.image = pygame.transform.scale(
+            self.image, (40, 40))
 
     def affect_player(self, player):
         player.health_drop = True
