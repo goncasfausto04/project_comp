@@ -95,6 +95,7 @@ class Player(pygame.sprite.Sprite):
         
 
     def save_progress(self):
+        save_location = os.path.join(base_path, "player_progress.json")
         player_data = {
             "has_dash": self.has_dash,
             "level" : self.level,
@@ -106,12 +107,13 @@ class Player(pygame.sprite.Sprite):
             "exp_required": self.exp_required,
             # Add other attributes you want to save
         }
-        with open("player_progress.json", "w") as file:
+        with open(save_location, "w") as file:
             json.dump(player_data, file)
 
     def load_progress(self):
-        if os.path.exists("player_progress.json"):
-            with open("player_progress.json", "r") as file:
+        save_location = os.path.join(base_path, "player_progress.json")
+        if os.path.exists(save_location):
+            with open(save_location, "r") as file:
                 player_data = json.load(file)
                 self.has_dash = player_data["has_dash"]
                 self.level = player_data["level"]

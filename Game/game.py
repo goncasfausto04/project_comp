@@ -463,6 +463,7 @@ def execute_game(player, pet):
                     screen,
                 )
                 pygame.display.flip()
+                
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         player.save_progress()
