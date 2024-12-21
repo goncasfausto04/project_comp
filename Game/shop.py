@@ -42,7 +42,6 @@ def shop(player):
                 pygame.quit()
 
             if event.type == pygame.MOUSEBUTTONDOWN:
-               
 
                 # Weapons button
                 if button_clicked(0.125, 0.333, 0.125, 0.083, mouse):
@@ -59,7 +58,6 @@ def shop(player):
         # Fill the screen with background
         screen.blit(background, (0, 0))
 
-   
         # Weapons button
         draw_buttonutils(
             dark_red,
@@ -170,12 +168,26 @@ def weapons_shop(player):
         money_text = font.render(f"Money: ${player.coins}", True, white)
         screen.blit(money_text, (config.width * 0.05, config.height * 0.05))
 
-        shotgun_text = font.render("Shatterblast - $300", True, white)  if "Shatterblast" not in player.weapons_purchased else font.render("Shatterblast - Purchased", True, white)
-        machinegun_text = font.render("Arcane Cascade - $500", True, white) if "Arcane Cascade" not in player.weapons_purchased else font.render("Arcane Cascade - Purchased", True, white)
-        bouncingbullets_text = font.render(
-            "Rebound Rune- $800", True, white
-        ) if "Rebound Rune" not in player.weapons_purchased else font.render("Rebound Rune - Purchased", True, white)
-        sniper_text = font.render("Astral Beam - $1000", True, white) if "Astral Beam" not in player.weapons_purchased else font.render("Astral Beam - Purchased", True,white)
+        shotgun_text = (
+            font.render("Shatterblast - $300", True, white)
+            if "Shatterblast" not in player.weapons_purchased
+            else font.render("Shatterblast - Purchased", True, white)
+        )
+        machinegun_text = (
+            font.render("Arcane Cascade - $500", True, white)
+            if "Arcane Cascade" not in player.weapons_purchased
+            else font.render("Arcane Cascade - Purchased", True, white)
+        )
+        bouncingbullets_text = (
+            font.render("Rebound Rune- $800", True, white)
+            if "Rebound Rune" not in player.weapons_purchased
+            else font.render("Rebound Rune - Purchased", True, white)
+        )
+        sniper_text = (
+            font.render("Astral Beam - $1000", True, white)
+            if "Astral Beam" not in player.weapons_purchased
+            else font.render("Astral Beam - Purchased", True, white)
+        )
 
         goback_text = font.render("Go Back", True, white)
 
@@ -296,9 +308,21 @@ def pet_shop(player):
         money_text = font.render(f"Money: ${player.coins}", True, white)
         screen.blit(money_text, (config.width * 0.05, config.height * 0.05))
 
-        dog_text = font.render("Dog - $100", True, white) if "Dog" not in player.pets_purchased else font.render("Dog", True, white)
-        cat_text = font.render("Cat - $300", True, white) if "Cat" not in player.pets_purchased else font.render("Cat", True, white)
-        crab_text = font.render("Crab - $500", True, white) if "Crab" not in player.pets_purchased else font.render("Crab", True, white)
+        dog_text = (
+            font.render("Dog - $100", True, white)
+            if "Dog" not in player.pets_purchased
+            else font.render("Dog", True, white)
+        )
+        cat_text = (
+            font.render("Cat - $300", True, white)
+            if "Cat" not in player.pets_purchased
+            else font.render("Cat", True, white)
+        )
+        crab_text = (
+            font.render("Crab - $500", True, white)
+            if "Crab" not in player.pets_purchased
+            else font.render("Crab", True, white)
+        )
         goback_text = font.render("Go Back", True, white)
 
         x_position = 0.1

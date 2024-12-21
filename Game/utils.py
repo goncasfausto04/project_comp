@@ -336,6 +336,24 @@ def draw_text_with_outline(surface, text, x, y, color, outline_color, font):
 def draw_fps(screen, clock):
     fps = int(clock.get_fps())
     font = pygame.font.SysFont(None, 30)
-    fps_text = font.render(f"FPS: {fps}", True, pygame.Color('white'))
+    fps_text = font.render(f"FPS: {fps}", True, pygame.Color("white"))
     screen.blit(fps_text, (10, height - 30))
 
+
+def handle_collision(player, collision_rects):
+    for rect in collision_rects:
+        if player.rect.colliderect(rect):
+            # Resolve collision by checking movement direction
+            dx = player.rect.centerx - rect.centerx
+            dy = player.rect.centery - rect.centery
+
+            if abs(dx) > abs(dy):  # Horizontal collision
+                if dx > 0:  # Colliding from the left
+                    player.rect.left = rect.right
+                else:  # Colliding from the right
+                    player.rect.right = rect.left
+            else:  # Vertical collision
+                if dy > 0:  # Colliding from above
+                    player.rect.top = rect.bottom
+                else:  # Colliding from below
+                    player.rect.bottom = rect.top

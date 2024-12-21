@@ -31,7 +31,6 @@ class Enemy(pygame.sprite.Sprite):
 
     def update(self, player):
         self.move_towards_player(player)
-        
 
     def move_towards_player(self, player):
         # Calculate direction vector towards the player
@@ -42,7 +41,6 @@ class Enemy(pygame.sprite.Sprite):
         # Normalize the direction and move towards the player
         self.rect.x += int(self.speed * dx / distance)
         self.rect.y += int(self.speed * dy / distance)
-
 
 
 class initialEnemy(Enemy):
@@ -59,17 +57,14 @@ class initialEnemy(Enemy):
         self.sprites = []
         for i in range(0, 5):
             self.sprites.append(
-                pygame.image.load(
-                    os.path.join(sprite_path, f"tile00{i}.png")
-                )
+                pygame.image.load(os.path.join(sprite_path, f"tile00{i}.png"))
             )
-        
+
         self.image = self.sprites[self.frame_count]
 
-    
     def draw(self, screen):
-        screen.blit(self.image, (self.rect.x - 15, self.rect.y-17))
-        #pygame.draw.rect(screen, (255, 0, 0), self.rect, 2)  # Red color, 2-pixel border
+        screen.blit(self.image, (self.rect.x - 15, self.rect.y - 17))
+        # pygame.draw.rect(screen, (255, 0, 0), self.rect, 2)  # Red color, 2-pixel border
 
     def update(self, player):
         self.move_towards_player(player)
@@ -79,7 +74,6 @@ class initialEnemy(Enemy):
             if self.frame_count >= len(self.sprites):
                 self.frame_count = 0
             self.image = self.sprites[self.frame_count]
-
 
 
 class fastEnemy(Enemy):
@@ -97,16 +91,16 @@ class fastEnemy(Enemy):
         self.sprites = []
         for i in range(0, 4):
             image = pygame.image.load(os.path.join(sprite_path, f"slime-move-{i}.png"))
-            scaled_image = pygame.transform.scale(image, (enemy_size[0]*2,enemy_size[1]*2))  # Set new_width and new_height to desired dimensions
+            scaled_image = pygame.transform.scale(
+                image, (enemy_size[0] * 2, enemy_size[1] * 2)
+            )  # Set new_width and new_height to desired dimensions
             self.sprites.append(scaled_image)
 
         self.image = self.sprites[self.frame_count]
 
     def draw(self, screen):
-        screen.blit(self.image,  (self.rect.x - 15, self.rect.y-27))
-        #pygame.draw.rect(screen, (255, 0, 0), self.rect, 2)  # Red color, 2-pixel border
-
-        
+        screen.blit(self.image, (self.rect.x - 15, self.rect.y - 27))
+        # pygame.draw.rect(screen, (255, 0, 0), self.rect, 2)  # Red color, 2-pixel border
 
     def update(self, player):
         self.move_towards_player(player)
@@ -116,8 +110,6 @@ class fastEnemy(Enemy):
             if self.frame_count >= len(self.sprites):
                 self.frame_count = 0
             self.image = self.sprites[self.frame_count]
-
-    
 
 
 class TankMonster(Enemy):
@@ -131,23 +123,24 @@ class TankMonster(Enemy):
         sprite_path = os.path.join(base_path, "extras", "sprite", "TankMonster")
         self.frame_count = 0
         self.fps_counter = 0
-        
 
         self.sprites = []
         for i in range(0, 8):
             image = pygame.image.load(os.path.join(sprite_path, f"tile00{i}.png"))
-            scaled_image = pygame.transform.scale(image, (enemy_size[0]*4.5,enemy_size[1]*3))
+            scaled_image = pygame.transform.scale(
+                image, (enemy_size[0] * 4.5, enemy_size[1] * 3)
+            )
             self.sprites.append(scaled_image)
 
         self.image = self.sprites[self.frame_count]
 
         # Adjust the size of the hitbox
-        self.rect.width = self.rect.width 
+        self.rect.width = self.rect.width
         self.rect.height = self.rect.height * 2.1  # Increase height by 50%
 
     def draw(self, screen):
-        screen.blit(self.image,  (self.rect.x - 55, self.rect.y-25))
-        #pygame.draw.rect(screen, (255, 0, 0), self.rect, 2)
+        screen.blit(self.image, (self.rect.x - 55, self.rect.y - 25))
+        # pygame.draw.rect(screen, (255, 0, 0), self.rect, 2)
 
     def update(self, player):
         self.move_towards_player(player)
@@ -177,16 +170,17 @@ class RangedMonster(Enemy):
         self.sprites = []
         for i in range(0, 4):
             image = pygame.image.load(os.path.join(sprite_path, f"tile00{i}.png"))
-            scaled_image = pygame.transform.scale(image, (enemy_size[0]*2,enemy_size[1]*2))
+            scaled_image = pygame.transform.scale(
+                image, (enemy_size[0] * 2, enemy_size[1] * 2)
+            )
             self.sprites.append(scaled_image)
 
         self.image = self.sprites[self.frame_count]
 
     def draw(self, screen):
-        screen.blit(self.image,  (self.rect.x - 15, self.rect.y-17))
-        #pygame.draw.rect(screen, (255, 0, 0), self.rect, 2)  # Red color, 2-pixel border
+        screen.blit(self.image, (self.rect.x - 15, self.rect.y - 17))
+        # pygame.draw.rect(screen, (255, 0, 0), self.rect, 2)  # Red color, 2-pixel border
 
-    
     def update(self, player):
         self.move_towards_player(player)
         self.fps_counter += 1
@@ -204,7 +198,7 @@ class RangedMonster(Enemy):
                     self.rect.centerx, self.rect.centery, angle, self
                 )
                 bullets.add(bullet)
-            
+
             # Reset cooldown
             self.bullet_cooldown = self.fire_rate
 
@@ -223,21 +217,22 @@ class DuplicateMonster(Enemy):
         self.frame_count = 0
         self.fps_counter = 0
 
-        self.rect.width = self.rect.width *1.8
+        self.rect.width = self.rect.width * 1.8
         self.rect.height = self.rect.height * 1.3
 
         self.sprites = []
         for i in range(0, 5):
             image = pygame.image.load(os.path.join(sprite_path, f"tile00{i}.png"))
-            scaled_image = pygame.transform.scale(image, (enemy_size[0]*2.5,enemy_size[1]*2.5))  # Set new_width and new_height to desired dimensions
+            scaled_image = pygame.transform.scale(
+                image, (enemy_size[0] * 2.5, enemy_size[1] * 2.5)
+            )  # Set new_width and new_height to desired dimensions
             self.sprites.append(scaled_image)
-                
+
         self.image = self.sprites[self.frame_count]
 
-    
     def draw(self, screen):
-        screen.blit(self.image,  (self.rect.x - 12, self.rect.y-25))
-        #pygame.draw.rect(screen, (255, 0, 0), self.rect, 2)  # Red color, 2-pixel border
+        screen.blit(self.image, (self.rect.x - 12, self.rect.y - 25))
+        # pygame.draw.rect(screen, (255, 0, 0), self.rect, 2)  # Red color, 2-pixel border
 
     def update(self, player):
         self.move_towards_player(player)
@@ -252,6 +247,8 @@ class DuplicateMonster(Enemy):
         """Spawn two new enemies upon death."""
         for _ in range(2):
             new_enemy = initialEnemy()  # Create a new regular enemy
-            new_enemy.rect.x = self.rect.x + random.randint(-20, 20)  # Spawn near the parent enemy
+            new_enemy.rect.x = self.rect.x + random.randint(
+                -20, 20
+            )  # Spawn near the parent enemy
             new_enemy.rect.y = self.rect.y + random.randint(-20, 20)
             enemies_group.add(new_enemy)
