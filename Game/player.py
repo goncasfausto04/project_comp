@@ -104,6 +104,7 @@ class Player(pygame.sprite.Sprite):
             "pets_purchased": self.pets_purchased,
             "best_time": self.best_time,
             "exp_required": self.exp_required,
+            "max_health": self.max_health,
             # Add other attributes you want to save
         }
         with open(save_location, "w") as file:
@@ -122,6 +123,7 @@ class Player(pygame.sprite.Sprite):
                 self.pets_purchased = player_data["pets_purchased"]
                 self.best_time = player_data["best_time"]
                 self.exp_required = player_data["exp_required"]
+                self.max_health = player_data["max_health"]
                 # Load other attributes as needed
         else:
             pass

@@ -2,7 +2,6 @@ import pygame
 import random
 from config import *
 from abc import ABC, abstractmethod
-import time
 base_path = os.path.dirname(__file__)
 
 
@@ -30,11 +29,6 @@ class PowerUp(pygame.sprite.Sprite, ABC):
         """Apply the effect to the game."""
         pass
 
-    @abstractmethod
-    def deactivate(self, player):
-        """Remove the power-ups effect when it expires."""
-        player.powerup_active = False
-
 
 class Invincibility(PowerUp):
     def __init__(self, x, y):
@@ -54,10 +48,6 @@ class Invincibility(PowerUp):
         """Invincibility doesn't directly affect enemies, but it could if you wanted."""
         # For now, no game-wide effects, just the player's invincibility.
         pass
-
-    def deactivate(self, player):
-        """End the invincibility effect."""
-        player.invincible = False
 
 
 class DeSpawner(PowerUp):
@@ -86,8 +76,7 @@ class DeSpawner(PowerUp):
         player.de_spawner_active = True
         player.de_spawner_timer = self.duration
 
-    def deactivate(self, player):
-        pass
+ 
 
 
 class Instakill(PowerUp):
@@ -105,8 +94,6 @@ class Instakill(PowerUp):
     def affect_game(self, enemies):
         pass
 
-    def deactivate(self, player):
-        player.oneshotkill = False
 
 
 class InvertedControls(PowerUp):
@@ -123,9 +110,6 @@ class InvertedControls(PowerUp):
     def affect_game(self, enemies):
         pass
 
-    def deactivate(self, player):
-        player.inverted = False
-
 
 class Teleportation(PowerUp):
     def __init__(self, x, y):
@@ -141,8 +125,7 @@ class Teleportation(PowerUp):
     def affect_game(self, enemies):
         pass
 
-    def deactivate(self, player):
-        player.teleport = False
+ 
 
 
 class Health_Drop(PowerUp):
@@ -158,6 +141,3 @@ class Health_Drop(PowerUp):
 
     def affect_game(self, enemies):
         pass
-
-    def deactivate(self, player):
-        player.health_drop = False

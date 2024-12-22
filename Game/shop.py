@@ -1,4 +1,4 @@
-from utils import under_construction
+
 import pygame
 from utils import *  # no need to import pygame because the import is in utils
 from config import *  # importing colors and the like

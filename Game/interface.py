@@ -1,4 +1,3 @@
-from utils import under_construction
 from game import game_loop
 import pygame
 from utils import *  # no need to import pygame because the import is in utils
@@ -235,6 +234,7 @@ def options():
             "pets_purchased": ["Dog"],
             "best_time": 0,
             "exp_required": 10,
+            "max_health": 100
             # Add other default attributes as needed
         }
         with open(save_location, "w") as file:
