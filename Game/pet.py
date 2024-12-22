@@ -70,7 +70,7 @@ class Pet(pygame.sprite.Sprite):
         if self.bullet_cooldown <= 0:
             bullet_class = self.bullet_type
 
-            for _ in range(2):  # Fire 4 bullets in random directions
+            for _ in range(2):  # Fire 2 bullets in random directions
                 angle = random.uniform(
                     0, 2 * math.pi
                 )  # Generate a random angle in radians

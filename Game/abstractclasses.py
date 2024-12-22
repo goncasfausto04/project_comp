@@ -55,7 +55,7 @@ class DeSpawner(PowerUp):
         self.image = pygame.image.load(image_path).convert_alpha()
         self.image = pygame.transform.scale(
             self.image, (40, 40))
-        self.duration = fps * 5  # Duration in frames (e.g., 5 seconds at 60 FPS)
+        self.duration = fps * 5  # Duration in frames
 
     def affect_game(self, enemies):
         """Remove a random percentage of enemies and reduce spawn rates."""
