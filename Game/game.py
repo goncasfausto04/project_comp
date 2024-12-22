@@ -103,6 +103,21 @@ def execute_game(player, pet):
     damage_cooldown = 35  # Cooldown in frames (1 second at 60 FPS (if it was 60))
     player_cooldown = 0  # Tracks the remaining cooldown time for the player
 
+    colission_rect1 = pygame.Rect(
+            0,
+            config.height * 0.94,
+            config.width ,
+            config.height*0.01 ,
+        )
+
+    colission_rect2 = pygame.Rect(
+            config.width * 0.02,
+            0,
+            config.width * 0.01,
+            config.height * 0.94,
+        )
+
+
     while running:
 
         clock.tick(fps)
@@ -257,20 +272,6 @@ def execute_game(player, pet):
         # Check for collisions between player and power-ups
         collected_powerups = pygame.sprite.spritecollide(
             player, abspowerups_group, True
-        )
-
-        colission_rect1 = pygame.Rect(
-            0,
-            config.height * 0.94,
-            config.width ,
-            config.height*0.01 ,
-        )
-
-        colission_rect2 = pygame.Rect(
-            config.width * 0.02,
-            0,
-            config.width * 0.01,
-            config.height * 0.94,
         )
 
         
