@@ -4,6 +4,7 @@ from config import *
 import config
 import pygame
 import math
+import random
 
 
 # class Bullet is a child of the Sprite class from pygame
@@ -68,6 +69,7 @@ class machinegun(Bullet):
 
 class bouncing(Bullet):
     def __init__(self, x, y, direction):
+        direction = random.uniform(0, 2 * math.pi)
         super().__init__(x, y, direction)
         self.color = pink
         self.speed = 7

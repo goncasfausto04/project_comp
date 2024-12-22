@@ -275,6 +275,7 @@ def battle():
             abspowerups_group.add(powerup1)
             spawn_powerup = False
 
+
         if update_enemy == True:
             enemy_group.update(playertutorial)
 
@@ -343,7 +344,7 @@ def battle():
             prompt(screen, config.width, config.height * 1.5, "Great Job!!")
             spawn_powerup = True
 
-        if frame_count == 500:
+        if frame_count == 470:
             prompt(
                 screen,
                 config.width,
@@ -351,22 +352,23 @@ def battle():
                 "See that little thing that spawned?",
             )
 
-        if frame_count == 520:
+        if frame_count == 500:
             prompt(
                 screen, config.width, config.height * 1.5, "Its a powerup. Catch it!"
             )
             frame_count += 1
             run_frames = False
 
-        if frame_count == 550:
+
+        if frame_count == 520:
             prompt(screen, config.width, config.height * 1.5, "You are invencible now.")
 
-        if frame_count == 580:
+        if frame_count == 530:
             prompt(
                 screen, config.width, config.height * 1.5, "Like this are many others!"
             )
 
-        if frame_count == 630:
+        if frame_count == 570:
             prompt(
                 screen,
                 config.width,
@@ -374,12 +376,12 @@ def battle():
                 "Your main objective is to last as long as you can!",
             )
 
-        if frame_count == 670:
+        if frame_count == 600:
             prompt(
                 screen, config.width, config.height * 1.5, "Go and try for yourself!"
             )
 
-        if frame_count == 700:
+        if frame_count == 650:
             prompt(
                 screen,
                 config.width,
