@@ -197,6 +197,8 @@ def execute_game(player, pet):
             player.exp_required = int(
                 player.exp_required * exp_multiplier
             )  # Increase the XP required for the next level
+            if player.level % 5 == 0:
+                player.max_health += 5
 
         # Detect collision and apply damage
         collided_enemies = pygame.sprite.spritecollide(player, enemies, False)

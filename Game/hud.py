@@ -44,6 +44,25 @@ class HUD:
         self.dash_bar_x = 0.485 * 1280 - (self.dash_bar_width / 2)
         self.dash_bar_y = 0.9 * 720
 
+        #load spell images
+        basic_path = os.path.join(base_path, "extras", "basic_spell.png")
+        shatterblast_path = os.path.join(base_path, "extras", "shatterblast.png")
+        arcane_cascade_path = os.path.join(base_path, "extras", "arcane_cascade.png")
+        rebound_rune_path = os.path.join(base_path, "extras", "bouncing.png")
+        astral_beam_path = os.path.join(base_path, "extras", "astral_beam.png")
+
+        self.basic_spell = pygame.image.load(basic_path).convert_alpha()
+        self.shatterblast = pygame.image.load(shatterblast_path).convert_alpha()
+        self.arcane_cascade = pygame.image.load(arcane_cascade_path).convert_alpha()
+        self.rebound_rune = pygame.image.load(rebound_rune_path).convert_alpha()
+        self.astral_beam = pygame.image.load(astral_beam_path).convert_alpha()
+
+        self.basic_spell = pygame.transform.scale(self.basic_spell, (self.slot_size, self.slot_size))
+        self.shatterblast = pygame.transform.scale(self.shatterblast, (self.slot_size, self.slot_size))
+        self.arcane_cascade = pygame.transform.scale(self.arcane_cascade, (self.slot_size, self.slot_size))
+        self.rebound_rune = pygame.transform.scale(self.rebound_rune, (self.slot_size, self.slot_size))
+        self.astral_beam = pygame.transform.scale(self.astral_beam, (self.slot_size, self.slot_size))
+
     def draw_text(self, text, font, color, x, y, center=False):
         surface = font.render(text, True, color)
         rect = surface.get_rect(center=(x, y) if center else (x, y))
@@ -53,7 +72,7 @@ class HUD:
         pygame.draw.rect(self.screen, color_bg, (x, y, width, height))
         pygame.draw.rect(self.screen, color_fg, (x, y, width * progress, height))
 
-    def draw_weapon_slots(self):
+    def draw_weapon_slots(self,player):
         weapon_names = ["1", "2", "3", "4", "5"]
         bullet_types = {
             "1": "Basic Spell",
@@ -68,6 +87,16 @@ class HUD:
             rect = pygame.Rect(x, self.slot_y, self.slot_size, self.slot_size)
 
             pygame.draw.rect(self.screen, self.colors["dark_gray"], rect)
+            if weapon_name == "1":
+                self.screen.blit(self.basic_spell, (x, self.slot_y))
+            elif weapon_name == "2" and "Shatterblast" in player.weapons_purchased:
+                self.screen.blit(self.shatterblast, (x, self.slot_y))
+            elif weapon_name == "3" and "Arcane Cascade" in player.weapons_purchased:
+                self.screen.blit(self.arcane_cascade, (x, self.slot_y))
+            elif weapon_name == "4" and "Rebound Rune" in player.weapons_purchased:
+                self.screen.blit(self.rebound_rune, (x, self.slot_y))
+            elif weapon_name == "5" and "Astral Beam" in player.weapons_purchased:
+                self.screen.blit(self.astral_beam, (x, self.slot_y))
             self.draw_text(
                 weapon_name,
                 self.font_medium,
@@ -222,7 +251,7 @@ class HUD:
         )
         self.draw_health_bar()
         self.draw_level_up_bar()
-        self.draw_weapon_slots()
+        self.draw_weapon_slots(self.player)
         self.draw_player_level()
         self.draw_player_money()
         if self.player.has_dash:
