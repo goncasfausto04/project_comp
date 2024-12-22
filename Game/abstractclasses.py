@@ -9,8 +9,8 @@ class PowerUp(pygame.sprite.Sprite, ABC):
     def __init__(self, x, y, duration=300):
         """
         Base Power-Up class.
-        x: Initial x position
-        y: Initial y position
+        param x: Initial x position
+        param y: Initial y position
         param color: Visual color of the power-up
         param duration: Duration in frames the power-up is active
         """
@@ -45,8 +45,6 @@ class Invincibility(PowerUp):
         player.invincible = True
 
     def affect_game(self, enemies):
-        """Invincibility doesn't directly affect enemies, but it could if you wanted."""
-        # For now, no game-wide effects, just the player's invincibility.
         pass
 
 
