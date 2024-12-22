@@ -144,6 +144,7 @@ def pause_game(screen, width, height):
             if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
+                
 
 
 def play_video(video_path, resolution, sound_path):

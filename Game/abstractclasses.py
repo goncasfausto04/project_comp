@@ -97,6 +97,7 @@ class Instakill(PowerUp):
         self.image = pygame.image.load(image_path).convert_alpha()
         self.image = pygame.transform.scale(
             self.image, (40, 40))
+        self.duration = fps * 5
 
     def affect_player(self, player):
         player.oneshotkill = True
