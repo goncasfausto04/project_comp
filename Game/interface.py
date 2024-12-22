@@ -225,6 +225,7 @@ def options():
     chime_sound = pygame.mixer.Sound(chime_path)
 
     def reset_progress():
+        save_location = os.path.join(base_path, "player_progress.json")
         default_data = {
             "has_dash": False,
             "level": 1,
@@ -236,9 +237,8 @@ def options():
             "exp_required": 10,
             # Add other default attributes as needed
         }
-        with open("player_progress.json", "w") as file:
+        with open(save_location, "w") as file:
             json.dump(default_data, file)
-        print("Progress reset to default values")
 
     # Main loop
     while True:
@@ -276,7 +276,7 @@ def options():
                     chime_sound.play()
                     # reload the game with the new resolution
                     return
-                
+
                 # Reset button click
                 if button_clicked(0.3, 0.5, 0.4, 0.1, mouse):
                     chime_sound.play()
@@ -298,7 +298,7 @@ def options():
         )
         pygame.draw.rect(screen, dark_red, filled_bar)
 
-        #Draw reset button
+        # Draw reset button
         draw_buttonutils(
             dark_red,
             glowing_light_red,

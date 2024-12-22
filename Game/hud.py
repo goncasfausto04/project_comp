@@ -3,6 +3,7 @@ import os
 import config
 from utils import *
 
+
 class HUD:
     def __init__(self, screen, config, player):
         self.screen = screen
@@ -34,7 +35,7 @@ class HUD:
         # Weapon slot dimensions
         self.slot_size = 50
         self.slot_spacing = 10
-        self.slot_start_x = self.bar_x 
+        self.slot_start_x = self.bar_x
         self.slot_y = 720 - 95
 
         # Dash cooldown bar dimensions
@@ -47,7 +48,6 @@ class HUD:
         surface = font.render(text, True, color)
         rect = surface.get_rect(center=(x, y) if center else (x, y))
         self.screen.blit(surface, rect.topleft)
-
 
     def draw_bar(self, x, y, width, height, progress, color_bg, color_fg):
         pygame.draw.rect(self.screen, color_bg, (x, y, width, height))
@@ -68,14 +68,39 @@ class HUD:
             rect = pygame.Rect(x, self.slot_y, self.slot_size, self.slot_size)
 
             pygame.draw.rect(self.screen, self.colors["dark_gray"], rect)
-            self.draw_text(weapon_name, self.font_medium, self.colors["white"], rect.x + 5, rect.y + 15)
-            border_color = self.colors["green"] if bullet_types[weapon_name] == self.player.bullet_type else self.colors["white"]
+            self.draw_text(
+                weapon_name,
+                self.font_medium,
+                self.colors["white"],
+                rect.x + 5,
+                rect.y + 15,
+            )
+            border_color = (
+                self.colors["green"]
+                if bullet_types[weapon_name] == self.player.bullet_type
+                else self.colors["white"]
+            )
             pygame.draw.rect(self.screen, border_color, rect, 2)
 
     def draw_level_up_bar(self):
         progress = self.player.exp / self.player.exp_required
-        self.draw_bar(self.bar_x, self.bar_y, self.bar_width, self.bar_height, progress, self.colors["white"], self.colors["green"])
-        self.draw_text(f"EXP: {self.player.exp}/{int(self.player.exp_required)}", self.font_medium, self.colors["dark_gray"], config.width // 2, self.bar_y + 8, center=True)
+        self.draw_bar(
+            self.bar_x,
+            self.bar_y,
+            self.bar_width,
+            self.bar_height,
+            progress,
+            self.colors["white"],
+            self.colors["green"],
+        )
+        self.draw_text(
+            f"EXP: {self.player.exp}/{int(self.player.exp_required)}",
+            self.font_medium,
+            self.colors["dark_gray"],
+            config.width // 2,
+            self.bar_y + 8,
+            center=True,
+        )
 
     def draw_health_bar(self):
         bar_width = 50
@@ -83,17 +108,43 @@ class HUD:
         health_ratio = self.player.health / self.player.max_health
         bar_x = self.player.rect.centerx - bar_width // 2
         bar_y = self.player.rect.bottom + 5
-        self.draw_bar(bar_x, bar_y, bar_width, bar_height, health_ratio, self.colors["red"], self.colors["green"])
+        self.draw_bar(
+            bar_x,
+            bar_y,
+            bar_width,
+            bar_height,
+            health_ratio,
+            self.colors["red"],
+            self.colors["green"],
+        )
 
     def draw_player_level(self):
-        self.draw_text(f"Level: {self.player.level}", self.font_large, self.colors["white"], self.dash_bar_x * 1.07, config.height * 0.925)
+        self.draw_text(
+            f"Level: {self.player.level}",
+            self.font_large,
+            self.colors["white"],
+            self.dash_bar_x * 1.07,
+            config.height * 0.925,
+        )
 
     def draw_best_time(self):
         minutes, seconds = divmod(self.player.best_time, 60)
-        self.draw_text(f"Record: {minutes:02}:{seconds:02}", self.font_large, self.colors["white"], 1280 * 0.697, 0.925 * 720)
+        self.draw_text(
+            f"Record: {minutes:02}:{seconds:02}",
+            self.font_large,
+            self.colors["white"],
+            1280 * 0.697,
+            0.925 * 720,
+        )
 
     def draw_player_money(self):
-        self.draw_text(f"Coins: {self.player.coins}", self.font_large, self.colors["gold"], 1280 * 0.688, config.height * 0.89)
+        self.draw_text(
+            f"Coins: {self.player.coins}",
+            self.font_large,
+            self.colors["gold"],
+            1280 * 0.688,
+            config.height * 0.89,
+        )
 
     def draw_transparent_bar(self, x, y, width, height, color, alpha):
         """
@@ -111,22 +162,64 @@ class HUD:
         s.fill((*color, alpha))  # Add alpha to the color
         self.screen.blit(s, (x, y))
 
-
     def draw_dash_cooldown(self):
-        self.draw_text("Dash", self.font_large, self.colors["white"], self.dash_bar_x * 1.04, self.dash_bar_y - self.dash_bar_height * 2, center=True)
+        self.draw_text(
+            "Dash",
+            self.font_large,
+            self.colors["white"],
+            self.dash_bar_x * 1.04,
+            self.dash_bar_y - self.dash_bar_height * 2,
+            center=True,
+        )
         timer = self.player.dash_cooldown
         max_cooldown = fps * 2
         if timer > 0:
             progress = timer / max_cooldown
-            self.draw_bar(self.dash_bar_x, self.dash_bar_y, self.dash_bar_width, self.dash_bar_height, progress, self.colors["gray"], self.colors["green"])
-            self.draw_text(f"{timer / fps:.1f}", self.font_large, self.colors["white"], self.dash_bar_x * 1.13, self.dash_bar_y - self.dash_bar_height * 2, center=True)
+            self.draw_bar(
+                self.dash_bar_x,
+                self.dash_bar_y,
+                self.dash_bar_width,
+                self.dash_bar_height,
+                progress,
+                self.colors["gray"],
+                self.colors["green"],
+            )
+            self.draw_text(
+                f"{timer / fps:.1f}",
+                self.font_large,
+                self.colors["white"],
+                self.dash_bar_x * 1.13,
+                self.dash_bar_y - self.dash_bar_height * 2,
+                center=True,
+            )
         else:
-            self.draw_text("Space Bar", self.font_small, self.colors["white"], self.dash_bar_x * 1.15, self.dash_bar_y - self.dash_bar_height * 2, center=True)
-            self.draw_bar(self.dash_bar_x, self.dash_bar_y, self.dash_bar_width, self.dash_bar_height, 0, self.colors["gray"], self.colors["green"])
-
+            self.draw_text(
+                "Space Bar",
+                self.font_small,
+                self.colors["white"],
+                self.dash_bar_x * 1.15,
+                self.dash_bar_y - self.dash_bar_height * 2,
+                center=True,
+            )
+            self.draw_bar(
+                self.dash_bar_x,
+                self.dash_bar_y,
+                self.dash_bar_width,
+                self.dash_bar_height,
+                0,
+                self.colors["gray"],
+                self.colors["green"],
+            )
 
     def draw(self):
-        self.draw_transparent_bar(config.width *0.19, config.height * 0.855, 800, 90, self.colors["deep_black"], 150)
+        self.draw_transparent_bar(
+            config.width * 0.19,
+            config.height * 0.855,
+            800,
+            90,
+            self.colors["deep_black"],
+            150,
+        )
         self.draw_health_bar()
         self.draw_level_up_bar()
         self.draw_weapon_slots()
@@ -135,4 +228,3 @@ class HUD:
         if self.player.has_dash:
             self.draw_dash_cooldown()
         self.draw_best_time()
-        

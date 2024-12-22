@@ -72,7 +72,7 @@ class bouncing(Bullet):
         self.color = pink
         self.speed = 7
         self.damage = 15
-        self.bounce_count = 3
+        self.bounce_count = 2
 
     def update(self):
         if self.rect.x <= 5 or self.rect.x >= width - 5:

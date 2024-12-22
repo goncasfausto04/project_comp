@@ -4,19 +4,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5343582e-b416-4521-b4fb-95a701b985f0" name="Changes" comment="when despawner is active enemy only have 75% chance of spawning (it lasts 5 seconds)">
+    <list default="true" id="5343582e-b416-4521-b4fb-95a701b985f0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game/abstractclasses.py" beforeDir="false" afterPath="$PROJECT_DIR$/Game/abstractclasses.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/Game/game.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game/player.py" beforeDir="false" afterPath="$PROJECT_DIR$/Game/player.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game/player_progress.json" beforeDir="false" afterPath="$PROJECT_DIR$/Game/player_progress.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game/shed.py" beforeDir="false" afterPath="$PROJECT_DIR$/Game/shed.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -27,22 +36,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.game.executor": "Run",
-    "Python.main.executor": "Run",
-    "Python.player.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "luisv8",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.angelo.executor&quot;: &quot;Run&quot;,
+    &quot;Python.game.executor&quot;: &quot;Run&quot;,
+    &quot;Python.hud.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;giga&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -58,81 +68,24 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733848723493</updated>
-      <workItem from="1733848724714" duration="5267000" />
+      <workItem from="1733848724714" duration="6851000" />
+      <workItem from="1733943051556" duration="374000" />
+      <workItem from="1734048453665" duration="5957000" />
+      <workItem from="1734287657575" duration="9896000" />
+      <workItem from="1734370104606" duration="2453000" />
+      <workItem from="1734554543722" duration="609000" />
+      <workItem from="1734633516351" duration="335000" />
+      <workItem from="1734656689302" duration="7507000" />
     </task>
-    <task id="LOCAL-00001" summary="Teleport powerup working">
-      <option name="closed" value="true" />
-      <created>1734372266764</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1734372266764</updated>
-    </task>
-    <task id="LOCAL-00002" summary="Teleport powerup working i added things that might not be needed (no error)">
-      <option name="closed" value="true" />
-      <created>1734388508330</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1734388508330</updated>
-    </task>
-    <task id="LOCAL-00003" summary="Teleport powerup working i added things that might not be needed (no error)">
-      <option name="closed" value="true" />
-      <created>1734465089818</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1734465089818</updated>
-    </task>
-    <task id="LOCAL-00004" summary="Health drop is now an abstract class and working the same as it was previously">
-      <option name="closed" value="true" />
-      <created>1734465812548</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1734465812548</updated>
-    </task>
-    <task id="LOCAL-00005" summary="CHANGED powerup spawns to be different">
-      <option name="closed" value="true" />
-      <created>1734472923603</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1734472923603</updated>
-    </task>
-    <task id="LOCAL-00006" summary="CHANGED powerup spawns to be different and power up intervals to be random (mandatory) i think that they are very slow at spawning">
-      <option name="closed" value="true" />
-      <created>1734474756937</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1734474756937</updated>
-    </task>
-    <task id="LOCAL-00007" summary="when despawner is active enemy only have 75% chance of spawning (it lasts 5 seconds)">
-      <option name="closed" value="true" />
-      <created>1734551220235</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1734551220235</updated>
-    </task>
-    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="Teleport powerup working" />
-    <MESSAGE value="Teleport powerup working i added things that might not be needed (no error)" />
-    <MESSAGE value="Health drop is now an abstract class and working the same as it was previously" />
-    <MESSAGE value="CHANGED powerup spawns to be different" />
-    <MESSAGE value="CHANGED powerup spawns to be different and power up intervals to be random (mandatory) i think that they are very slow at spawning" />
-    <MESSAGE value="when despawner is active enemy only have 75% chance of spawning (it lasts 5 seconds)" />
-    <option name="LAST_COMMIT_MESSAGE" value="when despawner is active enemy only have 75% chance of spawning (it lasts 5 seconds)" />
-  </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/project_comp3Final$main.coverage" NAME="main Coverage Results" MODIFIED="1733873220397" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Game" />
-    <SUITE FILE_PATH="coverage/project_comp3Final$game.coverage" NAME="game Coverage Results" MODIFIED="1733872212280" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Game" />
+    <SUITE FILE_PATH="coverage/project_comp3Final$main.coverage" NAME="main Coverage Results" MODIFIED="1734738578391" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Game" />
+    <SUITE FILE_PATH="coverage/project_comp3Final$hud.coverage" NAME="hud Coverage Results" MODIFIED="1734298857713" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Game" />
+    <SUITE FILE_PATH="coverage/project_comp3Final$game.coverage" NAME="game Coverage Results" MODIFIED="1733874169305" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Game" />
+    <SUITE FILE_PATH="coverage/project_comp3Final$angelo.coverage" NAME="angelo Coverage Results" MODIFIED="1734371541190" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

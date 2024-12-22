@@ -10,7 +10,6 @@ import config
 def blackjack(player):
     pygame.init()
 
-    width, height = config.resolution[0], config.resolution[1]
 
     WIDTH = config.resolution[0]
     HEIGHT = config.resolution[1]

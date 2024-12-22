@@ -54,7 +54,7 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = (width // 2, height // 2)
 
-        self.rect.height = self.rect.height * 0.9 
+        self.rect.height = self.rect.height * 0.9
         self.rect.width = self.rect.width * 0.8
 
         # GAMEPLAY VARIABLES
@@ -78,7 +78,7 @@ class Player(pygame.sprite.Sprite):
         self.exp = 0
         self.spawn_rate_multiplier = 1.0  # Default spawn rate multiplier
         self.de_spawner_active = False
-        self.de_spawner_timer = 5*fps
+        self.de_spawner_timer = 5 * fps
         self.invincible = False
         self.spawn_rate_multiplier = 1
         self.oneshotkill = False
@@ -92,12 +92,12 @@ class Player(pygame.sprite.Sprite):
         self.health_drop = False
         self.best_time = 0
         self.load_progress()
-        
 
     def save_progress(self):
+        save_location = os.path.join(base_path, "player_progress.json")
         player_data = {
             "has_dash": self.has_dash,
-            "level" : self.level,
+            "level": self.level,
             "exp": self.exp,
             "coins": self.coins,
             "weapons_purchased": self.weapons_purchased,
@@ -106,12 +106,13 @@ class Player(pygame.sprite.Sprite):
             "exp_required": self.exp_required,
             # Add other attributes you want to save
         }
-        with open("player_progress.json", "w") as file:
+        with open(save_location, "w") as file:
             json.dump(player_data, file)
 
     def load_progress(self):
-        if os.path.exists("player_progress.json"):
-            with open("player_progress.json", "r") as file:
+        save_location = os.path.join(base_path, "player_progress.json")
+        if os.path.exists(save_location):
+            with open(save_location, "r") as file:
                 player_data = json.load(file)
                 self.has_dash = player_data["has_dash"]
                 self.level = player_data["level"]
@@ -123,9 +124,7 @@ class Player(pygame.sprite.Sprite):
                 self.exp_required = player_data["exp_required"]
                 # Load other attributes as needed
         else:
-            print("No saved progress found")
-
-    
+            pass
 
     def activate_powerup(self):
         """
@@ -165,7 +164,7 @@ class Player(pygame.sprite.Sprite):
                     movement[0] -= self.speed
 
             # Normalize the  vector so that the player moves at the same speed in all directions
-            magnitude = (movement[0]**2 + movement[1]**2)**0.5
+            magnitude = (movement[0] ** 2 + movement[1] ** 2) ** 0.5
             if magnitude > 0:  # Avoid division by zero
                 movement[0] = movement[0] / magnitude * self.speed
                 movement[1] = movement[1] / magnitude * self.speed
@@ -173,8 +172,6 @@ class Player(pygame.sprite.Sprite):
             # Apply movement to the player
             self.rect.x += movement[0]
             self.rect.y += movement[1]
-
-
 
         if self.dying:
             if self.frame_count % 12 == 0:
@@ -229,7 +226,6 @@ class Player(pygame.sprite.Sprite):
                 self.de_spawner_timer -= 1
                 if self.de_spawner_timer <= 0:
                     self.de_spawner_active = False
-                    print("despawner_active is now False")
 
             if self.dash_cooldown > 0:
                 self.dash_cooldown -= 1
@@ -261,20 +257,19 @@ class Player(pygame.sprite.Sprite):
 
         # Blit the glow onto the main surface at the player's center
         surface.blit(
-            glow_surface,
-            (self.rect.centerx - radius, self.rect.centery - radius))
+            glow_surface, (self.rect.centerx - radius, self.rect.centery - radius)
+        )
+
     def death(self):
         """
         Called when the player dies.
         """
         self.dying = True
 
-    
     def draw(self, screen):
         screen.blit(self.image, (self.rect.x, self.rect.y))
         # Draw the hitbox
         pygame.draw.rect(screen, (255, 0, 0), self.rect, 2)  # Red color, 2-pixel border
-
 
     def shoot(self, bullets):
         """
@@ -332,14 +327,17 @@ class Player(pygame.sprite.Sprite):
             direction = pygame.Vector2(0, 0)
             keys = pygame.key.get_pressed()
 
-            if keys[pygame.K_w]: direction.y = -1
-            if keys[pygame.K_s]: direction.y = 1
-            if keys[pygame.K_a]: direction.x = -1
-            if keys[pygame.K_d]: direction.x = 1
+            if keys[pygame.K_w]:
+                direction.y = -1
+            if keys[pygame.K_s]:
+                direction.y = 1
+            if keys[pygame.K_a]:
+                direction.x = -1
+            if keys[pygame.K_d]:
+                direction.x = 1
 
             if direction.length() > 0:
                 direction = direction.normalize()
                 self.rect.move_ip(direction * dash_distance)
                 self.dash_cooldown = config.fps * 2  # Cooldown in seconds
                 # Add visual/audio feedback here
-

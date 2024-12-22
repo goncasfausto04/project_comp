@@ -17,7 +17,7 @@ def shed(player, pet, spawn_location):
     # setting up the screen
     background = pygame.transform.scale(background, config.resolution)
     screen = pygame.display.set_mode(config.resolution)
-    hud = HUD(screen, config,player)
+    hud = HUD(screen, config, player)
 
     clock = pygame.time.Clock()
 
@@ -33,20 +33,66 @@ def shed(player, pet, spawn_location):
     pet_group = pygame.sprite.Group()
     pet_group.add(pet)
 
+
     # Define the special area dynamically based on resolution
     special_area = pygame.Rect(
-        config.width* 0.845,  # x-coordinate (right margin of 2% from the edge)
+        config.width * 0.845,  # x-coordinate (right margin of 2% from the edge)
         config.height * 0.248,  # y-coordinate (4.2% of screen height)
         config.width * 0.03,  # width (10.9% of screen width)
         config.height * 0.06,  # height (19.4% of screen height)
     )
 
     casino_area = pygame.Rect(
-        config.width * 0.785,  # x-coordinate 
-        config.height * (0.73),  # y-coordinate 
+        config.width * 0.785,  # x-coordinate
+        config.height * (0.73),  # y-coordinate
         config.width * 0.03,  # width (10.9% of screen width)
         config.height * 0.063,
     )
+
+    collision_rects = [
+        pygame.Rect(
+            config.width * 0.755,
+            config.height * 0.15,
+            config.width * 0.22,
+            config.height * 0.08,
+        ),
+        pygame.Rect(
+            config.width * 0.82,
+            config.height * 0.09,
+            config.width * 0.08,
+            config.height * 0.06,
+        ),
+        pygame.Rect(
+            config.width * 0.75,
+            config.height * 0.54,
+            config.width * 0.1,
+            config.height * 0.18,
+        ),
+        pygame.Rect(
+            config.width * 0.85,
+            config.height * 0.54,
+            config.width * 0.08,
+            config.height * 0.15,
+        ),
+        pygame.Rect(
+            config.width * 0.305,
+            config.height * 0.07,
+            config.width * 0.09,
+            config.height * 0.16,
+        ),
+        pygame.Rect(
+            config.width * 0.355,
+            config.height * 0.07,
+            config.width * 0.06,
+            config.height * 0.13,
+        ),
+        pygame.Rect(
+            config.width * 0.395,
+            config.height * 0.07,
+            config.width * 0.06,
+            config.height * 0.04,
+        ),
+    ]
 
     running = True
 
@@ -73,22 +119,18 @@ def shed(player, pet, spawn_location):
             pet.rect.left = player.rect.left + 50  # Pet follows the player
             return "main"
 
+        handle_collision(player, collision_rects)
+
         # Draw the player and the pet
         player_group.draw(screen)
         pet_group.draw(screen)
         hud.draw()
 
-        # draw the special area
-        #pygame.draw.rect(screen, (0, 255, 0), special_area, 2)
-
-        # draw casino area
-        #pygame.draw.rect(screen, (0, 255, 0), casino_area, 2)
 
         keys = pygame.key.get_pressed()
         player.change_bullet_type(keys)
 
         draw_fps(screen, clock)
-        
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

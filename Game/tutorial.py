@@ -35,7 +35,7 @@ def tutorial():
     playertutorial.rect.left = config.width * 0.5
 
     special_area = pygame.Rect(
-        config.width* 0.845,  # x-coordinate (right margin of 2% from the edge)
+        config.width * 0.845,  # x-coordinate (right margin of 2% from the edge)
         config.height * 0.248,  # y-coordinate (4.2% of screen height)
         config.width * 0.03,  # width (10.9% of screen width)
         config.height * 0.06,  # height (19.4% of screen height)
@@ -205,8 +205,8 @@ def tutorial():
 
         if playertutorial.rect.left <= 0:
             playertutorial.rect.left = config.width - playertutorial.rect.width
-            return battle() 
-            
+            return battle()
+
         pygame.display.flip()
 
 
@@ -218,8 +218,6 @@ def battle():
     enemy_group = pygame.sprite.Group()
     bullets = pygame.sprite.Group()
     abspowerups_group = pygame.sprite.Group()
-
-
 
     # setting up the background and the screen
     background_path = os.path.join(base_path, "extras", "battleground.png")
@@ -245,9 +243,6 @@ def battle():
 
     run_frames = True
 
-
-
-
     while running:
         clock.tick(config.fps)
         screen.blit(background, (0, 0))
@@ -269,8 +264,6 @@ def battle():
         if pygame.sprite.spritecollide(playertutorial, abspowerups_group, True):
             run_frames = True
 
-        
-
         # Draw the enemies
         for enemy in enemy_group:
             enemy.draw(screen)
@@ -286,7 +279,7 @@ def battle():
             enemy_group.update(playertutorial)
 
         if player_shoot == True:
-             # Draw the bullets
+            # Draw the bullets
 
             playertutorial.shoot(bullets)
             bullets.update()
@@ -301,12 +294,9 @@ def battle():
                             enemy.kill()
                             dead_enemy = True
 
-
         if dead_enemy == True:
-            run_frames = True   
-            dead_enemy = False 
-
-
+            run_frames = True
+            dead_enemy = False
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -315,15 +305,22 @@ def battle():
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     return
-                
+
         if frame_count == 150:
-            prompt(screen, config.width, config.height * 1.5, "Welcome to the battlefield!")
+            prompt(
+                screen, config.width, config.height * 1.5, "Welcome to the battlefield!"
+            )
 
         if frame_count == 200:
-            prompt(screen, config.width, config.height * 1.5, "This is where you will fight your enemies.")
+            prompt(
+                screen,
+                config.width,
+                config.height * 1.5,
+                "This is where you will fight your enemies.",
+            )
 
         if frame_count == 250:
-            #spawn enemy
+            # spawn enemy
             enemy = initialEnemy()
             enemy_group.add(enemy)
 
@@ -332,23 +329,32 @@ def battle():
             update_enemy = True
 
         if frame_count == 350:
-            prompt(screen, config.width, config.height * 1.5, "He will try and Kill You!!")
+            prompt(
+                screen, config.width, config.height * 1.5, "He will try and Kill You!!"
+            )
 
         if frame_count == 400:
             prompt(screen, config.width, config.height * 1.5, "Kill Him first!!")
             player_shoot = True
             run_frames = False
-            frame_count +=1
+            frame_count += 1
 
         if frame_count == 450:
             prompt(screen, config.width, config.height * 1.5, "Great Job!!")
             spawn_powerup = True
 
         if frame_count == 500:
-            prompt(screen, config.width, config.height * 1.5, "See that little thing that spawned?")
+            prompt(
+                screen,
+                config.width,
+                config.height * 1.5,
+                "See that little thing that spawned?",
+            )
 
         if frame_count == 520:
-            prompt(screen, config.width, config.height * 1.5, "Its a powerup. Catch it!")
+            prompt(
+                screen, config.width, config.height * 1.5, "Its a powerup. Catch it!"
+            )
             frame_count += 1
             run_frames = False
 
@@ -356,25 +362,31 @@ def battle():
             prompt(screen, config.width, config.height * 1.5, "You are invencible now.")
 
         if frame_count == 580:
-            prompt(screen, config.width, config.height * 1.5, "Like this are many others!")
+            prompt(
+                screen, config.width, config.height * 1.5, "Like this are many others!"
+            )
 
         if frame_count == 630:
-            prompt(screen, config.width, config.height * 1.5, "Your main objective is to last as long as you can!")
+            prompt(
+                screen,
+                config.width,
+                config.height * 1.5,
+                "Your main objective is to last as long as you can!",
+            )
 
         if frame_count == 670:
-            prompt(screen, config.width, config.height * 1.5, "Go and try for yourself!")
+            prompt(
+                screen, config.width, config.height * 1.5, "Go and try for yourself!"
+            )
 
         if frame_count == 700:
-            prompt(screen, config.width, config.height * 1.5, "Good Luck! Press ESC to exit.")
-
-        
-
-         
-
+            prompt(
+                screen,
+                config.width,
+                config.height * 1.5,
+                "Good Luck! Press ESC to exit.",
+            )
 
         pygame.display.flip()
-
-
-
 
     return
