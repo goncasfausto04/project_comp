@@ -21,7 +21,7 @@ def shop(player):
     blockyfontsmall = pygame.font.Font(blockyfontpath, int(config.height * 0.035))
 
     # Render the text
-    bullets_text = blockyfontsmall.render("Weapons Shop", True, white)
+    bullets_text = blockyfontsmall.render("Spells Shop", True, white)
     pets_text = blockyfontsmall.render("Pet Shop", True, white)
     goback_text = blockyfontsmall.render("Go Back", True, white)
     title_text = blockyfont.render("Shopping Street", True, glowing_light_red)
