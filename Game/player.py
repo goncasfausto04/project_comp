@@ -124,7 +124,7 @@ class Player(pygame.sprite.Sprite):
                 self.exp_required = player_data["exp_required"]
                 # Load other attributes as needed
         else:
-            print("No saved progress found")
+            pass
 
     def activate_powerup(self):
         """
@@ -226,7 +226,6 @@ class Player(pygame.sprite.Sprite):
                 self.de_spawner_timer -= 1
                 if self.de_spawner_timer <= 0:
                     self.de_spawner_active = False
-                    print("despawner_active is now False")
 
             if self.dash_cooldown > 0:
                 self.dash_cooldown -= 1

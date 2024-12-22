@@ -225,6 +225,7 @@ def options():
     chime_sound = pygame.mixer.Sound(chime_path)
 
     def reset_progress():
+        save_location = os.path.join(base_path, "player_progress.json")
         default_data = {
             "has_dash": False,
             "level": 1,
@@ -236,9 +237,8 @@ def options():
             "exp_required": 10,
             # Add other default attributes as needed
         }
-        with open("player_progress.json", "w") as file:
+        with open(save_location, "w") as file:
             json.dump(default_data, file)
-        print("Progress reset to default values")
 
     # Main loop
     while True:

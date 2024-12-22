@@ -44,7 +44,6 @@ class TreasureChest(pygame.sprite.Sprite):
     def flip_card(self, card_index):
         if 0 <= card_index < len(self.cards) and not self.flipped_cards[card_index]:
             self.flipped_cards[card_index] = True
-            print(f"Card {card_index + 1}: {self.cards[card_index]}")
             if self.cards[card_index] in ["100", "200", "300"]:
                 self.player.coins += int(self.cards[card_index])
             elif self.cards[card_index] == "Dash":
@@ -52,7 +51,6 @@ class TreasureChest(pygame.sprite.Sprite):
 
             return self.cards[card_index]
         else:
-            print("Invalid card or already flipped!")
             return None
 
     def draw_cards(self, screen):
@@ -77,7 +75,7 @@ class TreasureChest(pygame.sprite.Sprite):
                     )
                 )
                 screen.blit(text_surface, text_rect)
-                if self.cards[i] in ["100", "200", "300"]:
+                if self.cards[i] in ["100", "200", "300","400"]:
                     screen.blit(coins_surface, coins_rect)
             else:
                 screen.blit(self.card_image, self.card_positions[i])
@@ -85,7 +83,6 @@ class TreasureChest(pygame.sprite.Sprite):
     def open_chest(self, screen, player):
         running = True
         last_loop = True
-        print(self.rewards)
 
         while running or last_loop:
             # Clear screen

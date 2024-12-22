@@ -77,9 +77,8 @@ class DeSpawner(PowerUp):
             enemies_removed = random.sample(enemies.sprites(), num_to_remove)
             for enemy in enemies_removed:
                 enemy.kill()
-                print(f"De-spawner removed {len(enemies_removed)} enemies!")
         else:
-            print("No enemies to remove")
+            pass
 
     def affect_player(self, player):
         """Reduce the spawn rate while active."""

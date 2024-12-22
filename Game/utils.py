@@ -357,3 +357,4 @@ def handle_collision(player, collision_rects):
                     player.rect.top = rect.bottom
                 else:  # Colliding from below
                     player.rect.bottom = rect.top
+

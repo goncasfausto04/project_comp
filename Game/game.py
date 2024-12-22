@@ -26,9 +26,6 @@ def game_loop():
     pygame.mixer.music.set_volume(config.music_volume)  # Set the desired volume
     pygame.mixer.music.play(-1)  # Loop the soundtrack indefinitely
 
-    spawn_interval = 2 * fps  # Intervalo inicial entre spawns (2 segundos)
-    phase_duration = 30  # Duração de cada fase em segundos
-    current_phase = 0  # Fase inicial do jogo
 
     while True:
         if current_state == "main":
@@ -97,8 +94,6 @@ def execute_game(player, pet):
     teleport_spawn_interval = random.randint(fps * 30, fps * 70)
     health_drop_spawn_interval = random.randint(fps * 30, fps * 60)
     reverse_time = 120
-    spawn_rate = fps * 6  # Spawn a health drop every 6 seconds (60 frames per second)
-    spawn_chance = 100  # Percentage rarity of power-up (lower is rarer)
     exp_multiplier = 1.2
 
     game_time_frames = 0  # Tracks elapsed time in seconds
@@ -179,7 +174,7 @@ def execute_game(player, pet):
                 chest = TreasureChest(x, y, player, ["100", "200", "300", "400", "500"])
             else:
                 chest = TreasureChest(
-                    x, y, player, ["100", "200", "300", "400", "Dash"]
+                    x, y, player, ["100", "200","Dash","300", "400"]
                 )
             chests.add(chest)
             player.level += 1
@@ -264,6 +259,31 @@ def execute_game(player, pet):
             player, abspowerups_group, True
         )
 
+        colission_rect1 = pygame.Rect(
+            0,
+            config.height * 0.94,
+            config.width ,
+            config.height*0.01 ,
+        )
+
+        colission_rect2 = pygame.Rect(
+            config.width * 0.02,
+            0,
+            config.width * 0.01,
+            config.height * 0.94,
+        )
+
+        
+        if player.rect.colliderect(colission_rect1):
+            player.rect.y -= 5
+        #pygame.draw.rect(screen, (0, 0, 0), colission_rect1)
+
+        if player.rect.colliderect(colission_rect2):
+            player.rect.x += 5
+        #pygame.draw.rect(screen, (0, 0, 0), colission_rect2)
+
+
+ 
         for powerup in collected_powerups:
             powerup.affect_player(player)
             powerup.affect_game(enemies)

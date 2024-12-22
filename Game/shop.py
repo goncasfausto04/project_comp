@@ -118,10 +118,10 @@ def weapons_shop(player):
 
     # Weapon prices
     weapon_prices = {
-        "Shatterblast": 300,
-        "Arcane Cascade": 500,
-        "Rebound Rune": 800,
-        "Astral Beam": 1000,
+        "Shatterblast": 1500,
+        "Arcane Cascade": 2500,
+        "Rebound Rune": 3500,
+        "Astral Beam": 4000,
     }
 
     while True:
@@ -169,22 +169,22 @@ def weapons_shop(player):
         screen.blit(money_text, (config.width * 0.05, config.height * 0.05))
 
         shotgun_text = (
-            font.render("Shatterblast - $300", True, white)
+            font.render("Shatterblast - $1500", True, white)
             if "Shatterblast" not in player.weapons_purchased
             else font.render("Shatterblast - Purchased", True, white)
         )
         machinegun_text = (
-            font.render("Arcane Cascade - $500", True, white)
+            font.render("Arcane Cascade - $2500", True, white)
             if "Arcane Cascade" not in player.weapons_purchased
             else font.render("Arcane Cascade - Purchased", True, white)
         )
         bouncingbullets_text = (
-            font.render("Rebound Rune- $800", True, white)
+            font.render("Rebound Rune- $3500", True, white)
             if "Rebound Rune" not in player.weapons_purchased
             else font.render("Rebound Rune - Purchased", True, white)
         )
         sniper_text = (
-            font.render("Astral Beam - $1000", True, white)
+            font.render("Astral Beam - $4000", True, white)
             if "Astral Beam" not in player.weapons_purchased
             else font.render("Astral Beam - Purchased", True, white)
         )
@@ -256,8 +256,8 @@ def pet_shop(player):
     # Pet prices
     pet_prices = {
         "Dog": 100,
-        "Cat": 300,
-        "Crab": 500,
+        "Cat": 600,
+        "Crab": 600,
     }
 
     while True:
@@ -309,17 +309,17 @@ def pet_shop(player):
         screen.blit(money_text, (config.width * 0.05, config.height * 0.05))
 
         dog_text = (
-            font.render("Dog - $100", True, white)
+            font.render("Dog", True, white)
             if "Dog" not in player.pets_purchased
             else font.render("Dog", True, white)
         )
         cat_text = (
-            font.render("Cat - $300", True, white)
+            font.render("Cat - $600", True, white)
             if "Cat" not in player.pets_purchased
             else font.render("Cat", True, white)
         )
         crab_text = (
-            font.render("Crab - $500", True, white)
+            font.render("Crab - $600", True, white)
             if "Crab" not in player.pets_purchased
             else font.render("Crab", True, white)
         )
