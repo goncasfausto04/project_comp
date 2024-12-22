@@ -9,3 +9,5 @@ Powerups also spawn randomly so you may alter the spawn rate if you wish in orde
 very simple in the game.py file altering the value powerupname_spawn_interval to your desired need
 
 If you wish to reset your progress on the options there is a button that does so.
+
+NOTE: If you have problems running the game it may be due to numpy incopabilities, create a clean enviroment and everything should work fine!
