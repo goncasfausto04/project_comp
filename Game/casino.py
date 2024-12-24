@@ -9,8 +9,6 @@ from slots import slots
 
 
 def casino(player):
-    # Initialize pygame
-    pygame.init()
 
     # Create the screen at the set resolution
     screen = pygame.display.set_mode(config.resolution)

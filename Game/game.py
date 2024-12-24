@@ -135,7 +135,7 @@ def execute_game(player, pet):
             if event.type == pygame.QUIT:
                 player.save_progress()
                 pygame.quit()
-                exit()
+
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 pause_game(screen, config.width, config.height)
 
@@ -444,7 +444,7 @@ def execute_game(player, pet):
                     if event.type == pygame.QUIT:
                         player.save_progress()
                         pygame.quit()
-                        exit()
+
                     elif event.type == pygame.MOUSEBUTTONDOWN:
                         if button_clicked(
                             0.5 - (0.125 / 2), 0.5 - (0.125 / 2), 0.125, 0.125, mouse
@@ -486,7 +486,7 @@ def execute_game(player, pet):
                     if event.type == pygame.QUIT:
                         player.save_progress()
                         pygame.quit()
-                        exit()
+
                     elif event.type == pygame.MOUSEBUTTONDOWN:
                         if button_clicked(
                             0.4 - (0.125 / 2), 0.5 - (0.083 / 2), 0.125, 0.083, mouse

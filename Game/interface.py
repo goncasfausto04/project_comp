@@ -7,6 +7,7 @@ from credits import credits_
 import config
 from tutorial import tutorial
 import json
+import sys
 
 
 def interface():
@@ -14,9 +15,6 @@ def interface():
     play_video(video_path, config.resolution, sound_path)
 
     while True:
-        # Initialize pygame
-        pygame.init()
-
         # Create the screen at the set resolution
         screen = pygame.display.set_mode(config.resolution)
 
@@ -249,7 +247,6 @@ def options():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
-                exit()
 
             # Volume adjustment
             if event.type == pygame.MOUSEBUTTONDOWN:
