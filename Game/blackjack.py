@@ -5,6 +5,7 @@ import os
 from config import *
 from player import Player
 import config
+import sys
 
 
 def blackjack(player):
@@ -170,6 +171,7 @@ def blackjack(player):
                 if event.type == pygame.QUIT:
                     player.save_progress()
                     pygame.quit()
+                    sys.exit()
                     
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_RETURN:
@@ -259,3 +261,4 @@ def blackjack(player):
         clock.tick(30)
 
     pygame.quit()
+    sys.exit()

@@ -40,6 +40,7 @@ def casino(player):
             if event.type == pygame.QUIT:
                 player.save_progress()
                 pygame.quit()
+                sys.exit()
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 # Skins button

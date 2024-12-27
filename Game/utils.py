@@ -3,6 +3,7 @@ import os
 import cv2
 from config import *
 import config
+import sys
 
 def pause_game(screen, width, height):
     """Pauses the game and displays a 'Paused' message."""
@@ -24,7 +25,7 @@ def pause_game(screen, width, height):
                 return
             if event.type == pygame.QUIT:
                 pygame.quit()
-                exit()
+                sys.exit()
                 
 
 
@@ -59,6 +60,7 @@ def play_video(video_path, resolution, sound_path):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
+                sys.exit()
             if event.type == pygame.KEYDOWN:
                 if (
                     event.key == pygame.K_ESCAPE
@@ -194,6 +196,7 @@ def prompt(screen, width, height, content):
                 return
             if event.type == pygame.QUIT:
                 pygame.quit()
+                sys.exit()
                 exit()
 
 

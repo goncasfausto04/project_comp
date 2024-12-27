@@ -11,6 +11,7 @@ from shop import shop
 from chest import TreasureChest
 from abstractclasses import *
 from hud import HUD
+import sys
 
 
 # endless loop that will keep the game running
@@ -135,6 +136,7 @@ def execute_game(player, pet):
             if event.type == pygame.QUIT:
                 player.save_progress()
                 pygame.quit()
+                sys.exit()
 
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 pause_game(screen, config.width, config.height)
@@ -444,6 +446,7 @@ def execute_game(player, pet):
                     if event.type == pygame.QUIT:
                         player.save_progress()
                         pygame.quit()
+                        sys.exit()
 
                     elif event.type == pygame.MOUSEBUTTONDOWN:
                         if button_clicked(
@@ -486,6 +489,7 @@ def execute_game(player, pet):
                     if event.type == pygame.QUIT:
                         player.save_progress()
                         pygame.quit()
+                        sys.exit()
 
                     elif event.type == pygame.MOUSEBUTTONDOWN:
                         if button_clicked(

@@ -136,6 +136,7 @@ def shed(player, pet, spawn_location):
             if event.type == pygame.QUIT:
                 player.save_progress()
                 pygame.quit()
+                sys.exit()
                 
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 pause_game(screen, config.width, config.height)

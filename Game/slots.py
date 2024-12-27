@@ -215,7 +215,7 @@ def slots(player):
                 if event.type == pygame.QUIT:
                     player.save_progress()
                     pygame.quit()
-                    
+                    sys.exit()
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_RETURN:
                         if input_text.isdigit() and int(input_text) <= player.coins:
@@ -266,3 +266,4 @@ def slots(player):
         pygame.display.flip()
 
     pygame.quit()
+    sys.exit()

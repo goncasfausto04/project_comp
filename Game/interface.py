@@ -61,12 +61,14 @@ def interface():
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
+                    sys.exit()
 
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     # Quit button
                     if button_clicked(0.75 - (0.125 / 2), 0.833, 0.125, 0.083, mouse):
                         chime_sound.play()
                         pygame.quit()
+                        sys.exit()
 
                     # Credits button
                     if button_clicked(0.75 - (0.125 / 2), 0.667, 0.125, 0.083, mouse):
@@ -222,7 +224,18 @@ def options():
     chime_sound = pygame.mixer.Sound(chime_path)
 
     def reset_progress():
-        save_location = os.path.join(base_path, "player_progress.json")
+        """Reset progress to default values."""
+        if os.name == 'nt':  # Windows
+            save_dir = os.path.join(os.getenv('APPDATA'), ".hitorstand")
+        else:  # macOS/Linux
+            save_dir = os.path.expanduser("~/.hitorstand")
+        
+        # Ensure the directory exists
+        os.makedirs(save_dir, exist_ok=True)
+
+        save_location = os.path.join(save_dir, "player_progress.json")
+
+        # Define default progress data
         default_data = {
             "has_dash": False,
             "level": 1,
@@ -235,8 +248,13 @@ def options():
             "max_health": 100
             # Add other default attributes as needed
         }
+
+        # Save the default data to the save file
         with open(save_location, "w") as file:
             json.dump(default_data, file)
+        
+        print(f"Progress reset to default and saved to {save_location}")
+
 
     # Main loop
     while True:
@@ -247,6 +265,7 @@ def options():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
+                sys.exit()
 
             # Volume adjustment
             if event.type == pygame.MOUSEBUTTONDOWN:
